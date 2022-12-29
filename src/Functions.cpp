@@ -1,4 +1,5 @@
 #include "Functions.h"
+#include <vector>
 using namepsace std;
 char num_to_lett(int t)
 {
