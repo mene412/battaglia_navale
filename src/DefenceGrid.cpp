@@ -27,7 +27,7 @@ void Defence_Grid::set_grid()          //posiziona le navi nella griglia
             if(check_ship(c)) //se la nave non va ad occupare celle già occupate                    viene inserita nel vettore ships,
             {
                 ships.push_back(c);
-                cout<<"OK"<<endl;
+                cout<<"OK"<<endl; //La stampa di ok è solo per controllare che funzioni, nel codice finale non ci sarà
             }
 
         }
