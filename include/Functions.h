@@ -4,7 +4,7 @@
 #include <vector>
 char num_to_lett(int t)
 {
-    vector<char> letters={'a','b','c','d','e','f','g','h','i','l','m','n'};
+    std::vector<char> letters={'a','b','c','d','e','f','g','h','i','l','m','n'};
     return letters[t-1];
 };
 int char_to_int(char t)
