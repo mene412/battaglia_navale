@@ -2,9 +2,10 @@
 #ifndef Functions_h
 #define Functions_h
 #include <vector>
+using namespace std;
 char num_to_lett(int t)
 {
-    std::vector<char> letters={'a','b','c','d','e','f','g','h','i','l','m','n'};
+    vector<char> letters={'a','b','c','d','e','f','g','h','i','l','m','n'};
     return letters[t-1];
 };
 int char_to_int(char t)
