@@ -1,10 +1,9 @@
 // Autore:
 #ifndef Battleship_h
 #define Battleship_h
-class Corazzata: public Ship
+class Battleship: public Ship
 {
-public:
-    Corazzata();
+    public:
+    Battleship(void);
 };
-
 #endif /* Battleship_h */

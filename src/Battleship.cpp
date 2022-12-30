@@ -1,10 +1,9 @@
 // Autore:
 #include "Ship.h"
 #include "Battleship.h"
-Corazzata::Corazzata()
-{
-    type='C';
-    dim=5;
-    armor=5;
-    set_coord();
+Battleship::Battleship(void){
+    type_='C';
+    dim_=5;
+    armor_=5;
+    SetCoord();
 }

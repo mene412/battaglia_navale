@@ -1,10 +1,9 @@
 // Autore:
 #include "Ship.h"
 #include "Help_Ship.h"
-Support_Ship::Support_Ship()
-{
-       type='S';
-       dim=3;
-       armor=3;
-       set_coord();
+HelpShip::HelpShip(){
+    type_='S';
+    dim_=3;
+    armor_=3;
+    SetCoord();
 }

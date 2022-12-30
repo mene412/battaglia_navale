@@ -1,10 +1,9 @@
 // Autore:
 #include "Ship.h"
 #include "ExplorationSubmarine.h"
-Submarine::Submarine()
-{
-       type='E';
-       dim=1;
-       armor=1;
-       set_coord();
+ExplorationSubmarine::ExplorationSubmarine(void){
+    type_='E';
+    dim_=1;
+    armor_=1;
+    SetCoord();
 }
