@@ -7,16 +7,18 @@
 #include "Help_Ship.h"
 #include "ExplorationSubmarine.h"
 using namespace std;
-    bool Defence_Grid::check_ship(Ship n)   //controlla che le celle non siano                                          // occupate da altre navi. Per il momento                                   //ritorna un false, ma devo implementare                                    //le eccezioni
+bool Defence_Grid::check_ship(Ship n)   //controlla che le celle non siano                                          // occupate da altre navi. Per il momento                                   //ritorna un false, ma devo implementare                                    //le eccezioni
     {
-            for(int i=0; i<n.get_dim(); i++)
-            {
-                if(coord[n.get_coord(i, 0)][n.get_coord(i, 1)]!='*')
-                    return false;
-                else
-                    coord[n.get_coord(i, 0)][n.get_coord(i, 1)]=n.get_type();
-            }
-        return true;
+      for(int i=0; i<n.get_dim(); i++)
+      {
+          if(coord[n.get_coord(i, 0)][n.get_coord(i, 1)]!='*')
+              return false;
+      }
+      for(int i=0; i<n.get_dim(); i++)
+      {
+          coord[n.get_coord(i, 0)][n.get_coord(i, 1)]=n.get_type();
+        }
+  return true;
     }
 void Defence_Grid::set_grid()          //posiziona le navi nella griglia
     {
