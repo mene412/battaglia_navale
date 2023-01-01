@@ -26,9 +26,10 @@ void Grid::ShowGrid(void){
 }
 bool operator== (Ship& Ship1, Ship& Ship2)
 {
-    for(int i=0; i<std::min(Ship1.GetDim(),Ship2.GetDim()); i++){
-        if(Ship1.GetCoord(i, 0)==Ship2.GetCoord(i, 0)&&Ship1.GetCoord(i, 1)==Ship2.GetCoord(i, 1))
-            return true;
-        }
+  for(int i=0; i<std::min(Ship1.GetDim(),Ship2.GetDim()); i++){
+      for(int k=0; k<std::max(Ship1.GetDim(),Ship2.GetDim()); k++){
+          if(Ship1.GetCoord(i, 0)==Ship2.GetCoord(k, 0) && Ship1.GetCoord(i, 1)==Ship2.GetCoord(k, 1))
+              return true;
+          }
     return false;
 }
