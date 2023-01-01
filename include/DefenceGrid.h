@@ -1,10 +1,12 @@
 // Autore:
+
 #ifndef DefenceGrid_h
 #define DefenceGrid_h
-class Defence_Grid : public Grid
+class DefenceGrid : public Grid
 {
 public:
-    bool check_ship(Ship n);
-    void set_grid();
+    bool CheckShip(Ship n); //controlla che le celle non siano già occupate da altre navi
+    void PositionShip(Ship n);
+    void SetGrid(void);
 };
 #endif /* DefenceGrid_h */

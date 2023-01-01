@@ -1,32 +1,34 @@
+
 #include <iostream>
-#include <vector>
-#include "Functions.h"
+#include "Ship.h"
 #include "Grid.h"
-using namespace std;
-
-Grid::Grid()            //costruttore default, inizializza la griglia a "tutto mare"
-    {
-        ships[0];
-        for(int i=1; i<=12; i++)
-        {
-            for(int j=1; j<=12; j++)
-            {
-                    coord[0][j]=j+'0';
-                    coord[i][j]='*';
-            }
-            coord[i][0]=num_to_lett(i);
+Grid::Grid(void){
+    ships_[0];                              //Grid inizializzata con 0 navi e tutte caselle "mare"
+    for(int i=1; i<=12; i++){
+        for(int j=1; j<=12; j++){
+            coord_[0][j]=j+'0';
+            coord_[i][j]='*';
         }
-        coord[0][0]=' ';
+        coord_[i][0]=conversion::NumToLett(i);
     }
-void Grid::show_grid()
-    {
-        for(int i=0; i<=12; i++)        //Devo ancora sistemare il problema dei                                   caratteri 10,11 e 12
-        {
-            for(int j=0; j<=12; j++)
-            {
-                cout<<coord[i][j]<<"   ";
-            }
+    coord_[0][0]=' ';
+}
 
-            cout<<endl;
+void Grid::ShowGrid(void){
+    for(int i=0; i<=12; i++){
+        for(int j=0; j<=12; j++){
+                std::cout<<coord_[i][j]<<"   ";
         }
+
+    std::cout<<std::endl;
     }
+    return;
+}
+bool operator== (Ship& Ship1, Ship& Ship2)
+{
+    for(int i=0; i<std::min(Ship1.GetDim(),Ship2.GetDim()); i++){
+        if(Ship1.GetCoord(i, 0)==Ship2.GetCoord(i, 0)&&Ship1.GetCoord(i, 1)==Ship2.GetCoord(i, 1))
+            return true;
+        }
+    return false;
+}

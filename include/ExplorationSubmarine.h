@@ -1,10 +1,10 @@
-// Autore:
 
 #ifndef ExplorationSubmarine_h
 #define ExplorationSubmarine_h
-class Submarine: public Ship
+class ExplorationSubmarine: public Ship
 {
-public:
-    Submarine();
+    public:
+    ExplorationSubmarine(void);
+    void Move(void);
 };
 #endif /* ExplorationSubmarine_h */
