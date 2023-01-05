@@ -14,6 +14,7 @@ HelpShip::HelpShip() {
     type_='S';
     dim_=3;
     armor_=3;
+	healed_=false;
     SetCoord();
 }
 
