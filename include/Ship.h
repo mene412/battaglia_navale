@@ -13,6 +13,10 @@ class Ship
     int GetArmor(void);
     int GetX(void);
     int GetY(void);
+    void SetHealed(bool a);
+    bool Healed(void);
+    void IncArmor(void);
+    void DecArmor(void);
 
     protected:
     std::vector<std::vector<int>> coord_;

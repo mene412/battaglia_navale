@@ -24,6 +24,11 @@ void Grid::ShowGrid(void){
     }
     return;
 }
+
+char Grid::ReturnCharMatrix(int n1, int n2){
+    return coord_[n1][n2];
+}
+
 bool operator== (Ship& Ship1, Ship& Ship2)
 {
   for(int i=0; i<std::min(Ship1.GetDim(),Ship2.GetDim()); i++){

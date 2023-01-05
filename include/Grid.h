@@ -8,6 +8,7 @@ class Grid
     Grid(void);
     void ShowGrid(void);
     virtual void SetGrid(void)=0;
+    char ReturnCharMatrix(int n1, int n2);
     protected:
     char coord_[13][13];
     std::vector<Ship> ships_;
