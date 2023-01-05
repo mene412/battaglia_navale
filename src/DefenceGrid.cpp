@@ -1,11 +1,11 @@
   //Autore:
   #include <iostream>
-  #include "Grid.h"
-  #include "DefenceGrid.h"
-  #include "Ship.h"
-  #include "Battleship.h"
-  #include "Help_Ship.h"
-  #include "ExplorationSubmarine.h"
+  #include "../include/Grid.h"
+  #include "../include/DefenceGrid.h"
+  #include "../include/Ship.h"
+  #include "../include/Battleship.h"
+  #include "../include/HelpShip.h"
+  #include "../include/ExplorationSubmarine.h"
   bool DefenceGrid::CheckShip(Ship n){
       for(int i=0; i<ships_.size(); i++){
           std::cout<<ships_.size()<<std::endl;

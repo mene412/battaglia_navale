@@ -26,6 +26,7 @@ class Ship
     int x_;
     int y_;
     char type_;
+    bool healed_;
     void SetY(int y1, int y2);
     void SetX(int x1, int x2);
 };

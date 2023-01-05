@@ -5,8 +5,10 @@
 // - aggiungere a Grid metodo che ritorna la matrice di char
 // - aggiungere a Ship 2 metodi per l'armor: incrArmor() e decrArmor()
 
-#include "Ship.h"
-#include "Help_Ship.h"
+#include "../include/Ship.h"
+#include "../include/HelpShip.h"
+#include "../include/DefenceGrid.h"
+#include "../include/Grid.h"
 
 HelpShip::HelpShip() {
     type_='S';
@@ -15,13 +17,13 @@ HelpShip::HelpShip() {
     SetCoord();
 }
 
-void HelpShip::move(int xTo, int yTo) {
+void HelpShip::move(int toX, int toY) {
 	setCoord();	//TO DO
 }
     
 //A partire dalla cella centrale della nave, scorre una matrice 3x3
 //Se 1 <= armor < dim, allora armor++
-void HelpShip::heal(defenceGrid yourGrid, int x, int y) {
+void HelpShip::heal(DefenceGrid yourGrid, int x, int y) {
 	//segno come curata questa helShip, perchè non può curarsi da sola
 	setHealed(true);					
 	//scorre la matrice 3x3
@@ -39,7 +41,7 @@ void HelpShip::heal(defenceGrid yourGrid, int x, int y) {
 				else if (charFind == 'e')
 					charFind = 'E';
 				//cerco la nave per tipo
-				for (int s = 0; s < ships().length(); s++) {
+				for (int k = 0; k < ships().length(); k++) {
 					if (ships()[k].type() == charFind) {
 					//trovato il tipo, cerco la nave giusta guardando le posizioni
 						if () {	//if una coppia delle coord è uguale a [i][j]
