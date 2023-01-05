@@ -15,26 +15,26 @@ HelpShip::HelpShip() {
     dim_=3;
     armor_=3;
 	healed_=false;
-    SetCoord();
+    set_coord();
 }
 
 void HelpShip::move(int toX, int toY) {
-	setCoord();	//TO DO
+	set_coord();	//TO DO
 }
     
 //A partire dalla cella centrale della nave, scorre una matrice 3x3
 //Se 1 <= armor < dim, allora armor++
 void HelpShip::heal(DefenceGrid yourGrid, int x, int y) {
 	//segno come curata questa helShip, perchè non può curarsi da sola
-	setHealed(true);					
+	set_healed(true);					
 	//scorre la matrice 3x3
 	for (int i = (y-1); i < (y+2); i++) {
 		for (int j = (x-1); j < (x+2); j++) {
 			if (j < 0 || i < 0)
 				break;
-			if (yourGrid.matrix()[i][j] != ' ') {
+			if (yourGrid.grid()[i][j] != ' ') {
 				//determino il tipo della nave
-				char charFind = yourGrid.matrix()[i][i];
+				char charFind = yourGrid.grid()[i][i];
 				if (charFind == 'c')
 					charFind = 'C';
 				else if (charFind == 's')
@@ -42,13 +42,13 @@ void HelpShip::heal(DefenceGrid yourGrid, int x, int y) {
 				else if (charFind == 'e')
 					charFind = 'E';
 				//cerco la nave per tipo
-				for (int k = 0; k < ships().length(); k++) {
-					if (ships()[k].type() == charFind) {
+				for (int k = 0; k < yourGrid.ships().size(); k++) {
+					if (yourGrid.ships()[k].type() == charFind) {
 					//trovato il tipo, cerco la nave giusta guardando le posizioni
-						if () {	//if una coppia delle coord è uguale a [i][j]
-							if (!ships()[k].healed()) {
-								if (1 <= ships()[k].armor() < ships()[k].dim())
-									ships()[k].incrArmor();
+						if (true) {	//if una coppia delle coord è uguale a [i][j]			//TO DO
+							if (!yourGrid.ships()[k].healed()) {
+								if (1 <= yourGrid.ships()[k].armor() && yourGrid.ships()[k].armor() < yourGrid.ships()[k].dim())
+									yourGrid.ships()[k].incArmor();
 							}
 						}
 					}

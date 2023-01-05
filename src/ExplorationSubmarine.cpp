@@ -10,7 +10,7 @@ ExplorationSubmarine::ExplorationSubmarine(void){
     dim_=1;
     armor_=1;
     healed_=false;
-    SetCoord();
+    set_coord();
 }
 
 void ExplorationSubmarine::move(void) {
@@ -22,13 +22,13 @@ void ExplorationSubmarine::search(DefenceGrid enemyGrid, AttackGrid myGrid, int 
         for (int j = (x-2); j < (x+3); j++) {
             if (y < 0 || x < 0)
                 break;
-            if (enemyGrid.matrix()[i][j] != ' ') {
-                char valueFind = enemyGrid.matrix()[i][j];
+            if (enemyGrid.grid()[i][j] != ' ') {
+                char valueFind = enemyGrid.grid()[i][j];
                 if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
-                    myGrid.matrix()[i][j] = 'Y';
+                    myGrid.grid()[i][j] = 'Y';
                 }
                 else if (valueFind == 'c' || valueFind == 'e' || valueFind == 'd') {
-                    myGrid.matrix()[i][j] = 'X';
+                    myGrid.grid()[i][j] = 'X';
                 }
             }
         }

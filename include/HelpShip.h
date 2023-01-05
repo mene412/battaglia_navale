@@ -3,9 +3,9 @@
 #define Help_Ship_h
 
 #include "Ship.h"
+#include "DefenceGrid.h"
 
-class HelpShip : public Ship
-{
+class HelpShip : public Ship {
 public:
     HelpShip(void);
     void move(int toX, int toY);
