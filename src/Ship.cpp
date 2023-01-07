@@ -5,11 +5,7 @@ Ship::Ship(void){
     coord_={{0,0},{0,0},{0,0},{0,0},{0,0}}; //nave inizializzata "fuori dal gioco"
 }
 
-char Ship::GetType(void){
-    return type_;
-}
-
-void Ship::SetCoord(void){
+void Ship::set_coord(void){
     std::cout<<"Inserisci le coordinate di prua e di poppa"<<std::endl;
     int y1,y2;
     char p1,p2;
@@ -37,40 +33,32 @@ void Ship::SetCoord(void){
     return;
 }
 
-int const Ship::GetCoord(int n1, int n2){ return coord_[n1][n2];}
+int const Ship::coord(int n1, int n2){ return coord_[n1][n2];}
 
-int const Ship::GetDim(void){ return dim_;}
-
-int Ship::GetArmor(void){ return armor_;}
-
-int Ship::GetX(void){ return x_;}
-
-int Ship::GetY(void){return y_;}
-
-void Ship::SetX(int x1, int x2){
+void Ship::set_x(int x1, int x2){
     x_=(x1+x2)/2;
     return;
 }
 
-void Ship::SetY(int y1, int y2){
+void Ship::set_y(int y1, int y2){
     y_=(y1+y2)/2;
     return;
 }
 
-void Ship::SetHealed(bool a){
+void Ship::set_healed(bool a){
   healed_=a;
 }
 
-void Ship::DecArmor(void){
+void Ship::decArmor(void){
   armor_=armor_-1;
 }
 
-void Ship::IncArmor(void){
+void Ship::incArmor(void){
   armor_=armor_+1;
 }
 
-bool Ship:: Healed(void){
-  return healed_
+bool Ship:: healed(void){
+  return healed_;
 }
 
 char conversion::NumToLett(int t){

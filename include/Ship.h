@@ -8,7 +8,7 @@ class Ship
         Ship(void);
         char type(void) { return type_; }
         void set_coord(void);
-        int const coord(int n1, int n2);
+        std::vector<std::vector<int>> const coord(void) { return coord_; }
         int const dim(void) { return dim_; }
         int armor(void) { return armor_; }
         int x(void) { return x_; }
@@ -23,8 +23,8 @@ class Ship
         int dim_;
         int armor_;
         int num_;
-        int x_;
-        int y_;
+        int x_;     // numero riga (vedi pg. 3 progetto Tonin)
+        int y_;     // numero colonna
         char type_;
         bool healed_;
         void set_y(int y1, int y2);
