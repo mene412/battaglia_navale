@@ -1,10 +1,5 @@
 // Autore: Matteo
 
-// TO DO
-// - aggiungere a Ship variabile healed, e il metodo setHealed(bool a) e healed(void)
-// - aggiungere a Grid metodo che ritorna la matrice di char
-// - aggiungere a Ship 2 metodi per l'armor: incrArmor() e decrArmor()
-
 #include "../include/Ship.h"
 #include "../include/HelpShip.h"
 #include "../include/DefenceGrid.h"
