@@ -19,14 +19,14 @@ void Ship::set_coord(void){
     SetY(y1, y2);
     if(x1==x2 && std::max(y1,y2)-std::min(y1,y2)+1==dim_){
         for(int i=0; i<dim_; i++){
-            coord_[i][0]=x1;
-            coord_[i][1]=std::min(y1,y2)+i;
+            coord_[i].first=x1;
+            coord_[i].second=std::min(y1,y2)+i;
         }
     }
     else if(y1==y2 && std::max(x1,x2)-std::min(x1,x2)+1==dim_){
         for(int i=0; i<dim_; i++){
-            coord_[i][0]=std::min(x1,x2)+i;;
-            coord_[i][1]=y1;
+            coord_[i].first=std::min(x1,x2)+i;;
+            coord_[i].second=y1;
         }
     }
     else{ throw std::out_of_range("NO");}   //eventuali eccezioni ancora da gestire
