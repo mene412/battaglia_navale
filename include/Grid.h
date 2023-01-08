@@ -4,6 +4,7 @@
 
 #include "Ship.h"
 #include "vector"
+#include <iostream>
 
 class Grid {
     public:
@@ -17,6 +18,8 @@ class Grid {
         // date le coordinate centrali della nave, ritorna la posizione nell'array ships_,
         // -1 se non la trova
         int findShip(int x, int y);
+        //stampa la griglia
+        void showGrid(void);
     protected:
         std::vector<Ship> ships_;
         char** grid_;
