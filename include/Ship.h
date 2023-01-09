@@ -16,6 +16,7 @@ class Ship
         int y(void) { return y_; }
         void set_healed(bool a);
         bool healed(void) { return healed_; }
+        bool ifSameCoord(int x, int y);
         void incArmor(void);
         void decArmor(void);
 

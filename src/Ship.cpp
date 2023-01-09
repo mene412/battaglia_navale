@@ -60,6 +60,13 @@ void Ship::incArmor(void){
 bool Ship:: healed(void){
   return healed_;
 }
+bool Ship::ifSameCoord(int x, int y){
+  for(int i=0; i<dim_; i++){
+    if(coord_[i].first==x && coord_[i].second==y)
+      return true;
+  }
+  return false; 
+}
 
 char conversion::NumToLett(int t){
     std::vector<char> letters={'a','b','c','d','e','f','g','h','i','l','m','n'};

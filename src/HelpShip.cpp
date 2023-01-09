@@ -16,12 +16,12 @@ HelpShip::HelpShip() {
 void HelpShip::move(int toX, int toY) {
 	set_coord();	//TO DO
 }
-    
+
 //A partire dalla cella centrale della nave, scorre una matrice 3x3
 //Se 1 <= armor < dim, allora armor++
 void HelpShip::heal(DefenceGrid yourGrid, int x, int y) {
 	//segno come curata questa helShip, perchè non può curarsi da sola
-	set_healed(true);					
+	set_healed(true);
 	//scorre la matrice 3x3
 	for (int i = (y-1); i < (y+2); i++) {
 		for (int j = (x-1); j < (x+2); j++) {
@@ -40,7 +40,7 @@ void HelpShip::heal(DefenceGrid yourGrid, int x, int y) {
 				for (int k = 0; k < yourGrid.ships().size(); k++) {
 					if (yourGrid.ships()[k].type() == charFind) {
 					//trovato il tipo, cerco la nave giusta guardando le posizioni
-						if (true) {	//if una coppia delle coord è uguale a [i][j]			//TO DO
+						if (yourGrid.ships()[k].ifSameCoord(i,j)) {	//if una coppia delle coord è uguale a [i][j]	//Metodo IfSamecoord di ship
 							if (!yourGrid.ships()[k].healed()) {
 								if (1 <= yourGrid.ships()[k].armor() && yourGrid.ships()[k].armor() < yourGrid.ships()[k].dim())
 									yourGrid.ships()[k].incArmor();
