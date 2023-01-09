@@ -8,11 +8,12 @@ Battleship::Battleship(void){
     SetCoord();
 }
 bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x, int y){
+  if(AttGrid[x][y]==' '){
   if(DefGrid[x][y]==' '){
       AttGrid[x][y]='O';
       return false;         //colpo non andato a segno
   }
-  else{
+  else {
       for(int i=0; i<DefGrid.ships_.size(); i++){
         for(int j=0; i<DefGrid.ships_[i].dim();j++){
           if(ships()[i].coord(j).first==x && ships()[i].coord(j).second==y){
@@ -31,5 +32,8 @@ bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x, int y){
         AttGrid[x][y]='X';
         return true;                      //colpo andato a segno
       }
-
+    }
+    else{
+      return false; //DA rivedere
+    }                        //Come gestiamo il "colpo ripetuto"? Per esempio se le coordinate x,y generate dal computer sono quelle di un "pezzo" di nave già colpito?
   }
