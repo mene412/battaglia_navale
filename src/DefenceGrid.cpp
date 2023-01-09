@@ -22,9 +22,9 @@
   void DefenceGrid::addShip(Ship newShip) {
         if (!checkPosition(newShip.coord()))        //da errore in compilazione perhè coord è, per ora, un vector di vector di int
             return;                                 //TO DO: lanciare eccezione
-        for (int i = 0; i < newShip.coord().size; i++) {
-            int rowSelected = newShip.coord().first;
-            int columnSelected = newShip.coord().second;
+      for (int i = 0; i < newShip.coord().size(); i++) {
+            int rowSelected = newShip.coord(i).first;
+            int columnSelected = newShip.coord(i).second;
             grid_[rowSelected][columnSelected] = newShip.type();
         }
   }

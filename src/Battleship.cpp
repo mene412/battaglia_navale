@@ -1,35 +1,41 @@
 // Autore:
 #include "Ship.h"
 #include "Battleship.h"
+#include "DefenceGrid.h"
+#include "AttackGrid.h"
+#include "Grid.h"
+#include <vector>
+#include <iterator>
 Battleship::Battleship(void){
     type_='C';
     dim_=5;
     armor_=5;
-    SetCoord();
+    set_coord();
 }
-bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x, int y){
-  if(AttGrid[x][y]==' '){
-  if(DefGrid[x][y]==' '){
-      AttGrid[x][y]='O';
+bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x,int y){
+    if(AttGrid.grid()[x][y]==' '){
+        if(DefGrid.grid()[x][y]==' '){
+            AttGrid.grid()[x][y]='O';
       return false;         //colpo non andato a segno
   }
   else {
-      for(int i=0; i<DefGrid.ships_.size(); i++){
-        for(int j=0; i<DefGrid.ships_[i].dim();j++){
-          if(ships()[i].coord(j).first==x && ships()[i].coord(j).second==y){
-            if(ships()[i].armor()>1){
-              ships()[i].decArmor();
-              DefGrid[x][y]=std::tolower(ships()[i].type());     //scrive il carattere minuscolo al posto del maiuscolo
+      for(int i=0; i<DefGrid.ships().size(); i++){
+        for(int j=0; i<DefGrid.ships()[i].dim();j++){
+            if(DefGrid.ships()[i].coord(j).first==x && DefGrid.ships()[i].coord(j).second==y){
+                if(DefGrid.ships()[i].armor()>1){
+                    DefGrid.ships()[i].decArmor();
+                    DefGrid.grid()[x][y]=std::tolower(DefGrid.ships()[i].type());     //scrive il carattere minuscolo al posto del maiuscolo
             }
             else{
-              for(int k=0; k<ships_[i].dim(); k++)
-                DefGrid[ships()[i].coord(k).first][ships()[i].coord(k).second]=' ';   //"reinizializza la grid dove è affondata la nave"
-              DefGrid.ships().erase(i);                                                //rimuove la nave abbattuta dal vettore
+                std::vector<Ship>::iterator it =DefGrid.ships().begin() + i;
+                for(int k=0; k<DefGrid.ships()[i].dim(); k++)
+                    DefGrid.grid()[DefGrid.ships()[i].coord(k).first][DefGrid.ships()[i].coord(k).second]=' ';   //"reinizializza la grid dove è affondata la nave"
+              DefGrid.ships().erase(it);                                                //rimuove la nave abbattuta dal vettore
             }
             }
           }
         }
-        AttGrid[x][y]='X';
+      AttGrid.grid()[x][y]='X';
         return true;                      //colpo andato a segno
       }
     }
