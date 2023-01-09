@@ -5,6 +5,7 @@
 #include "AttackGrid.h"
 #include "Grid.h"
 #include <vector>
+#include <iterator>
 Battleship::Battleship(void){
     type_='C';
     dim_=5;
@@ -26,9 +27,10 @@ bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x,int y){
                     DefGrid.grid()[x][y]=std::tolower(DefGrid.ships()[i].type());     //scrive il carattere minuscolo al posto del maiuscolo
             }
             else{
+                std::vector<Ship>::iterator it =DefGrid.ships().begin() + i;
                 for(int k=0; k<DefGrid.ships()[i].dim(); k++)
                     DefGrid.grid()[DefGrid.ships()[i].coord(k).first][DefGrid.ships()[i].coord(k).second]=' ';   //"reinizializza la grid dove è affondata la nave"
-              DefGrid.ships().erase(i);                                                //rimuove la nave abbattuta dal vettore
+              DefGrid.ships().erase(it);                                                //rimuove la nave abbattuta dal vettore
             }
             }
           }
