@@ -8,18 +8,20 @@ class Ship
         Ship(void);
         char type(void) { return type_; }
         void set_coord(void);
-        std::vector<std::vector<int>> const coord(void) { return coord_; }
+        std::vector<std::pair<int,int>> const coord(void) { return coord_; }
+        std::pair<int,int> coord(int a){return coord_[a];}
         int const dim(void) { return dim_; }
         int armor(void) { return armor_; }
         int x(void) { return x_; }
         int y(void) { return y_; }
         void set_healed(bool a);
         bool healed(void) { return healed_; }
+        bool ifSameCoord(int x, int y);
         void incArmor(void);
         void decArmor(void);
 
     protected:
-        std::vector<std::vector<int>> coord_;
+        std::vector<std::pair<int,int>> coord_;
         int dim_;
         int armor_;
         int num_;
