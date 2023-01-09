@@ -3,7 +3,7 @@
 Game::Game(void){
   def_grid_= DefenseGrid{};
   att_grid = AttackGrid{};
-  poitioning();
+  positioning();
 }
 
 void Game::positioning(void){
