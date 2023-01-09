@@ -57,9 +57,6 @@ void Ship::incArmor(void){
   armor_=armor_+1;
 }
 
-bool Ship:: healed(void){
-  return healed_;
-}
 bool Ship::ifSameCoord(int x, int y){
   for(int i=0; i<dim_; i++){
     if(coord_[i].first==x && coord_[i].second==y)
