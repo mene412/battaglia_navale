@@ -15,15 +15,15 @@ bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x, int y){
   else{
       for(int i=0; i<DefGrid.ships_.size(); i++){
         for(int j=0; i<DefGrid.ships_[i].dim();j++){
-          if(ships_[i].coord(j).first==x && ships_[i].coord(j).second==y){
-            if(ships_[i].armor()>1){
-              ships_[i].decArmor();
-              DefGrid[x][y]=std::tolower(ships_[i].type());     //scrive il carattere minuscolo al posto del maiuscolo
+          if(ships()[i].coord(j).first==x && ships()[i].coord(j).second==y){
+            if(ships()[i].armor()>1){
+              ships()[i].decArmor();
+              DefGrid[x][y]=std::tolower(ships()[i].type());     //scrive il carattere minuscolo al posto del maiuscolo
             }
             else{
               for(int k=0; k<ships_[i].dim(); k++)
-                DefGrid[ships_[i].coord_(k).first][ships_[i].coord_(k).second]=' ';   //"reinizializza la grid dove è affondata la nave"
-              DefGrid.ships_.erase(i);                                                //rimuove la nave abbattuta dal vettore
+                DefGrid[ships()[i].coord(k).first][ships()[i].coord(k).second]=' ';   //"reinizializza la grid dove è affondata la nave"
+              DefGrid.ships().erase(i);                                                //rimuove la nave abbattuta dal vettore
             }
             }
           }
