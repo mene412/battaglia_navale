@@ -5,7 +5,7 @@ class Game{
 	public:
 		virtual ~Game();
 		virtual void make_move(int s) = 0;
-		int starter(void){return starter_}
+    int starter(void){return starter_;}
 		
 	protected:
 		Game(void);

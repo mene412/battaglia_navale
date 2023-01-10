@@ -28,7 +28,7 @@ bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x,int y){
             else{
                 for(int k=0; k<DefGrid.ships()[i].dim(); k++)
                     DefGrid.grid()[DefGrid.ships()[i].coord(k).first][DefGrid.ships()[i].coord(k).second]=' ';   //"reinizializza la grid dove è affondata la nave"
-              DefGrid.ships().erase(i);                                                //rimuove la nave abbattuta dal vettore
+                DefGrid.ships().erase(ships().begin()+i);                                                //rimuove la nave abbattuta dal vettore
             }
             }
           }
