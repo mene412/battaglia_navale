@@ -5,20 +5,8 @@ Ship::Ship(void){
     coord_={{0,0},{0,0},{0,0},{0,0},{0,0}}; //nave inizializzata "fuori dal gioco"
 }
 
-void Ship::set_coord(void){
-    std::cout<<"Inserisci le coordinate di prua e di poppa"<<std::endl;
-    int y1,y2;
-    char p1,p2;
-    std::cin>>p1;
-    std::cin>>y1;
-    std::cin>>p2;
-    std::cin>>y2;
-    int x1=conversion::CharToInt(p1);
-    int x2=conversion::CharToInt(p2);
-    //SetX(x1, x2);
-    //SetY(y1, y2);
-    if(x1==x2 && std::max(y1,y2)-std::min(y1,y2)+1==dim_){
-
+void Ship::setInitialCoord(int x1, int x2, int y1, int y2){
+   if(x1==x2 && std::max(y1,y2)-std::min(y1,y2)+1==dim_){
         for(int i=0; i<dim_; i++){
             coord_[i].first=x1;
             coord_[i].second=std::min(y1,y2)+i;
@@ -31,21 +19,56 @@ void Ship::set_coord(void){
         }
     }
     else{ throw std::out_of_range("NO");}  //coordinate non valide
-    return;
-}
-
-
-// int const Ship::coord(int n1, int n2){ return coord_[n1][n2];}
-
-void Ship::set_x(int x1, int x2){
     x_=(x1+x2)/2;
-    return;
+    y_=(y1+y2)/2;
 }
 
-void Ship::set_y(int y1, int y2){
-    y_=(y1+y2)/2;
-    return;
+void Ship::setCoord(int x, int y){
+    if(coord_[0].first==coord_[dim_-1].first){
+        int a=y-dim_/2;
+        if(a>0 && a<13){
+            for(int i=0; i<dim_;i++){
+                coord_[i].first=x;
+                coord_[i].second=a+i;
+            }
+        }
+        else{                           //Cambio orientazione nave
+            int a=x-dim_/2;
+            if(a>0 && a<13){
+                for(int i=0; i<dim_;i++){
+                    coord_[i].first=a+i;
+                    coord_[i].second=y;
+                }
+            }
+            else
+                throw std::out_of_range("Coordinate non valide");
+        }
+    }
+    else{
+        int a=x-dim_/2;
+        if(a>0 && a<13){
+            for(int i=0; i<dim_;i++){
+                coord_[i].first=a+1;
+                coord_[i].second=y;
+            }
+        }
+        else{                           //Cambio orientazione nave
+            int a=y-dim_/2;
+            if(a>0 && a<13){
+                for(int i=0; i<dim_;i++){
+                    coord_[i].first=x;
+                    coord_[i].second=a+1;
+                }
+            }
+            else
+                throw std::out_of_range("Coordinate non valide");
+        }
+       
 }
+    x_=x;
+    y_=y;
+}
+
 
 void Ship::set_healed(bool a){
 

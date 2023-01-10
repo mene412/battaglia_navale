@@ -8,6 +8,7 @@ class Ship
         Ship(void);
         char type(void) { return type_; }
         void setInitialCoord(int x1, int x2, int y1, int y2);
+        void setCoord(int x, int y);
         std::vector<std::pair<int,int>> const coord(void) { return coord_; }
         std::pair<int,int> coord(int a){return coord_[a];}
         int const dim(void) { return dim_; }
