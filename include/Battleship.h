@@ -1,4 +1,4 @@
-// Autore:
+// Autore: Gaia Soso
 #ifndef Battleship_h
 #define Battleship_h
 class Battleship: public Ship

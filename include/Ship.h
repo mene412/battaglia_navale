@@ -1,4 +1,4 @@
-// Autore:
+// Autore: Gaia Soso
 #ifndef Ship_h
 #define Ship_h
 #include <vector>
