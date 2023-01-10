@@ -1,5 +1,5 @@
 #ifndef "GamePc_h"
-#define GamePc_h"
+#define "GamePc_h"
 
 #include "Game.h"
 
