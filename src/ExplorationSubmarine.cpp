@@ -21,8 +21,8 @@ void ExplorationSubmarine::search(DefenceGrid enemyGrid, AttackGrid myGrid, int 
     for (int i = (y-2); i < (y+3); i++) {
         for (int j = (x-2); j < (x+3); j++) {
             if (y < 0 || x < 0)
-                break;
-            if (enemyGrid.grid()[i][j] != ' ') {
+                continue;
+            else if (enemyGrid.grid()[i][j] != ' ') {
                 char valueFind = enemyGrid.grid()[i][j];
                 if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
                     myGrid.grid()[i][j] = 'Y';
