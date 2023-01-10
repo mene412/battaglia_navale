@@ -1,5 +1,5 @@
-#ifndef "Game_Player_h"
-#define "Game_Player_h
+#ifndef Game_Player_h
+#define Game_Player_h
 
 #include "Game.h"
 #include "Coord.h"
@@ -10,7 +10,8 @@ class GamePlayer: public Game{
  		
  	private:
  		void select_starter(void) override;
- 		void positioning(void);
+ 		void positioning(void) override;
  		void positioning_player(void);
  		void positioning_pc(void);
+};
 #endif
