@@ -4,9 +4,9 @@
 #include "Game.h"
 #include "Coord.h"
 
-class Game_Player: public Game{
+class GamePlayer: public Game{
  	public:
- 		Game_Player(void);
+ 	    GamePlayer(void);
  		
  	private:
  		void select_starter(void) override;
