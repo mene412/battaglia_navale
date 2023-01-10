@@ -19,18 +19,43 @@
         return true;
   }
 
-  void DefenceGrid::addShip(Ship &newShip) {
-        // controlla che la griglia sia vuota in quelle celle
-        if (!checkPosition(newShip.coord()))        
+  void DefenceGrid::addShip(Ship newShip) {
+        if (!checkPosition(newShip.coord()))        //da errore in compilazione perhè coord è, per ora, un vector di vector di int
             return;                                 //TO DO: lanciare eccezione
-
-        // scrive nella griglia il char del type della ship
-        for (int i = 0; i < newShip.coord().size(); i++) {
+      for (int i = 0; i < newShip.coord().size(); i++) {
             int rowSelected = newShip.coord(i).first;
             int columnSelected = newShip.coord(i).second;
             grid_[rowSelected][columnSelected] = newShip.type();
         }
-
-        // Se va a buon fine la scrittura su griglia, inserisce la nave nel vector
-        ships_.push_back(newShip);
   }
+
+//   void DefenceGrid::SetGrid(void){
+//       for(int i=0; i<3; i++){
+//           std::cout<<"Corazzata"<<std::endl;
+//           Battleship c;
+//           if(CheckShip(c)){
+//               PositionShip(c);
+//               std::cout<<"OK"<<std::endl;           //"Ok" messo solo per controllo codice
+//           }
+//           else i--;
+//       }
+//       for(int i=0; i<3; i++){
+//           std::cout<<"Nave Supporto"<<std::endl;
+//           HelpShip s;
+//           if(CheckShip(s)){
+//               PositionShip(s);
+//               std::cout<<"OK"<<std::endl;           //"Ok" messo solo per controllo codice
+//           }
+//           else i--;
+//       }
+//       for(int i=0; i<2; i++){
+//           std::cout<<"Sottomarino"<<std::endl;
+//           ExplorationSubmarine d;
+//           if(CheckShip(d)){
+//               PositionShip(d);
+//               std::cout<<"OK"<<std::endl;           //"Ok" messo solo per controllo codice
+//           }
+//           else i--;
+//       }
+//       return;
+//     }
