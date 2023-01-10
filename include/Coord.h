@@ -5,7 +5,10 @@
 class Coord{
 	
 	public:
+		Coord();
 		Coord(int X, int Y);
+		void setX(int X);
+		void setY(int Y);
 		int X(void){ return X_;};
 		int Y(void){return Y_;};
 		std::string coord(void);
@@ -21,5 +24,5 @@ namespace UCoord {
 	static Coord from_string_to_coord(std::string c);
 }
 std::ostream& operator<<(std::ostream& os, Coord a);
-
+bool operator==(Coord a, Coord b);
 #endif

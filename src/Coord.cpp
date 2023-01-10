@@ -3,6 +3,24 @@
 #include <stdlib.h>
 #include <iostream>
 
+Coord::Coord()
+	: X_{0}, Y_{0}
+{}
+
+void Coord::setX(int x){
+	if(x<0 || x>11){
+		throw std::invalid_argument("");
+	}
+	X_ = x;
+}
+
+void Coord::setY(int y){
+	if(y<0 || y>11){
+		throw std::invalid_argument("");
+	}
+	Y_ = y;
+}
+
 Coord::Coord(int X, int Y)
 	: X_{X}, Y_{Y}
 {
@@ -96,4 +114,8 @@ static Coord UCoord::from_string_to_coord(std::string c){
 
 std::ostream& operator<<(std::ostream& os, Coord a){
 	return os << UCoord::from_int_to_char(a.X()) << (a.Y()+1);
+}
+
+bool operator==(Coord a, Coord b){
+	return a.X() == b.X() && a.Y() == b.Y();
 }

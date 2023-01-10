@@ -12,7 +12,7 @@
 #include <iostream>
 
 Game::Game(void)
-	: def_grid1_{DefenceGrid{}}, att_grid1_{AttackGrid{}}, def_grid2_{DefenceGrid{}}, att_grid2_{AttackGrid{}}, turn_{0}, starter_{0} 
+	: def_grid1_{DefenceGrid{}}, att_grid1_{AttackGrid{}}, def_grid2_{DefenceGrid{}}, att_grid2_{AttackGrid{}}, turn_{0}, starter_{0}, ship_{} 
 {
 	std::cout << "Inizio gioco.\n" << std::endl; 
 }
@@ -155,4 +155,44 @@ void Game::make_move(int s){
  	
 }
 
+std::pair<Coord, Coord> Game::select_move(int player){
+	int x, y;
+	srand(time(NULL));
+	int ran = rand()%(number_ship());
+	x = ship(ran).x();
+	y = ship(ran).y();
+
+	Coord first{x,y};
+	Coord second = UCoord::random_coord();
+	std::pair<Coord, Coord> coord{first, second};
+	return coord;
+}
+
  
+void add_ship(int player, Coord p, Coord c, char type){
+
+}
+
+std::pair<Coord,Coord> GamePlayer::select_move(int player){
+	bool end = false;
+	std::string first;
+	std::string second;
+	Coord f{};
+	Coord s{};
+	while(!end){
+		std::cout << "Prossima mossa --> ";
+		std::cin >> first >> second;
+		Coord f = UCoord::from_string_to_coord(first);
+		Coord s = UCoord::from_string_to_coord(second);
+		for(int i = 0; i<number_ship(); i++){
+			if(ship.coord() == f){
+				end = true;
+				break;
+			}
+		}
+		if(!end){
+			std::cout << "Coordinate inserite non valide." << std::endl;
+		}
+	}
+	std::pair<Coord, Coord> p{f, s};
+}

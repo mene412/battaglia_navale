@@ -13,6 +13,7 @@ class GamePlayer: public Game{
  	private:
  		void select_starter(void) override;
  		void positioning(void) override;
+		std::pair<Coord,Coord> select_move(int player) override;
  		void positioning_player(void);
  		void positioning_pc(void);
 };
