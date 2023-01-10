@@ -6,7 +6,7 @@
 Coord::Coord(int X, int Y)
 	: X_{X}, Y_{Y}
 {
-	if(X_<1 || X_>12 || Y_<1 || Y_>12){
+	if(X_<0 || X_>11 || Y_<0 || Y_>11){
 		//throw std::illegal_argument();
 	}
 }
@@ -22,8 +22,8 @@ std::string Coord::coord(){
 static Coord UCoord::random_coord()
 {
     srand(time(NULL));
-	int x = rand()%11+1;
-	int y = rand()%11+1;
+	int x = rand()%11;
+	int y = rand()%11;
 	Coord coordinate{x,y};
 	return coordinate;
 }
@@ -35,13 +35,13 @@ static Coord UCoord::random_coord(Coord c, int dim){
 	int y;
 	if(s == 0){
 		int t = (int)(c.X());
-		if((c.X()+dim)>=1 && (c.Y()+dim)<=12){
+		if((c.X()+dim)>=0 && (c.Y()+dim)<=11){
 			x = c.X()+dim;
 		}else{
 			x = c.X()-dim;
 		}
 	}else if(s == 1){
-		if((c.Y()+dim)>=1 && (c.Y()+dim)<=12){
+		if((c.Y()+dim)>=0 && (c.Y()+dim)<=11){
 			y = c.Y()+dim;
 		}else{
 			y = c.Y()-dim;
@@ -79,21 +79,21 @@ static Coord UCoord::from_string_to_coord(std::string c){
 	}
 	int xf;
 	if(x<='I'){
-		xf = x-'A'+1;
+		xf = x-in;
 	}
 	if(x=='L'){
-		xf = 10;
+		xf = 9;
 	}
 	if(x=='M'){
-		xf = 11;
+		xf = 10;
 	}
 	if(x=='N'){
-		xf = 12;
+		xf = 11;
 	}
 	Coord coordinate{xf, y};
 	return coordinate; 
 }
 
 std::ostream& operator<<(std::ostream& os, Coord a){
-	return os << UCoord::from_int_to_char(a.X()) << a.Y();
+	return os << UCoord::from_int_to_char(a.X()) << (a.Y()+1);
 }

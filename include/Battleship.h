@@ -1,6 +1,11 @@
 // Autore: Gaia Soso
 #ifndef Battleship_h
 #define Battleship_h
+
+#include "Ship.h"
+#include "DefenceGrid.h"
+#include "AttackGrid.h"
+
 class Battleship: public Ship
 {
     public:
