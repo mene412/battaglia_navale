@@ -15,8 +15,8 @@ void Ship::set_coord(void){
     std::cin>>y2;
     int x1=conversion::CharToInt(p1);
     int x2=conversion::CharToInt(p2);
-    SetX(x1, x2);
-    SetY(y1, y2);
+    //SetX(x1, x2);
+    //SetY(y1, y2);
     if(x1==x2 && std::max(y1,y2)-std::min(y1,y2)+1==dim_){
         for(int i=0; i<dim_; i++){
             coord_[i].first=x1;
@@ -33,7 +33,7 @@ void Ship::set_coord(void){
     return;
 }
 
-int const Ship::coord(int n1, int n2){ return coord_[n1][n2];}
+// int const Ship::coord(int n1, int n2){ return coord_[n1][n2];}
 
 void Ship::set_x(int x1, int x2){
     x_=(x1+x2)/2;

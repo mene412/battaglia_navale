@@ -1,4 +1,4 @@
-// Autore:
+// Autore: Matteo Meneghin
 #ifndef Help_Ship_h
 #define Help_Ship_h
 

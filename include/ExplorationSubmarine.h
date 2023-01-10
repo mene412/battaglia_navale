@@ -1,3 +1,4 @@
+//  Autore: Matteo Meneghin
 
 #ifndef ExplorationSubmarine_h
 #define ExplorationSubmarine_h
@@ -6,8 +7,7 @@
 #include "../include/ExplorationSubmarine.h"
 #include "../include/AttackGrid.h"
 
-class ExplorationSubmarine: public Ship
-{
+class ExplorationSubmarine: public Ship {
     public:
     ExplorationSubmarine(void);
     void move(void);

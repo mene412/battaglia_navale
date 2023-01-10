@@ -1,3 +1,4 @@
+// Autore: Andrea Mutti
 #ifndef Coord_h
 #define Coord_h
 

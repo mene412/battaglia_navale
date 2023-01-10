@@ -1,4 +1,4 @@
-// Autore:
+// Autore: Matteo Meneghin
 
 #ifndef AttackGrid_h
 #define AttackGrid_h

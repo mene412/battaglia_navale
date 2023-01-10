@@ -1,4 +1,4 @@
-// Autore:
+// Autore: Matteo Meneghin
 
 #ifndef DefenceGrid_h
 #define DefenceGrid_h

@@ -1,3 +1,5 @@
+// Autore: Andrea Mutti
+
 #ifndef Game_Player_h
 #define Game_Player_h
 

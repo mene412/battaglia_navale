@@ -1,3 +1,5 @@
+// Autore: Andrea Mutti
+
 #ifndef GamePc_h
 #define GamePc_h
 

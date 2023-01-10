@@ -1,4 +1,5 @@
-// Autore: Matteo
+// Autore: Matteo Meneghin
+
 #ifndef Grid_h
 #define Grid_h
 
