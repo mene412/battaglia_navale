@@ -12,9 +12,7 @@ class Game{
 		virtual ~Game(){};
 		void make_move(int s);
     	int starter(void){return starter_;}
-		Ship ship(int pos){return *(ship_.at(pos));}
-		int number_ship(){return ship_.size();}
-		
+
 	protected:
 		Game(void);
 		virtual std::pair<Coord,Coord> select_move(int player);
@@ -24,12 +22,9 @@ class Game{
 		int starter_;
 
 	private:
-		AttackGrid att_grid1_;
-		DefenceGrid def_grid1_;
-		AttackGrid att_grid2_;
-		DefenceGrid def_grid2_;
+		std::pair<AttackGrid, AttackGrid> att_grid_;
+		std::pair<DefenceGrid, DefenceGrid> def_grid_;
 		int turn_;
-		std::vector<Ship*> ship_;
 };
 
 #endif

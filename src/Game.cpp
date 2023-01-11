@@ -12,7 +12,7 @@
 #include <iostream>
 
 Game::Game(void)
-	: def_grid1_{DefenceGrid{}}, att_grid1_{AttackGrid{}}, def_grid2_{DefenceGrid{}}, att_grid2_{AttackGrid{}}, turn_{0}, starter_{0}, ship_{} 
+	: def_grid_{DefenceGrid{}, DefenceGrid{}}, att_grid_{AttackGrid{}, AttackGrid{}}, turn_{0}, starter_{0}
 {
 	std::cout << "Inizio gioco.\n" << std::endl; 
 }
@@ -29,7 +29,11 @@ void Game::select_starter(void){
 }
 
 void Game::add_ship(int player, Coord p, Coord c, char type){
-	
+	if(player == 1){
+		def_grid_.first.addShip(Ship newShip(p, c, type));
+	}else{
+		def_grid_.second.addShip(Ship newShip(p, c,	type));
+	}
 }
 
 GamePlayer::GamePlayer(void)
@@ -152,7 +156,16 @@ void GamePlayer::positioning_pc(void){
 }
 
 void Game::make_move(int s){
- 	
+ 	int pl1 = 0;
+	int pl2 = 0;
+	if(starter_==1){
+		pl1 = 1;
+		pl2 = 2;
+	}else{
+		pl1 = 2;
+		pl2 = 1;
+	}
+	select_move(pl1);
 }
 
 std::pair<Coord, Coord> Game::select_move(int player){
@@ -168,31 +181,41 @@ std::pair<Coord, Coord> Game::select_move(int player){
 	return coord;
 }
 
- 
-void add_ship(int player, Coord p, Coord c, char type){
-
-}
 
 std::pair<Coord,Coord> GamePlayer::select_move(int player){
-	bool end = false;
-	std::string first;
-	std::string second;
-	Coord f{};
-	Coord s{};
-	while(!end){
-		std::cout << "Prossima mossa --> ";
-		std::cin >> first >> second;
-		Coord f = UCoord::from_string_to_coord(first);
-		Coord s = UCoord::from_string_to_coord(second);
-		for(int i = 0; i<number_ship(); i++){
-			if(ship.coord() == f){
-				end = true;
-				break;
+	if(player == 1){
+		bool end = false;
+		std::string first;
+		std::string second;
+		Coord f{};
+		Coord s{};
+		while(!end){
+			std::cout << "Prossima mossa --> ";
+			std::cin >> first >> second;
+			Coord f = UCoord::from_string_to_coord(first);
+			Coord s = UCoord::from_string_to_coord(second);
+			for(int i = 0; i<number_ship(); i++){
+				if(ship.coord() == f){
+					end = true;
+					break;
+				}
+			}
+			if(!end){
+				std::cout << "Coordinate inserite non valide." << std::endl;
 			}
 		}
-		if(!end){
-			std::cout << "Coordinate inserite non valide." << std::endl;
-		}
+		std::pair<Coord, Coord> coord{f, s};
+		return coord;
+	}else{
+		int x, y;
+		srand(time(NULL));
+		int ran = rand()%(number_ship());
+		x = ship(ran).x();
+		y = ship(ran).y();
+
+		Coord first{x,y};
+		Coord second = UCoord::random_coord();
+		std::pair<Coord, Coord> coord{first, second};
+		return coord;
 	}
-	std::pair<Coord, Coord> p{f, s};
 }
