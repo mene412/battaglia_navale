@@ -5,6 +5,9 @@
 #include "../include/DefenceGrid.h"
 #include "../include/AttackGrid.h"
 #include "../include/Coord.h"
+#include "../include/Battleship.h"
+#include "../include/HelpShip.h"
+#include "../include/ExplorationSubmarine.h"
 
 
 #include <time.h>
@@ -12,7 +15,7 @@
 #include <iostream>
 
 Game::Game(void)
-	: def_grid_{DefenceGrid{}, DefenceGrid{}}, att_grid_{AttackGrid{}, AttackGrid{}}, turn_{0}, starter_{0}
+	: def_grid_{DefenceGrid{}, DefenceGrid{}}, att_grid_{AttackGrid{}, AttackGrid{}}, turn_{0}, starter_{0}, log{"../log.txt"}
 {
 	std::cout << "Inizio gioco.\n" << std::endl; 
 }
@@ -26,13 +29,34 @@ void Game::select_starter(void){
 		std::cout << "Inizia il player " << s << std::endl;
 	}
 	starter_ = s;
+	write_log(std::to_string(s));
 }
 
 void Game::add_ship(int player, Coord p, Coord c, char type){
 	if(player == 1){
-		def_grid_.first.addShip(Ship newShip(p, c, type));
+		switch(type){
+			case 'C':
+				def_grid_.first.addShip(Battleship{p, c});
+				break;
+			case 'S':
+				def_grid_.first.addShip(HelpShip{p, c});
+				break;
+			case 'E':
+				def_grid_.first.addShip(ExplorationSubmarine{p, c});
+				break;
+		}
 	}else{
-		def_grid_.second.addShip(Ship newShip(p, c,	type));
+		switch(type){
+			case 'C':
+				def_grid_.second.addShip(Battleship{p, c});
+				break;
+			case 'S':
+				def_grid_.second.addShip(HelpShip{p, c});
+				break;
+			case 'E':
+				def_grid_.second.addShip(ExplorationSubmarine{p, c});
+				break;
+		}
 	}
 }
 
@@ -155,6 +179,7 @@ void GamePlayer::positioning_pc(void){
 	}
 }
 
+
 void Game::make_move(int s){
  	int pl1 = 0;
 	int pl2 = 0;
@@ -170,10 +195,19 @@ void Game::make_move(int s){
 
 std::pair<Coord, Coord> Game::select_move(int player){
 	int x, y;
-	srand(time(NULL));
-	int ran = rand()%(number_ship());
-	x = ship(ran).x();
-	y = ship(ran).y();
+	if(player == 1){
+		srand(time(NULL));
+		int ran = rand()%(def_grid_.first.number_ship());
+		x = def_grid_.first.ships().at(ran).center().X();
+		y = def_grid_.first.ships().at(ran).center().Y();
+	}else{
+		int x, y;
+		srand(time(NULL));
+		int ran = rand()%(def_grid_.second.number_ship());
+		x = def_grid_.second.ships().at(ran).center().X();
+		y = def_grid_.second.ships().at(ran).center().Y();
+	}
+	
 
 	Coord first{x,y};
 	Coord second = UCoord::random_coord();
@@ -194,8 +228,8 @@ std::pair<Coord,Coord> GamePlayer::select_move(int player){
 			std::cin >> first >> second;
 			Coord f = UCoord::from_string_to_coord(first);
 			Coord s = UCoord::from_string_to_coord(second);
-			for(int i = 0; i<number_ship(); i++){
-				if(ship.coord() == f){
+			for(int i = 0; i<def_grid_.first.number_ship(); i++){
+				if(def_grid_.first.ships().at(i).center() == f){
 					end = true;
 					break;
 				}
@@ -209,13 +243,32 @@ std::pair<Coord,Coord> GamePlayer::select_move(int player){
 	}else{
 		int x, y;
 		srand(time(NULL));
-		int ran = rand()%(number_ship());
-		x = ship(ran).x();
-		y = ship(ran).y();
-
+		int ran = rand()%(def_grid_.second.number_ship());
+		x = def_grid_.second.ships().at(ran).center().X();
+		y = def_grid_.second.ships().at(ran).center().Y();
 		Coord first{x,y};
 		Coord second = UCoord::random_coord();
 		std::pair<Coord, Coord> coord{first, second};
 		return coord;
 	}
 }
+
+
+void Game::write_log(std::string x){
+	log << x << std::endl;
+}
+
+void Game::write_log(std::pair<Coord, Coord>& x){
+	log << x.first << " " << x.second << std::endl;
+}
+
+void Game::write_log(std::vector<std::string>& x){
+	for(int i = 0; i<x.size(); i++){
+		log << x.at(i);
+		if(i!=(x.size()-1)){
+			log << " ";
+		}
+	}
+	log << std::endl;
+}
+

@@ -39,10 +39,17 @@ int Grid::findShip(int x, int y) {
     return -1;
 }
 
-void Grid::showGrid(void) {
+
+std::string Grid::print_grid(void) {
+    std::string grid = "";
     for (int row = 0; row < 13; row++) {
         for (int column = 0; column < 13; column++) {
-            std::cout << grid_[row][column] << "|" << std::endl;
+            grid = grid + grid_[row][column] + "|\n";
         }
     }
+    return grid;
+}
+
+std::ostream& operator<<(std::ostream& os, Grid a){
+    os << a.print_grid();
 }

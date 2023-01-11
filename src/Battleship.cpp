@@ -5,11 +5,14 @@
 #include "AttackGrid.h"
 #include "Grid.h"
 #include <vector>
-Battleship::Battleship(void){
+
+Battleship::Battleship(Coord front, Coord back)
+  : Ship{front, back}
+{
     type_='C';
     dim_=5;
     armor_=5;
-    set_coord();
+    distance_ = 2;
 }
 bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x,int y){
     if(AttGrid.grid()[x][y]==' '){
@@ -28,7 +31,7 @@ bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x,int y){
             else{
                 for(int k=0; k<DefGrid.ships()[i].dim(); k++)
                     DefGrid.grid()[DefGrid.ships()[i].coord(k).first][DefGrid.ships()[i].coord(k).second]=' ';   //"reinizializza la grid dove è affondata la nave"
-                DefGrid.ships().erase(ships().begin()+i);                                                //rimuove la nave abbattuta dal vettore
+                DefGrid.ships().erase(DefGrid.ships().begin()+i);                                                //rimuove la nave abbattuta dal vettore
             }
             }
           }

@@ -23,6 +23,7 @@ namespace UCoord {
 	static char from_int_to_char(int a);
 	static Coord from_string_to_coord(std::string c);
 }
+
 std::ostream& operator<<(std::ostream& os, Coord a);
 bool operator==(Coord a, Coord b);
 #endif

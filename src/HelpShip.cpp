@@ -5,16 +5,17 @@
 #include "../include/DefenceGrid.h"
 #include "../include/Grid.h"
 
-HelpShip::HelpShip() {
+HelpShip::HelpShip(Coord front, Coord back)
+	:	Ship{front, back}
+{
     type_='S';
     dim_=3;
     armor_=3;
 	healed_=false;
-    set_coord();
 }
 
 void HelpShip::move(int toX, int toY) {
-	set_coord();	//TO DO
+	//set_coord();	//TO DO
 }
 
 //A partire dalla cella centrale della nave, scorre una matrice 3x3

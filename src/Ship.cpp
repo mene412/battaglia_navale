@@ -1,78 +1,51 @@
 #include <iostream>
 #include <exception>
 #include "Ship.h"
-Ship::Ship(void){
-    coord_={{0,0},{0,0},{0,0},{0,0},{0,0}}; //nave inizializzata "fuori dal gioco"
+
+Ship::Ship(Coord front, Coord back)
+    : front_{front}, back_{back}, distance_{0} 
+{
+    set_center();
+    set_direction();
 }
 
-void Ship::setInitialCoord(int x1, int x2, int y1, int y2){
-   if(x1==x2 && std::max(y1,y2)-std::min(y1,y2)+1==dim_){
-        for(int i=0; i<dim_; i++){
-            coord_[i].first=x1;
-            coord_[i].second=std::min(y1,y2)+i;
-        }
+void Ship::set_center(void){
+    if(front_.X() == back_.X()){
+        int y = (front_.Y() + back_.Y())/2;
+        center_ = Coord{front_.X(), y};
+    }else if(front_.Y() == back_.Y()){
+        int x = (front_.X() + back_.X())/2;
+        center_ = Coord{x, front_.Y()};
     }
-    else if(y1==y2 && std::max(x1,x2)-std::min(x1,x2)+1==dim_){
-        for(int i=0; i<dim_; i++){
-            coord_[i].first=std::min(x1,x2)+i;;
-            coord_[i].second=y1;
-        }
-    }
-    else{ throw std::out_of_range("NO");}  //coordinate non valide
-    x_=(x1+x2)/2;
-    y_=(y1+y2)/2;
 }
 
-void Ship::setCoord(int x, int y){
-    if(coord_[0].first==coord_[dim_-1].first){
-        int a=y-dim_/2;
-        if(a>0 && a<13){
-            for(int i=0; i<dim_;i++){
-                coord_[i].first=x;
-                coord_[i].second=a+i;
-            }
-        }
-        else{                           //Cambio orientazione nave
-            int a=x-dim_/2;
-            if(a>0 && a<13){
-                for(int i=0; i<dim_;i++){
-                    coord_[i].first=a+i;
-                    coord_[i].second=y;
-                }
-            }
-            else
-                throw std::out_of_range("Coordinate non valide");
-        }
+void Ship::set_direction(void){
+    if(front_.X() < back_.X()){
+        left_ = true;
+        orizzontal_ = true;
+    }else if(front_.X() > back_.X()){
+        left_ = false;
+        orizzontal_ = true;
+    }else if(front_.Y() < back_.Y()){
+        left_ = true;
+        orizzontal_ = false;
+    }else if(front_.Y() >= back_.Y()){
+        left_ = false;
+        orizzontal_ = false;
     }
-    else{
-        int a=x-dim_/2;
-        if(a>0 && a<13){
-            for(int i=0; i<dim_;i++){
-                coord_[i].first=a+1;
-                coord_[i].second=y;
-            }
-        }
-        else{                           //Cambio orientazione nave
-            int a=y-dim_/2;
-            if(a>0 && a<13){
-                for(int i=0; i<dim_;i++){
-                    coord_[i].first=x;
-                    coord_[i].second=a+1;
-                }
-            }
-            else
-                throw std::out_of_range("Coordinate non valide");
-        }
-       
 }
-    x_=x;
-    y_=y;
+
+void Ship::set_coord_center(int x, int y){
+    center_ = Coord{x, y};
+    if(left_ && orizzontal_){
+        front_.setX(x-distance_);
+        back_.setX(x+distance_); 
+    }
 }
 
 
 void Ship::set_healed(bool a){
-
-  healed_=a;
+    healed_=a;
 }
 
 void Ship::decArmor(void){
@@ -91,15 +64,3 @@ bool Ship::ifSameCoord(int x, int y){
   return false; 
 }
 
-char conversion::NumToLett(int t){
-    std::vector<char> letters={'a','b','c','d','e','f','g','h','i','l','m','n'};
-    return letters[t-1];
-}
-
-int conversion::CharToInt(char t){
-    std::vector<char> letters={'a','b','c','d','e','f','g','h','i','l','m','n'};
-    int s=0;
-    while(letters[s]!=t)
-        s++;
-    return s+1;
-}

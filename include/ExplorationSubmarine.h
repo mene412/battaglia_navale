@@ -9,8 +9,8 @@
 
 class ExplorationSubmarine: public Ship {
     public:
-    ExplorationSubmarine(void);
-    void move(void);
-    void search(DefenceGrid enemyGrid, AttackGrid myGrid, int x, int y);
+        ExplorationSubmarine(Coord front, Coord back);
+        void move(void);
+        void search(DefenceGrid enemyGrid, AttackGrid myGrid, int x, int y);
 };
 #endif /* ExplorationSubmarine_h */

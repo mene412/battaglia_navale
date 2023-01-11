@@ -7,7 +7,7 @@
 
 class HelpShip : public Ship {
 public:
-    HelpShip(void);
+    HelpShip(Coord front, Coord back);
     void move(int toX, int toY);
     void heal(DefenceGrid yourGrid, int x, int y);
 };
