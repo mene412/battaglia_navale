@@ -11,7 +11,7 @@ class Coord{
 		Coord(int X, int Y);		// costruttore: parametro X -> seleziona riga, parametro Y -> selezione colonna
 		void setX(int X);
 		void setY(int Y);
-		int X(void){ return X_;};
+		int X(void){return X_;};
 		int Y(void){return Y_;};
 		std::string coord(void);
 	private:
