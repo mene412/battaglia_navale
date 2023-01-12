@@ -25,6 +25,7 @@ class Ship
         Coord center(void){ return center_; }
         bool left(void) { return left_; }
         bool orizzontal(void) { return orizzontal_; }
+        virtual ~Ship(){};
     protected:
         std::vector<std::pair<int,int>> coord_;
         int dim_;
