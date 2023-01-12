@@ -7,8 +7,8 @@
 class Coord{
 	
 	public:
-		Coord();
-		Coord(int X, int Y);
+		Coord();					
+		Coord(int X, int Y);		// costruttore: parametro X -> seleziona riga, parametro Y -> selezione colonna
 		void setX(int X);
 		void setY(int Y);
 		int X(void){ return X_;};
