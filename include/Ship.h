@@ -12,17 +12,16 @@ class Ship
         void set_coord_center(Coord cord);
         void set_coord(std::vector<Coord>& coordinates);
         std::vector<Coord> const coord(void) { return coord_ship_; }
-        Coord coord(int a){return coord_;}
+        Coord const coord(int a){return coord_[a];}
         int const dim(void) { return dim_; }
         int armor(void) { return armor_; }
         void set_healed(bool a);
         bool healed(void) { return healed_; }
-        bool ifSameCoord(int x, int y);
-        void incArmor(void);
-        void decArmor(void);
         Coord center(void){ return center_; }
         bool left(void) { return left_; }
+        void dec_armor() { armor_=armor_-1;}
         bool orizzontal(void) { return orizzontal_; }
+        void set_armor(int a);
         virtual ~Ship(){};
 
     protected:
@@ -30,7 +29,6 @@ class Ship
         Coord coord_;
         int dim_;
         int armor_;
-        int num_;
         char type_;
         bool healed_;
         int distance_;
