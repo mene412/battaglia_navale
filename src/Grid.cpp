@@ -7,7 +7,6 @@
 #include <iostream>
 
 Grid::Grid(void){
-    ships_;
     // costriusco la griglia vuota e inizializzo tutte le celle a ' '
     grid_[12][12];
     for (int i = 0; i < 12; i++) {
@@ -16,78 +15,6 @@ Grid::Grid(void){
         }
     }
 }
-
-int Grid::find_ship(Coord x) {
-    for (int i = 0; i < ships_.size(); i++) {
-        if (ships().at(i).armor() != 0) {
-            if (ships().at(i).center() == x) {
-                return i;
-            }
-        }
-    }
-    throw std::invalid_argument("Errore");
-}
-
-
-
-std::vector<Ship> Grid::ships(void){
-    std::vector<Ship> x{};
-    for(int i = 0; i<ships_.size(); i++){
-        x.push_back(*ships_.at(i));
-    }
-    return x;
-}
-
-
-std::vector<Battleship> Grid::battle_ship(void){
-    std::vector<Battleship> battle{};
-    Battleship* battleship;
-    for(int i = 0; i<ships_.size(); i++){
-        battleship = dynamic_cast<Battleship*>(ships_.at(i));
-        if(battleship!=nullptr){
-            battle.push_back(*battleship);
-        }
-    }
-    return battle;
-}
-
-std::vector<HelpShip> Grid::help_ship(void){
-    std::vector<HelpShip> help{};
-    HelpShip* helpship;
-    for(int i = 0; i<ships_.size(); i++){
-        helpship = dynamic_cast<HelpShip*>(ships_.at(i));
-        if(helpship!=nullptr){
-            help.push_back(*helpship);
-        }
-    }
-    return help;
-}
-
-std::vector<ExplorationSubmarine> Grid::sub_ship(void){
-    std::vector<ExplorationSubmarine> sub{};
-    ExplorationSubmarine* subship;
-    for(int i = 0; i<ships_.size(); i++){
-        subship = dynamic_cast<ExplorationSubmarine*>(ships_.at(i));
-        if(subship!=nullptr){
-            sub.push_back(*subship);
-        }
-    }
-    return sub;
-}
-
-
-int Grid::type_ship(int pos){
-    if(dynamic_cast<Battleship*>(ships_.at(pos)) != nullptr){
-        return 1; // battleship 
-    }
-    if(dynamic_cast<HelpShip*>(ships_.at(pos)) != nullptr){
-        return 2; // helpship
-    }
-    if(dynamic_cast<ExplorationSubmarine*>(ships_.at(pos)) != nullptr){
-        return 3; // Exploration
-    }
-}
-
 
 std::string Grid::print_grid(void) {
     std::string grid_str = "";

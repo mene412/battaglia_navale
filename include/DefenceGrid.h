@@ -9,11 +9,25 @@
 class DefenceGrid : public Grid {
     public: 
         DefenceGrid(void);
+        //getter
+        std::vector<Ship> ships(void);
+        int number_ship(void){ return ships_.size(); }
+        std::vector<Battleship> battle_ship(void);
+        std::vector<HelpShip> help_ship(void);
+        std::vector<ExplorationSubmarine> sub_ship(void);
         //controlla che le celle non siano già occupate da altre navi
         // ritorna true se sono libere
-        bool checkPosition(std::vector<Coord> coordinates);   
+        bool check_position(std::vector<Coord> coordinates);   
         // inserisce la nave nel vettore di ship, e scrive i char corrispondenti nella griglia
-        void addShip(Ship newShip);
+        void add_ship(Ship newShip);
+        // date le coordinate centrali della nave, ritorna la posizione nell'array ships_,
+        // se non la trova lancia un errore
+        int find_ship(Coord x);
+        // ritorna il tipo della nave
+        // 1 = , 2= , 3 = 
+        int type_ship(int pos);
+    protected:
+        std::vector<Ship*> ships_;
 };
 
 std::ostream& operator<<(std::ostream& os, DefenceGrid a);

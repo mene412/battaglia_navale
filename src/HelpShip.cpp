@@ -4,6 +4,7 @@
 #include "../include/HelpShip.h"
 #include "../include/DefenceGrid.h"
 #include "../include/Grid.h"
+#include "../include/Coord.h"
 
 HelpShip::HelpShip(Coord front, Coord back)
 	:	Ship{front, back}
@@ -14,8 +15,22 @@ HelpShip::HelpShip(Coord front, Coord back)
 	healed_=false;
 }
 
-void HelpShip::move(int toX, int toY) {
-	//set_coord();	//TO DO
+void HelpShip::move(DefenceGrid myGrid, std::vector<Coord> c) {
+	// controlla che la cella sia libera
+	if (!myGrid.check_position(c))
+        throw std::invalid_argument("Errore");
+	// cancella la vecchia cella
+	for (int i = 0; i < coord().size(); i++) {
+		myGrid.grid()[coord().at(i).X()][coord().at(i).Y()] = ' ';
+	}
+	// scrive nelle nuove celle
+	for (int i = 0; i < c.size(); i++) {
+		int row = c.at(i).X();
+    	int column = c.at(i).Y();
+		myGrid.grid()[row][column] = 'S';
+	}
+	// modifica i membri
+	set_coord(c);
 }
 
 //A partire dalla cella centrale della nave, scorre una matrice 3x3

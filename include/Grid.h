@@ -15,26 +15,16 @@ class Grid {
     public:
         // costruttore: crea una amtrice 12x12 di char vuoti
         Grid(void);
-        //setter
-        char** grid(void) { return grid_; }
         //getter
-        std::vector<Ship> ships(void);
-        int number_ship(void){ return ships_.size(); }
-        std::vector<Battleship> battle_ship(void);
-        std::vector<HelpShip> help_ship(void);
-        std::vector<ExplorationSubmarine> sub_ship(void);
-        //altri metodi
-        int type_ship(int pos);
-
+        char** grid(void) { return grid_; }
         // date le coordinate centrali della nave, ritorna la posizione nell'array ships_,
-        // -1 se non la trova
+        // se non la trova lancia un errore
         int find_ship(Coord x);
         //stampa la griglia
         std::string print_grid(void);
         virtual ~Grid(){};
 
-    protected:
-        std::vector<Ship*> ships_;
+    protected:    
         char** grid_;
 };
 

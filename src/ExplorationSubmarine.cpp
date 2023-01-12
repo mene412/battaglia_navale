@@ -13,14 +13,25 @@ ExplorationSubmarine::ExplorationSubmarine(void){
     set_coord();
 }
 
-void ExplorationSubmarine::move(void) {
-
+void ExplorationSubmarine::move(DefenceGrid myGrid, Coord c) {
+    std::vector<Coord> coordinate {c};
+    // controlla che la cella sia libera
+    if (!myGrid.check_position(coordinate))
+        throw std::invalid_argument("Errore");
+    int row = c.X();
+    int column = c.Y();
+    // scrivi nella nuova cella
+    myGrid.grid()[row][column] = 'E';
+    // cancella la vecchia cella
+    myGrid.grid()[center().X()][center().Y()] = ' ';
+    // modifica i membri del sottomarino
+    set_coord(coordinate);
 }
     
-void ExplorationSubmarine::search(DefenceGrid enemyGrid, AttackGrid myGrid, int x, int y) {
-    for (int i = (y-2); i < (y+3); i++) {
-        for (int j = (x-2); j < (x+3); j++) {
-            if (y < 0 || x < 0)
+void ExplorationSubmarine::search(DefenceGrid enemyGrid, AttackGrid myGrid, Coord c) {
+    for (int i = (c.Y()-2); i < (c.Y()+3); i++) {
+        for (int j = (c.X()-2); j < (c.X()+3); j++) {
+            if (j < 0 || i < 0)
                 continue;
             else if (enemyGrid.grid()[i][j] != ' ') {
                 char valueFind = enemyGrid.grid()[i][j];
