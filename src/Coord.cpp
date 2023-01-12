@@ -25,7 +25,7 @@ Coord::Coord(int X, int Y)
 	: X_{X}, Y_{Y}
 {
 	if(X_<0 || X_>11 || Y_<0 || Y_>11){
-		//throw std::illegal_argument();
+		throw std::invalid_argument("Coordinate non valide");
 	}
 }
 
@@ -75,7 +75,7 @@ static char UCoord::from_int_to_char(int a){
 	a--;
 	std::string letters = "ABCDEFGHILMN";
 	if(a<0 || a>11){
-		// throw std::illegal_arguments();
+		throw std::invalid_argument("Coordinate non valide");
 	}
 	c = letters.at(a);
 	return c;
@@ -83,17 +83,17 @@ static char UCoord::from_int_to_char(int a){
 
 static Coord UCoord::from_string_to_coord(std::string c){
 	if(c.length()<2 || c.length()>3){
-		// throw std::illegal_argument();
+		throw std::invalid_argument("Coordinate non valide");
 	}
 	char x = c.at(0);
 	int y = stoi(c.substr(1));
 	char in = 'A';
 	char fin = 'N';
 	if(x<in || x>fin){
-		// throw std::illegal_argument();
+		throw std::invalid_argument("Coordinate non valide");
 	}
 	if(x=='J' || x=='K'){
-		// throw std::illegal_argument();
+		throw std::invalid_argument("Coordinate non valide");
 	}
 	int xf;
 	if(x<='I'){
