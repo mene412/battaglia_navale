@@ -28,10 +28,10 @@ Grid::Grid(void){
     }
 }
 
-int Grid::findShip(int x, int y) {
+int Grid::findShip(Coord x) {
     for (int i = 0; i < ships_.size(); i++) {
-        if (ships_[i].armor() != 0) {
-            if (ships_[i].x() == x && ships_[i].y() == y) {
+        if (ships_.at(i).armor() != 0) {
+            if (ships_.at(i).center().X() == x.X() && ships_.at(i).center().Y() == x.Y()) {
                 return i;
             }
         }

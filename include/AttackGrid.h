@@ -12,4 +12,6 @@ class AttackGrid : public Grid {
         void removeHit(void);           //rimuove le X
         void removeWater(void);         //rimuove le O
 };
+
+std::ostream& operator<<(std::ostream& os, AttackGrid a);
 #endif /* AttackGrid_h */

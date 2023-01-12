@@ -35,11 +35,28 @@ void Ship::set_direction(void){
     }
 }
 
-void Ship::set_coord_center(int x, int y){
-    center_ = Coord{x, y};
+void Ship::set_coord_center(Coord cord){
+    center_ = cord;
     if(left_ && orizzontal_){
-        front_.setX(x-distance_);
-        back_.setX(x+distance_); 
+        front_.setX(cord.X()-distance_);
+        back_.setX(cord.X()+distance_); 
+        front_.setY(cord.Y());
+        back_.setY(cord.Y());
+    }else if(!left_ && orizzontal_){
+        front_.setX(cord.X()+distance_);
+        back_.setX(cord.X()-distance_); 
+        front_.setY(cord.Y());
+        back_.setY(cord.Y());
+    }else if(left_ && !orizzontal_){
+        front_.setY(cord.Y()-distance_);
+        back_.setY(cord.Y()+distance_); 
+        front_.setX(cord.X());
+        back_.setX(cord.X());
+    }else if(!left_ && !orizzontal_){
+        front_.setY(cord.Y()+distance_);
+        back_.setY(cord.Y()-distance_);
+        front_.setX(cord.X());
+        back_.setX(cord.X());
     }
 }
 

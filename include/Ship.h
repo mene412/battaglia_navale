@@ -8,7 +8,7 @@ class Ship
     public:
         Ship(Coord front, Coord back);
         char type(void) { return type_; }
-        void Ship::set_coord_center(int x, int y);
+        void set_coord_center(Coord cord);
         void set_center(void);
         void set_direction(void);
         std::vector<std::pair<int,int>> const coord(void) { return coord_; }
@@ -42,8 +42,4 @@ class Ship
         bool left_;
         bool orizzontal_;
 };
-namespace conversion{
-    char NumToLett(int t);  //convete da int a char (es 1='a')
-    int CharToInt(char t);
-}
 #endif /* Ship_h */

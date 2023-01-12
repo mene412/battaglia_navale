@@ -59,3 +59,8 @@
 //       }
 //       return;
 //     }
+
+
+std::ostream& operator<<(std::ostream& os, DefenceGrid a){
+    os << "Griglia di difesa\n\n" << a.print_grid() << std::endl;
+}

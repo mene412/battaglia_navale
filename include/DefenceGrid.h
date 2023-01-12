@@ -13,4 +13,7 @@ class DefenceGrid : public Grid {
         // inserisce la nave nella griglia    
         void addShip(Ship newShip);
 };
+
+std::ostream& operator<<(std::ostream& os, DefenceGrid a);
+
 #endif /* DefenceGrid_h */
