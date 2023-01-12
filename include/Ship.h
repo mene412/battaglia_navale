@@ -10,6 +10,7 @@ class Ship
         void set_direction(void);
         void set_center(void);
         void set_coord_center(Coord cord);
+        void set_coord(std::vector<Coord>& coordinates);
         std::vector<Coord> const coord(void) { return coord_ship_; }
         Coord coord(int a){return coord_;}
         int const dim(void) { return dim_; }

@@ -147,9 +147,10 @@ void Game::attack(int pl, Coord c){
 
 void Game::heal(int pl, int pos, Coord c){
 	if(pl == 1){
-
+		HelpShip& ship = dynamic_cast<HelpShip&>(def_grid_.first.ships().at(pos));
+		ship
 	}else{
-
+		HelpShip& ship = dynamic_cast<HelpShip&>(def_grid_.second.ships().at(pos));
 	}
 }
 

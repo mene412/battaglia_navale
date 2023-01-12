@@ -38,8 +38,8 @@ int DefenceGrid::find_ship(Coord x) {
 
 
 
-std::vector<Ship> DefenceGrid::ships(void){
-    std::vector<Ship> x{};
+std::vector<Ship&> DefenceGrid::ships(void){
+    std::vector<Ship&> x{};
     for(int i = 0; i<ships_.size(); i++){
         x.push_back(*ships_.at(i));
     }
