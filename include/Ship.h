@@ -6,17 +6,14 @@
 class Ship
 {
     public:
-        Ship(Coord front, Coord back);
         char type(void) { return type_; }
-        void set_coord_center(Coord cord);
-        void set_center(void);
         void set_direction(void);
+        void set_center(void);
+        void set_coord_center(Coord cord);
         std::vector<Coord> const coord(void) { return coord_ship_; }
         Coord coord(int a){return coord_;}
         int const dim(void) { return dim_; }
         int armor(void) { return armor_; }
-        int x(void) { return x_; }
-        int y(void) { return y_; }
         void set_healed(bool a);
         bool healed(void) { return healed_; }
         bool ifSameCoord(int x, int y);
@@ -28,12 +25,11 @@ class Ship
         virtual ~Ship(){};
 
     protected:
+        Ship(Coord front, Coord back);
         Coord coord_;
         int dim_;
         int armor_;
         int num_;
-        int x_;     // numero riga (vedi pg. 3 progetto Tonin)
-        int y_;     // numero colonna
         char type_;
         bool healed_;
         int distance_;
