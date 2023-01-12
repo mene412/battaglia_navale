@@ -2,6 +2,8 @@
 #ifndef Coord_h
 #define Coord_h
 
+#include <string>
+
 class Coord{
 	
 	public:

@@ -1,3 +1,5 @@
+// Autore: Andrea Mutti
+
 #include "../include/Replay.h"
 #include "../include/Coord.h"
 #include "../include/Ship.h"

@@ -24,7 +24,7 @@ class Ship
         void decArmor(void);
         Coord center(void){ return center_; }
         bool left(void) { return left_; }
-        bool orizzontal(void) { return orizzontal; }
+        bool orizzontal(void) { return orizzontal_; }
     protected:
         std::vector<std::pair<int,int>> coord_;
         int dim_;
