@@ -44,25 +44,40 @@ void HelpShip::heal(DefenceGrid yourGrid, Coord c) {
 			if (j < 0 || i < 0)
 				break;
 			if (yourGrid.grid()[i][j] != ' ') {
-				//determino il tipo della nave
-				char charFind = yourGrid.grid()[i][i];
-				if (charFind == 'c')
-					charFind = 'C';
-				else if (charFind == 's')
-					charFind = 'S';
-				else if (charFind == 'e')
-					charFind = 'E';
-				//cerco la nave per tipo
-				for (int k = 0; k < yourGrid.ships().size(); k++) {
-					if (yourGrid.ships()[k].type() == charFind) {
-					//trovato il tipo, cerco la nave giusta guardando le posizioni
-						if (yourGrid.ships()[k].ifSameCoord(i,j)) {	//if una coppia delle coord è uguale a [i][j]	//Metodo IfSamecoord di ship
-							if (!yourGrid.ships()[k].healed()) {
-								if (1 <= yourGrid.ships()[k].armor() && yourGrid.ships()[k].armor() < yourGrid.ships()[k].dim())
-									yourGrid.ships()[k].incArmor();
-							}
-						}
-					}
+				Coord c {i, j};
+				//determino il tipo della nave e curo di conseguenza
+				char charFind = yourGrid.grid()[i][j];
+				if (charFind == 'c' || charFind == 'C')
+					heal_battleship(c, yourGrid);
+				else if (charFind == 's' || charFind == 'S') {
+					set_healed(true);
+					heal_helpShip(c, yourGrid);
+				}
+			}
+		}
+	}
+}
+
+void heal_battleship(Coord c, DefenceGrid yourGrid) {
+	std::vector<Battleship> ships = yourGrid.battle_ship();
+	for (int i = 0; i < ships.size(); i++) {
+		for (int k = 0; k < ships.at(i).coord().size(); k++) {
+			if (ships.at(i).coord().at(i) == c) {
+				if (ships.at(i).armor() > 0 || ships.at(i).armor() < ships.at(i).dim()) {
+					ships.at(i).set_armor(5);
+				}
+			}
+		}
+	}
+}
+
+void heal_helpShip(Coord c, DefenceGrid yourGrid) {
+	std::vector<HelpShip> ships = yourGrid.help_ship();
+	for (int i = 0; i < ships.size(); i++) {
+		for (int k = 0; k < ships.at(i).coord().size(); k++) {
+			if (ships.at(i).coord().at(i) == c) {
+				if ((ships.at(i).armor() > 0 || ships.at(i).armor() < ships.at(i).dim()) && !ships.at(i).healed()) {
+					ships.at(i).set_armor(3);
 				}
 			}
 		}

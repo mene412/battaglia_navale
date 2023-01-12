@@ -17,9 +17,6 @@ class Grid {
         Grid(void);
         //getter
         char** grid(void) { return grid_; }
-        // date le coordinate centrali della nave, ritorna la posizione nell'array ships_,
-        // se non la trova lancia un errore
-        int find_ship(Coord x);
         //stampa la griglia
         std::string print_grid(void);
         virtual ~Grid(){};
