@@ -11,7 +11,7 @@ class Ship
         void set_coord_center(Coord cord);
         void set_center(void);
         void set_direction(void);
-        //std::vector<std::pair<int,int>> const coord(void) { return coord_; }
+        std::vector<Coord> const coord(void) { return coord_ship_; }
         Coord coord(int a){return coord_;}
         int const dim(void) { return dim_; }
         int armor(void) { return armor_; }
@@ -26,6 +26,7 @@ class Ship
         bool left(void) { return left_; }
         bool orizzontal(void) { return orizzontal_; }
         virtual ~Ship(){};
+
     protected:
         Coord coord_;
         int dim_;
@@ -37,6 +38,7 @@ class Ship
         bool healed_;
         int distance_;
     private:
+        std::vector<Coord> coord_ship_;
         Coord front_;
         Coord back_;
         Coord center_;

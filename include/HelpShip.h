@@ -6,9 +6,9 @@
 #include "DefenceGrid.h"
 
 class HelpShip : public Ship {
-public:
-    HelpShip(Coord front, Coord back);
-    void move(int toX, int toY);
-    void heal(DefenceGrid yourGrid, int x, int y);
+    public:
+        HelpShip(Coord front, Coord back);
+        void move(int toX, int toY);
+        void heal(DefenceGrid yourGrid, int x, int y);
 };
 #endif

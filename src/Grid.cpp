@@ -17,15 +17,15 @@ Grid::Grid(void){
     }
 }
 
-int Grid::findShip(Coord x) {
+int Grid::find_ship(Coord x) {
     for (int i = 0; i < ships_.size(); i++) {
         if (ships().at(i).armor() != 0) {
-            if (ships().at(i).center().X() == x.X() && ships().at(i).center().Y() == x.Y()) {
+            if (ships().at(i).center() == x) {
                 return i;
             }
         }
     }
-    return -1;
+    throw std::invalid_argument("Errore");
 }
 
 
@@ -75,17 +75,17 @@ std::vector<ExplorationSubmarine> Grid::sub_ship(void){
     return sub;
 }
 
-int Grid::ship(Coord c){
-    for(int i = 0; i<ships().size(); i++){
-        if(ships().at(i).center() == c){
-            return i;
-        }
-    }
-    throw std::invalid_argument("Errore");
-}
 
 int Grid::type_ship(int pos){
-    
+    if(dynamic_cast<Battleship*>(ships_.at(pos)) != nullptr){
+        return 1; // battleship 
+    }
+    if(dynamic_cast<HelpShip*>(ships_.at(pos)) != nullptr){
+        return 2; // helpship
+    }
+    if(dynamic_cast<ExplorationSubmarine*>(ships_.at(pos)) != nullptr){
+        return 3; // Exploration
+    }
 }
 
 
