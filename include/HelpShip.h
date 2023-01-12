@@ -9,6 +9,6 @@ class HelpShip : public Ship {
     public:
         HelpShip(Coord front, Coord back);
         void move(DefenceGrid myGrid, std::vector<Coord> c);
-        void heal(DefenceGrid yourGrid, int x, int y);
+        void heal(DefenceGrid yourGrid, Coord c);
 };
 #endif

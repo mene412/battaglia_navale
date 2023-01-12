@@ -35,12 +35,12 @@ void HelpShip::move(DefenceGrid myGrid, std::vector<Coord> c) {
 
 //A partire dalla cella centrale della nave, scorre una matrice 3x3
 //Se 1 <= armor < dim, allora armor++
-void HelpShip::heal(DefenceGrid yourGrid, int x, int y) {
+void HelpShip::heal(DefenceGrid yourGrid, Coord c) {
 	//segno come curata questa helShip, perchè non può curarsi da sola
 	set_healed(true);
 	//scorre la matrice 3x3
-	for (int i = (y-1); i < (y+2); i++) {
-		for (int j = (x-1); j < (x+2); j++) {
+	for (int i = (c.Y()-1); i < (c.Y()+2); i++) {
+		for (int j = (c.X()-1); j < (c.X()+2); j++) {
 			if (j < 0 || i < 0)
 				break;
 			if (yourGrid.grid()[i][j] != ' ') {
