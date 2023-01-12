@@ -3,6 +3,10 @@
 #include "../include/Grid.h"
 #include "../include/AttackGrid.h"
 
+
+AttackGrid::AttackGrid(void)
+    :   Grid{}
+{}
 //rimuove le Y
 // invocato dall'utente con il comando AA AA
 void AttackGrid::removeDetections(void) {

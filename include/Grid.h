@@ -33,6 +33,8 @@ class Grid {
         int findShip(Coord x);
         //stampa la griglia
         std::string print_grid(void);
+        virtual ~Grid(){};
+
     protected:
         std::vector<Ship*> ships_;
         char** grid_;

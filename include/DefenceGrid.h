@@ -8,6 +8,7 @@
 
 class DefenceGrid : public Grid {
     public: 
+        DefenceGrid(void);
         //controlla che le celle non siano già occupate da altre navi
         // ritorna true se sono libere
         bool checkPosition(std::vector<Coord> coordinates);   

@@ -13,7 +13,7 @@ class Replay{
         Replay(std::string file_log);
         void start(void);
         void start(std::string file_output);
-
+        ~Replay(){log.close();}
     private:
         void take_ships(int player);
         void move_first(void);
