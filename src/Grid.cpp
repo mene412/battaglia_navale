@@ -2,29 +2,18 @@
 
 #include "../include/Ship.h"
 #include "../include/Grid.h"
+#include "../include/Coord.h"
 #include <vector>
 #include <iostream>
 
 Grid::Grid(void){
     ships_;
-    // costriusco la matrice e inizializzo tutte le celle a ' '
-    grid_[13][13];
-    for (int i = 0; i < 13; i++) {
-        for (int j = 0; j < 13; j++) {
+    // costriusco la griglia vuota e inizializzo tutte le celle a ' '
+    grid_[12][12];
+    for (int i = 0; i < 12; i++) {
+        for (int j = 0; j < 12; j++) {
             grid_[i][j] = ' ';
         }
-    }
-    // prima colonna: lettere
-    // non scrivo nulla nell'ultima riga (quindi i < 12)
-    for (int i = 0; i < 12; i++) {
-        if (i == 9)
-            i += 2;
-        grid_[i][0] = 'A' + i;
-    }
-    // ultima riga: numeri
-    // non scrivo nulla nella priam colonna (quindi j = 1)
-    for (int j = 1; j < 13; j++) {
-        grid_[12][j] = j;
     }
 }
 
@@ -101,13 +90,25 @@ int Grid::type_ship(int pos){
 
 
 std::string Grid::print_grid(void) {
-    std::string grid = "";
-    for (int row = 0; row < 13; row++) {
-        for (int column = 0; column < 13; column++) {
-            grid = grid + grid_[row][column] + "|\n";
+    std::string grid_str = "";
+    // stampo la griglia inserendo prima la lettera della riga
+    for (int row = 0; row < 12; row++) {
+        int number_row = row;
+        for (int column = 0; column < 12; column++) {
+            // se il numero di riga è superiore all'8 (char I), aggiungo 2 per saltare i char J e K
+            if (number_row > 8)
+                number_row += 2;
+            char char_row = 'A' + number_row;
+            grid_str = grid_str + char_row + "|";
+            grid_str = grid_str + grid_[row][column] + "|\n";
         }
     }
-    return grid;
+    // ultima riga: numeri
+    grid_str += " |";
+    for (int j = 1; j < 13; j++) {
+        grid_str = grid_str + std::to_string(j) + "|";
+    }
+    return grid_str;
 }
 
 std::ostream& operator<<(std::ostream& os, Grid a){

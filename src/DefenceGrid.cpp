@@ -6,11 +6,12 @@
   #include "../include/Battleship.h"
   #include "../include/HelpShip.h"
   #include "../include/ExplorationSubmarine.h"
+  #include "../include/Coord.h"
   
-  bool DefenceGrid::checkPosition(std::vector<std::pair<int,int>> coordinates) {
+  bool DefenceGrid::checkPosition(std::vector<Coord> coordinates) {
         for (int i = 0; i < coordinates.size(); i++) {
-            int checkRow = coordinates[i].first;        // numero riga
-            int checkColumn = coordinates[i].second;    // numero colonna
+            int checkRow = coordinates[i].X();        // numero riga
+            int checkColumn = coordinates[i].Y();    // numero colonna
             if (grid_[checkRow][checkColumn] != ' ') {
                 // se la cella non è vuota, ritorna false
                 return false;
@@ -20,46 +21,17 @@
   }
 
   void DefenceGrid::addShip(Ship newShip) {
-        if (!checkPosition(newShip.coord()))        //da errore in compilazione perhè coord è, per ora, un vector di vector di int
+        if (!checkPosition(newShip.coord())) {      //da errore in compilazione perhè coord è, per ora, un vector di vector di int
+                                                    // deve essere invece un vector di Coord
             return;                                 //TO DO: lanciare eccezione
-      for (int i = 0; i < newShip.coord().size(); i++) {
-            int rowSelected = newShip.coord(i).first;
-            int columnSelected = newShip.coord(i).second;
+        }
+        for (int i = 0; i < newShip.coord().size(); i++) {
+            int rowSelected = newShip.coord().at(i).X();
+            int columnSelected = newShip.coord().at(i).Y();
             grid_[rowSelected][columnSelected] = newShip.type();
         }
+        ships_.push_back(newShip);
   }
-
-//   void DefenceGrid::SetGrid(void){
-//       for(int i=0; i<3; i++){
-//           std::cout<<"Corazzata"<<std::endl;
-//           Battleship c;
-//           if(CheckShip(c)){
-//               PositionShip(c);
-//               std::cout<<"OK"<<std::endl;           //"Ok" messo solo per controllo codice
-//           }
-//           else i--;
-//       }
-//       for(int i=0; i<3; i++){
-//           std::cout<<"Nave Supporto"<<std::endl;
-//           HelpShip s;
-//           if(CheckShip(s)){
-//               PositionShip(s);
-//               std::cout<<"OK"<<std::endl;           //"Ok" messo solo per controllo codice
-//           }
-//           else i--;
-//       }
-//       for(int i=0; i<2; i++){
-//           std::cout<<"Sottomarino"<<std::endl;
-//           ExplorationSubmarine d;
-//           if(CheckShip(d)){
-//               PositionShip(d);
-//               std::cout<<"OK"<<std::endl;           //"Ok" messo solo per controllo codice
-//           }
-//           else i--;
-//       }
-//       return;
-//     }
-
 
 std::ostream& operator<<(std::ostream& os, DefenceGrid a){
     os << "Griglia di difesa\n\n" << a.print_grid() << std::endl;

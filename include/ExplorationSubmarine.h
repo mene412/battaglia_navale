@@ -3,14 +3,17 @@
 #ifndef ExplorationSubmarine_h
 #define ExplorationSubmarine_h
 
-#include "../include/Ship.h"
-#include "../include/ExplorationSubmarine.h"
-#include "../include/AttackGrid.h"
+#include "Ship.h"
+#include "AttackGrid.h"
+#include "DefenceGrid.h"
+#include "Coord.h"
 
 class ExplorationSubmarine: public Ship {
     public:
         ExplorationSubmarine(Coord front, Coord back);
         void move(void);
+        // se trova celle colpite (char minuscoli) stampa 'X', 
+        // se trova celle non danneggiate (char maiuscoli) stampa 'Y'
         void search(DefenceGrid enemyGrid, AttackGrid myGrid, int x, int y);
 };
 #endif /* ExplorationSubmarine_h */

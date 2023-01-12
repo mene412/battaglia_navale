@@ -7,11 +7,13 @@
 #include "Battleship.h"
 #include "ExplorationSubmarine.h"
 #include "HelpShip.h"
+#include "Coord.h"
 #include <vector>
 #include <iostream>
 
 class Grid {
     public:
+        // costruttore: crea una amtrice 12x12 di char vuoti
         Grid(void);
         //setter
         void set_grid(void);
