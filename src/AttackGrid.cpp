@@ -21,7 +21,7 @@ void AttackGrid::removeWater(void) {
 //rimuove uno specifico char
 void AttackGrid::removeChar(char c) {
     for (int i = 0; i < 12; i++) {
-        for (int j = 1; j < 13; j++) {
+        for (int j = 0; j < 12; j++) {
             if (grid_[i][j] == c)
                 grid_[i][j] = ' ';
         }

@@ -4,13 +4,14 @@
 #define DefenceGrid_h
 
 #include "Grid.h"
+#include "Coord.h"
 
 class DefenceGrid : public Grid {
     public: 
         //controlla che le celle non siano già occupate da altre navi
-        // controlla da prua e poppa, bow=prua, stern=poppa
-    bool checkPosition(std::vector<std::pair<int,int>> coordinates);   
-        // inserisce la nave nella griglia    
+        // ritorna true se sono libere
+        bool checkPosition(std::vector<Coord> coordinates);   
+        // inserisce la nave nel vettore di ship, e scrive i char corrispondenti nella griglia
         void addShip(Ship newShip);
 };
 
