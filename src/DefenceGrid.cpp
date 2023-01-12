@@ -56,6 +56,7 @@ std::vector<Battleship> DefenceGrid::battle_ship(void){
             battle.push_back(*battleship);
         }
     }
+    delete battleship;
     return battle;
 }
 
@@ -68,6 +69,7 @@ std::vector<HelpShip> DefenceGrid::help_ship(void){
             help.push_back(*helpship);
         }
     }
+    delete helpship;
     return help;
 }
 
@@ -80,6 +82,7 @@ std::vector<ExplorationSubmarine> DefenceGrid::sub_ship(void){
             sub.push_back(*subship);
         }
     }
+    delete subship;
     return sub;
 }
 

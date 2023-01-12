@@ -15,7 +15,7 @@ HelpShip::HelpShip(Coord front, Coord back)
 	healed_=false;
 }
 
-void HelpShip::move(DefenceGrid myGrid, std::vector<Coord> c) {
+void HelpShip::move(DefenceGrid& myGrid, std::vector<Coord> c) {
 	// controlla che la cella sia libera
 	if (!myGrid.check_position(c))
         throw std::invalid_argument("Errore");
@@ -35,7 +35,7 @@ void HelpShip::move(DefenceGrid myGrid, std::vector<Coord> c) {
 
 //A partire dalla cella centrale della nave, scorre una matrice 3x3
 //Se 1 <= armor < dim, allora armor++
-void HelpShip::heal(DefenceGrid yourGrid, Coord c) {
+void HelpShip::heal(DefenceGrid& yourGrid, Coord c) {
 	//segno come curata questa helShip, perchè non può curarsi da sola
 	set_healed(true);
 	//scorre la matrice 3x3
@@ -44,7 +44,7 @@ void HelpShip::heal(DefenceGrid yourGrid, Coord c) {
 			if (j < 0 || i < 0)
 				break;
 			if (yourGrid.grid()[i][j] != ' ') {
-				Coord c {i, j};
+								Coord c {i, j};
 				//determino il tipo della nave e curo di conseguenza
 				char charFind = yourGrid.grid()[i][j];
 				if (charFind == 'c' || charFind == 'C')

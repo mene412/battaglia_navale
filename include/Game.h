@@ -18,6 +18,8 @@ class Game{
 
 	protected:
 		Game(void);
+		Game(const Game&) = delete;
+		Game& operator=(const Game&) = delete;
 		virtual std::pair<Coord,Coord> select_move(int player);
 		void add_ship(int player, Coord p, Coord c, char type);
 		virtual void positioning(void) = 0;
@@ -28,10 +30,15 @@ class Game{
 		void write_log(std::pair<Coord, Coord>& x);
 		std::pair<AttackGrid, AttackGrid> att_grid_;
 		std::pair<DefenceGrid, DefenceGrid> def_grid_;
+		bool end_max_turn(void) const;
+		void attack(int pl, Coord c);
+		void heal(int pl, int pos, Coord c);
+		void exploration(int pl, int pos, Coord c);
 
 	private:
 		int turn_;
 		std::ofstream log;
+		const int MAX_TURNS = 250;
 };
 
 #endif
