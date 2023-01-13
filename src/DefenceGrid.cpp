@@ -34,48 +34,6 @@ int DefenceGrid::find_ship(Coord x) {
 }
 
 
-
-
-std::vector<Battleship*>& DefenceGrid::battle_ship(void){
-    std::vector<Battleship*> battle{};
-    Battleship* battleship;
-    for(int i = 0; i<number_ship(); i++){
-        battleship = dynamic_cast<Battleship*>(ships_.at(i));
-        if(battleship!=nullptr){
-            battle.push_back(battleship);
-        }
-    }
-    delete battleship;
-    return battle;
-}
-
-std::vector<HelpShip*>& DefenceGrid::help_ship(void){
-    std::vector<HelpShip*> help{};
-    HelpShip* helpship;
-    for(int i = 0; i<number_ship(); i++){
-        helpship = dynamic_cast<HelpShip*>(ships_.at(i));
-        if(helpship!=nullptr){
-            help.push_back(helpship);
-        }
-    }
-    delete helpship;
-    return help;
-}
-
-std::vector<ExplorationSubmarine*>& DefenceGrid::sub_ship(void){
-    std::vector<ExplorationSubmarine*> sub{};
-    ExplorationSubmarine* subship;
-    for(int i = 0; i<number_ship(); i++){
-        subship = dynamic_cast<ExplorationSubmarine*>(ships_.at(i));
-        if(subship!=nullptr){
-            sub.push_back(subship);
-        }
-    }
-    delete subship;
-    return sub;
-}
-
-
 int DefenceGrid::type_ship(int pos){
     if(dynamic_cast<Battleship*>(ships_.at(pos)) != nullptr){
         return 1; // battleship 
@@ -88,15 +46,15 @@ int DefenceGrid::type_ship(int pos){
     }
 }
 
-void DefenceGrid::add_ship(Ship* newShip) {
-    if (!check_position(newShip->coord())) {      //da errore in compilazione perhè coord è, per ora, un vector di vector di int
+void DefenceGrid::add_ship(Ship& newShip) {
+    if (!check_position(newShip.coord())) {      //da errore in compilazione perhè coord è, per ora, un vector di vector di int
                                                 // deve essere invece un vector di Coord
         return;                                 //TO DO: lanciare eccezione
     }
-    ships_.push_back(newShip);
-    for (int i = 0; i < newShip->coord().size(); i++) {
-        int rowSelected = newShip->coord().at(i).X();
-        int columnSelected = newShip->coord().at(i).Y();
+    ships_.push_back(&newShip);
+    for (int i = 0; i < newShip.coord().size(); i++) {
+        int rowSelected = newShip.coord().at(i).X();
+        int columnSelected = newShip.coord().at(i).Y();
         int type = type_ship(ships_.size()-1);
         if(type == 1){
             grid_[rowSelected][columnSelected] = 'C';

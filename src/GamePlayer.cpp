@@ -41,7 +41,7 @@ void GamePlayer::positioning_player(void){
 	int number_c = 1;
 	std::string punta;
 	std::string coda;
-	char t = 'C';
+	int t = 1;
 	while(number_c < 4){
 		try{
 			std::cout << "Inserire le coordinate della nave corazzata " << number_c << ": ";
@@ -57,7 +57,7 @@ void GamePlayer::positioning_player(void){
 	}
 	
 	int number_s = 1;
-	t = 'S';
+	t = 2;
 	while(number_s < 4){
 		try{
 			std::cout << "Inserire le coordinate della nave di supporto " << number_s << ": ";
@@ -73,7 +73,7 @@ void GamePlayer::positioning_player(void){
 	}		
 	
 	int number_e = 1;
-	t = 'E';
+	t = 3;
 	while(number_e < 3){
 		try{
 			std::cout << "Inserire la coordinata del sottomarino di esplorazione " << number_e << ": ";

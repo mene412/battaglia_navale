@@ -18,7 +18,7 @@ class Game{
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
 		virtual std::pair<Coord,Coord> select_move(int player);
-		void add_ship(int player, Coord p, Coord c, char type);
+		void add_ship(int player, Coord p, Coord c, int type);
 		virtual void positioning(void) = 0;
 		virtual void select_starter(void);
 		int starter_;

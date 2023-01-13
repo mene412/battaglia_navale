@@ -138,38 +138,44 @@ void Replay::take_ships(int player){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            def_grid_.first.add_ship(&Battleship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)});
+            Battleship ship{Battleship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)}};
+            def_grid_.first.add_ship(ship);
         }
         for(int i = 0; i<3; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            def_grid_.first.add_ship(&HelpShip{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)});
+            HelpShip ship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)};
+            def_grid_.first.add_ship(ship);
         }
         for(int i = 0; i<2; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            def_grid_.first.add_ship(&ExplorationSubmarine{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)});
+            ExplorationSubmarine ship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)};
+            def_grid_.first.add_ship(ship);
         }
     }else{
         for(int i = 0; i<3; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            def_grid_.second.add_ship(&Battleship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)});
+            Battleship ship{Battleship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)}};
+            def_grid_.second.add_ship(ship);
         }
         for(int i = 0; i<3; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            def_grid_.second.add_ship(&HelpShip{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)});
+            HelpShip ship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)};
+            def_grid_.second.add_ship(ship);
         }
         for(int i = 0; i<2; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            def_grid_.second.add_ship(&ExplorationSubmarine{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)});
+            ExplorationSubmarine ship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)};
+            def_grid_.second.add_ship(ship);
         }
     }
 }

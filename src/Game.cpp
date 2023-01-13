@@ -22,42 +22,40 @@ void Game::select_starter(void){
 	write_log(std::to_string(s));
 }
 
-void Game::add_ship(int player, Coord p, Coord c, char type){
+void Game::add_ship(int player, Coord p, Coord c, int type){
 	if(player == 1){
-		switch(type){
-			case 'C':
-				def_grid_.first.add_ship(&Battleship{p, c});
-				std::pair<Coord, Coord> coord{p, c}; 
-				write_log(coord);
-				break;
-			case 'S':
-				def_grid_.first.add_ship(&HelpShip{p, c});
-				std::pair<Coord, Coord> coord{p, c}; 
-				write_log(coord);
-				break;
-			case 'E':
-				def_grid_.first.add_ship(&ExplorationSubmarine{p, c});
-				std::pair<Coord, Coord> coord{p, c}; 
-				write_log(coord);
-				break;
+		if(type == 1){
+			Battleship ship{p, c};
+			def_grid_.first.add_ship(ship);
+			std::pair<Coord, Coord> coord{p, c}; 
+			write_log(coord);
+		}else if(type == 2){
+			HelpShip ship{p, c};
+			def_grid_.first.add_ship(ship);
+			std::pair<Coord, Coord> coord{p, c}; 
+			write_log(coord);
+		}else if(type == 3){
+			ExplorationSubmarine ship{p, c};
+			def_grid_.first.add_ship(ship);
+			std::pair<Coord, Coord> coord{p, c}; 
+			write_log(coord);
 		}
 	}else{
-		switch(type){
-			case 'C':
-				def_grid_.second.add_ship(&Battleship{p, c});
-				std::pair<Coord, Coord> coord{p, c}; 
-				write_log(coord);
-				break;
-			case 'S':
-				def_grid_.second.add_ship(&HelpShip{p, c});
-				std::pair<Coord, Coord> coord{p, c}; 
-				write_log(coord);
-				break;
-			case 'E':
-				def_grid_.second.add_ship(&ExplorationSubmarine{p, c});
-				std::pair<Coord, Coord> coord{p, c}; 
-				write_log(coord);
-				break;
+		if(type == 1){
+			Battleship ship{p, c};
+			def_grid_.second.add_ship(ship);
+			std::pair<Coord, Coord> coord{p, c}; 
+			write_log(coord);
+		}else if(type == 2){
+			HelpShip ship{p, c};
+			def_grid_.second.add_ship(ship);
+			std::pair<Coord, Coord> coord{p, c}; 
+			write_log(coord);
+		}else if(type == 3){
+			ExplorationSubmarine ship{p, c};
+			def_grid_.second.add_ship(ship);
+			std::pair<Coord, Coord> coord{p, c}; 
+			write_log(coord);
 		}
 	}
 }
@@ -157,8 +155,8 @@ void Game::make_move(int s){
 			valid  = false;
 		}
 	}
-	std::pair<Coord, Coord> coord{def, att}; 
-	write_log(coord);
+	std::pair<Coord, Coord> coord2{def, att}; 
+	write_log(coord2);
 }
 
 std::pair<Coord, Coord> Game::select_move(int player){

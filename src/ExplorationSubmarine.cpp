@@ -1,6 +1,7 @@
 // Autore:
 #include "../include/ExplorationSubmarine.h"
 
+
 ExplorationSubmarine::ExplorationSubmarine(Coord front, Coord back)
     :   Ship{front, back}
 {
