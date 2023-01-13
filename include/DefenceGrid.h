@@ -26,7 +26,13 @@ class DefenceGrid : public Grid {
         // ritorna il tipo della nave
         // 1 = , 2= , 3 = 
         int type_ship(int pos);
+
         ~DefenceGrid(void);
+
+        // ritorna il vettore di Coord, data la Coord centrale e 
+        // la posizione della nave nel vettore ships_
+        std::vector<Coord> get_ship_coord(Coord c, int pos);
+
     protected:
         std::vector<Ship*> ships_;
 };
