@@ -1,13 +1,5 @@
-#include "../include/Game.h"
 #include "../include/GamePlayer.h"
 #include "../include/Game.h"
-#include "../include/Grid.h"
-#include "../include/DefenceGrid.h"
-#include "../include/AttackGrid.h"
-#include "../include/Coord.h"
-#include "../include/Battleship.h"
-#include "../include/HelpShip.h"
-#include "../include/ExplorationSubmarine.h"
 
 
 #include <time.h>
@@ -108,37 +100,10 @@ void GamePlayer::make_move(int s){
 		pl1 = 2;
 		pl2 = 1;
 	}
+	std::pair<Coord, Coord> move;
+	Coord def;
+	Coord att;
 	bool valid = false;
-	std::pair<Coord, Coord> move = select_move(pl1);
-	Coord def = move.first;
-	Coord att = move.second;
-	if(pl1 == 1){
-		int pos = def_grid_.first.find_ship(def);
-		int type = def_grid_.first.type_ship(pos);
-		if(type == 1){
-			attack(pl1, pos, att);
-		}else if(type == 2){
-			move_help(pl1, pos, att);
-			heal(pl1, pos, att);
-		}else if(type == 3){
-			move_sub(pl1, pos, att);
-			exploration(pl1, pos, att);
-		}
-	}
-	if(pl1 == 2){
-		int pos = def_grid_.second.find_ship(def);
-		int type = def_grid_.second.type_ship(pos);
-		if(type == 1){
-			attack(pl1, pos, att);
-		}else if(type == 2){
-			move_help(pl1, pos, att);
-			heal(pl1, pos, att);
-		}else if(type == 3){
-			move_sub(pl1, pos, att);
-			exploration(pl1, pos, att);
-		}
-	}
-	valid = false;
 	while(!valid){
 		try{
 			move = select_move(pl1);
@@ -148,7 +113,7 @@ void GamePlayer::make_move(int s){
 				int pos = def_grid_.first.find_ship(def);
 				int type = def_grid_.first.type_ship(pos);
 				if(type == 1){
-					attack(pl2, pos, att);
+					fire(pl2, pos, att);
 				}else if(type == 2){
 					move_help(pl2, pos, att);
 					heal(pl2, pos, att);
@@ -161,7 +126,44 @@ void GamePlayer::make_move(int s){
 				int pos = def_grid_.second.find_ship(def);
 				int type = def_grid_.second.type_ship(pos);
 				if(type == 1){
-					attack(pl2, pos, att);
+					fire(pl2, pos, att);
+				}else if(type == 2){
+					move_help(pl2, pos, att);
+					heal(pl2, pos, att);
+				}else if(type == 3){
+					move_sub(pl2, pos, att);
+					exploration(pl2, pos, att);
+				}
+			}
+		}catch(std::invalid_argument& e){
+			valid  = false;
+		}
+	}
+
+	valid = false;
+	while(!valid){
+		try{
+			move = select_move(pl1);
+			def = move.first;
+			att = move.second;
+			if(pl2 == 1){
+				int pos = def_grid_.first.find_ship(def);
+				int type = def_grid_.first.type_ship(pos);
+				if(type == 1){
+					fire(pl2, pos, att);
+				}else if(type == 2){
+					move_help(pl2, pos, att);
+					heal(pl2, pos, att);
+				}else if(type == 3){
+					move_sub(pl2, pos, att);
+					exploration(pl2, pos, att);
+				}
+			}
+			if(pl2 == 2){
+				int pos = def_grid_.second.find_ship(def);
+				int type = def_grid_.second.type_ship(pos);
+				if(type == 1){
+					fire(pl2, pos, att);
 				}else if(type == 2){
 					move_help(pl2, pos, att);
 					heal(pl2, pos, att);
@@ -178,7 +180,6 @@ void GamePlayer::make_move(int s){
 
 void GamePlayer::positioning_pc(void){
 	int const pl = 2;
-	
 	int number_c = 1;
 	char t = 'C';
 	int dim = 4;
@@ -230,19 +231,19 @@ std::pair<Coord,Coord> GamePlayer::select_move(int player){
 				choice = true;
 				util::to_upper(first);
 				if(first=="XX" && second=="XX"){
-					att_grid_.first.removeChar('x');
+					std::cout << att_grid_.first;
 					choice = false;
 				}
 				if(first=="AA" && second=="AA"){
-					att_grid_.first.removeDetections();
+					att_grid_.first.remove_detections();
 					choice = false;
 				}
 				if(first=="BB" && second=="BB"){
-					att_grid_.first.removeHit();
+					att_grid_.first.remove_hit();
 					choice = false;
 				}
 				if(first=="CC" && second=="CC"){
-					att_grid_.first.removeWater();
+					att_grid_.first.remove_water();
 					choice = false;
 				}
 			}

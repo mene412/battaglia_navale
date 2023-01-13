@@ -4,18 +4,14 @@
 #define ExplorationSubmarine_h
 
 #include "Ship.h"
-#include "AttackGrid.h"
-#include "DefenceGrid.h"
-#include "Coord.h"
 
 class ExplorationSubmarine: public Ship {
     public:
         ExplorationSubmarine(Coord front, Coord back);
         // controlla se le celle sono vuote, se true allora
         // cancella quelle vecchie, scrive quelle nuove e modifica i membri della ship
-        void move(DefenceGrid& myGrid, Coord c);
+        void move(Coord c);
         // se trova celle colpite (char minuscoli) stampa 'X', 
         // se trova celle non danneggiate (char maiuscoli) stampa 'Y'
-        void search(DefenceGrid& enemyGrid, AttackGrid& myGrid, Coord c);
 };
 #endif /* ExplorationSubmarine_h */

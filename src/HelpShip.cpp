@@ -15,7 +15,7 @@ HelpShip::HelpShip(Coord front, Coord back)
 	healed_=false;
 }
 
-void HelpShip::move(DefenceGrid& myGrid, Coord c) {
+void HelpShip::move(Coord c) {
 	std::vector<Coord> coordinate;
 	int x = c.X();
 	int y = c.Y();
