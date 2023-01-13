@@ -16,6 +16,14 @@ Grid::Grid(void){
     }
 }
 
+char Grid::get_char(Coord c) {
+    return grid_[c.X()][c.Y()];
+}
+
+bool Grid::is_in_grid(char ch, Coord c) {
+    return (ch == grid_[c.X()][c.Y()]);
+}
+
 std::string Grid::print_grid(void) {
     std::string grid_str = "";
     // stampo la griglia inserendo prima la lettera della riga

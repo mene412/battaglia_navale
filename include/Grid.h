@@ -12,8 +12,9 @@ class Grid {
     public:
         // costruttore: crea una amtrice 12x12 di char vuoti
         Grid(void);
-        //getter
-        char[] grid(void) { return grid_; }
+
+        char get_char(Coord c);
+        bool is_in_grid(char ch, Coord c);
         //stampa la griglia
         std::string print_grid(void);
         virtual ~Grid(void){};
