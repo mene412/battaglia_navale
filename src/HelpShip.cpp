@@ -15,8 +15,25 @@ HelpShip::HelpShip(Coord front, Coord back)
 	healed_=false;
 }
 
-void HelpShip::move(DefenceGrid& myGrid, Coord c, int pos) {
-	std::vector<Coord> coordinate = myGrid.get_ship_coord(c, pos);
+void HelpShip::move(DefenceGrid& myGrid, Coord c) {
+	std::vector<Coord> coordinate;
+	int x = c.X();
+	int y = c.Y();
+	bool is_orizzontal = orizzontal();
+	int dim_ship = 3;
+	if (is_orizzontal) {
+        // orizzontal -> stessa x
+        for (int i = 0; i < dim_ship; i++) {
+            Coord new_c {x, (y-(dim_ship/2)+i)};
+            coordinate.push_back(new_c);
+        }
+    } else {
+        // vertical -> stessa y
+        for (int i = 0; i < dim_ship; i++) {
+            Coord new_c {(x-(dim_ship/2)+i), y};
+            coordinate.push_back(new_c);
+        }
+    }
 	// controlla che la cella sia libera
 	if (!myGrid.check_position(coordinate))
         throw std::invalid_argument("Errore");
