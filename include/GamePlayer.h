@@ -9,7 +9,7 @@
 class GamePlayer: public Game{
  	public:
  	    GamePlayer(void);
- 		
+ 		void make_move(int s) override;
  	private:
  		void select_starter(void) override;
  		void positioning(void) override;

@@ -14,32 +14,34 @@ Battleship::Battleship(Coord front, Coord back)
     armor_=5;
     distance_ = 2;
 }
-bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, Coord cord){
-    if(AttGrid.grid()[cord.X()][cord.Y()]==' '){
-        if(DefGrid.grid()[cord.X()][cord.Y()]==' '){
-            AttGrid.grid()[cord.X()][cord.Y()]='O';
-            return false;                                                           //colpo non andato a segno
-        }
-        else {
-            for(int i=0; i<DefGrid.ships().size(); i++){
-                for(int j=0; i<DefGrid.ships()[i].dim();j++){
-                    if(DefGrid.ships()[i].coord(j).X()==cord.X() && DefGrid.ships()[i].coord(j).Y()==cord.Y()){
-                        if(DefGrid.ships()[i].armor()>1){
-                            DefGrid.ships()[i].decArmor();
-                            DefGrid.grid()[cord.X()][cord.Y()]=std::tolower(DefGrid.ships()[i].type());
-                        }
-                        else{
-                            for(int k=0; k<DefGrid.ships()[i].dim(); k++)
-                                DefGrid.grid()[DefGrid.ships()[i].coord(k).X()][DefGrid.ships()[i].coord(k).Y()]=' ';
-                                DefGrid.ships().erase(DefGrid.ships().begin()+i);
-                        }
-                    }
+void Battleship::fire(AttackGrid& att_grid, DefenceGrid& def_grid, Coord cord){
+    for(int i = 0; i<def_grid.ships().size(); i++){
+        for(int j = 0; j<def_grid.ships().at(i)->coord().size(); j++){
+            if(def_grid.ships().at(i)->coord().at(j) == cord){
+                att_grid.add('x', cord);
+                def_grid.ships().at(i) -> dec_armor();
+                if(full_ship(def_grid, i)){
+                    titanic(att_grid, def_grid, i);
                 }
+                return;
             }
-            AttGrid.grid()[x][y]='X';
-            return true;
-      }
+        }
     }
-    else
-      return false;
-  }
+    att_grid.add('o', cord);
+    return;    
+}
+
+bool Battleship::full_ship(DefenceGrid& def_grid, int pos) const{
+    if(def_grid.ships().at(pos)->armor() == 0){
+        return true;
+    }   
+    return false;
+}
+
+void Battleship::titanic(AttackGrid& att_grid, DefenceGrid& def_grid, int pos){
+    for(int i = 0; i<def_grid.ships().at(pos)->coord().size(); i++){
+        att_grid.add('X', def_grid.ships().at(pos)->coord().at(i));
+    }
+    def_grid.ships().erase(def_grid.ships().begin()+pos);
+    return;
+}

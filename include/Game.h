@@ -13,7 +13,7 @@
 class Game{
 	public:
 		virtual ~Game(){log.close();};
-		void make_move(int s);
+		virtual void make_move(int s);
     	int starter(void){return starter_;}
 
 	protected:
@@ -32,8 +32,12 @@ class Game{
 		std::pair<DefenceGrid, DefenceGrid> def_grid_;
 		bool end_max_turn(void) const;
 		void attack(int pl, int pos, Coord c);
+		void move_help(int pl, int pos, Coord c);
+		void move_sub(int pl, int pos, Coord c);
 		void heal(int pl, int pos, Coord c);
 		void exploration(int pl, int pos, Coord c);
+		bool free_coord(Coord c);
+		void increment_turn(void);
 
 	private:
 		int turn_;
@@ -41,4 +45,7 @@ class Game{
 		const int MAX_TURNS = 250;
 };
 
+namespace util{
+	void to_upper(std::string& x);
+}
 #endif
