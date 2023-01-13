@@ -97,8 +97,8 @@ void DefenceGrid::add_ship(Ship newShip) {
         return;                                 //TO DO: lanciare eccezione
     }
     for (int i = 0; i < newShip.coord().size(); i++) {
-        int rowSelected = newShip.coord().at(i).X();
-        int columnSelected = newShip.coord().at(i).Y();
+        int rowSelected = newShip.coord().at(i)->X();
+        int columnSelected = newShip.coord().at(i)->Y();
         grid_[rowSelected][columnSelected] = newShip.type();
     }
     ships_.push_back(&newShip);
@@ -108,6 +108,29 @@ DefenceGrid::~DefenceGrid(void){
     for(int i = 0; i<number_ship(); i++){
         delete ships_.at(i);
     }
+}
+
+
+std::vector<Coord> DefenceGrid::get_ship_coord(Coord c, int pos) {
+    std::vector<Coord> coord_ship;
+    int x = c.X();
+    int y = c.Y();
+    bool is_orizzontal = ships_.at(pos)->orizzontal();
+    int dim_ship = ships_.at(pos)->orizzontal();
+    if (is_orizzontal) {
+        // orizzontal -> stessa x
+        for (int i = 0; i < dim_ship; i++) {
+            Coord new_c {x, (y-(dim_ship/2)+i)};
+            coord_ship.push_back(new_c);
+        }
+    } else {
+        // vertical -> stessa y
+        for (int i = 0; i < dim_ship; i++) {
+            Coord new_c {(x-(dim_ship/2)+i), y};
+            coord_ship.push_back(new_c);
+        }
+    }
+    return coord_ship;
 }
 
 std::ostream& operator<<(std::ostream& os, DefenceGrid a){
