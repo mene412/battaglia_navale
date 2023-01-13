@@ -2,7 +2,6 @@
 #include "../include/DefenceGrid.h"
 #include "../include/AttackGrid.h"
 
-
 #include <ctime>
 #include <cstdlib>
 #include <iostream>
@@ -30,17 +29,17 @@ void Game::add_ship(int player, Coord p, Coord c, char type){
 	if(player == 1){
 		switch(type){
 			case 'C':
-				def_grid_.first.add_ship(Battleship{p, c});
+				def_grid_.first.add_ship(&Battleship{p, c});
 				std::pair<Coord, Coord> coord{p, c}; 
 				write_log(coord);
 				break;
 			case 'S':
-				def_grid_.first.add_ship(HelpShip{p, c});
+				def_grid_.first.add_ship(&HelpShip{p, c});
 				std::pair<Coord, Coord> coord{p, c}; 
 				write_log(coord);
 				break;
 			case 'E':
-				def_grid_.first.add_ship(ExplorationSubmarine{p, c});
+				def_grid_.first.add_ship(&ExplorationSubmarine{p, c});
 				std::pair<Coord, Coord> coord{p, c}; 
 				write_log(coord);
 				break;
@@ -48,17 +47,17 @@ void Game::add_ship(int player, Coord p, Coord c, char type){
 	}else{
 		switch(type){
 			case 'C':
-				def_grid_.second.add_ship(Battleship{p, c});
+				def_grid_.second.add_ship(&Battleship{p, c});
 				std::pair<Coord, Coord> coord{p, c}; 
 				write_log(coord);
 				break;
 			case 'S':
-				def_grid_.second.add_ship(HelpShip{p, c});
+				def_grid_.second.add_ship(&HelpShip{p, c});
 				std::pair<Coord, Coord> coord{p, c}; 
 				write_log(coord);
 				break;
 			case 'E':
-				def_grid_.second.add_ship(ExplorationSubmarine{p, c});
+				def_grid_.second.add_ship(&ExplorationSubmarine{p, c});
 				std::pair<Coord, Coord> coord{p, c}; 
 				write_log(coord);
 				break;
@@ -195,15 +194,6 @@ void Game::write_log(std::pair<Coord, Coord>& x){
 	log << x.first << " " << x.second << std::endl;
 }
 
-void Game::write_log(std::vector<std::string>& x){
-	for(int i = 0; i<x.size(); i++){
-		log << x.at(i);
-		if(i!=(x.size()-1)){
-			log << " ";
-		}
-	}
-	log << std::endl;
-}
 
 bool Game::end_max_turn(void) const {
 	if(turn_>=MAX_TURNS){
@@ -217,8 +207,10 @@ void Game::fire(int pl, int pos, Coord c){
 			for(int j = 0; j<def_grid_.second.ships().at(i)->coord().size(); j++){
 				if(def_grid_.second.ships().at(i)->coord().at(j) == c){
 					att_grid_.first.add_char('x', c);
-					def_grid_.second.ships().at(i) -> dec_armor();
+					def_grid_.second.ships().at(i) -> hit(c);
+					def_grid_.second.hit(c);
 					if(def_grid_.second.destroyed(i)){
+						def_grid_.second.reload();
 						std::cout << "Nave abbattuta." << std::endl;
 					}
 					return;
@@ -232,8 +224,10 @@ void Game::fire(int pl, int pos, Coord c){
 			for(int j = 0; j<def_grid_.first.ships().at(i)->coord().size(); j++){
 				if(def_grid_.first.ships().at(i)->coord().at(j) == c){
 					att_grid_.second.add_char('x', c);
-					def_grid_.first.ships().at(i) -> dec_armor();
+					def_grid_.first.ships().at(i) -> hit(c);
+					def_grid_.first.hit(c);
 					if(def_grid_.first.destroyed(i)){
+						def_grid_.first.reload();
 						std::cout << "Nave abbattuta." << std::endl;
 					}
 					return;
@@ -262,7 +256,51 @@ void Game::titanic(int pl, int pos){
 }
 
 
-
+void Game::heal(int pl, int pos, Coord c){
+	std::vector<Coord> coord_heal;
+	for(int i = 0; i<3; i++){
+		coord_heal.push_back(Coord{c.X()-1+i, c.Y()-1});
+	}
+	for(int i = 0; i<3; i++){
+		coord_heal.push_back(Coord{c.X()-1+i, c.Y()});
+	}
+	for(int i = 0; i<3; i++){
+		coord_heal.push_back(Coord{c.X()-1+i, c.Y()+1});
+	}
+	if(pl = 1){
+		std::vector<Coord> coord = def_grid_.first.ships().at(pos) -> coord();
+		bool heal = true;
+		for(int i = 0; i<coord_heal.size(); i++){
+			for(int j = 0; j<coord.size(); j++){
+				if(coord_heal.at(i) == coord.at(j)){
+					heal = false;
+				}
+			}
+			if(heal){
+				if(!def_grid_.first.ships().at(i) -> healed()){
+					def_grid_.first.ships().at(i) -> heal();
+				}
+			}
+		}
+		def_grid_.first.reload();
+	}else{
+		std::vector<Coord> coord = def_grid_.second.ships().at(pos) -> coord();
+		bool heal = true;
+		for(int i = 0; i<coord_heal.size(); i++){
+			for(int j = 0; j<coord.size(); j++){
+				if(coord_heal.at(i) == coord.at(j)){
+					heal = false;
+				}
+			}
+			if(heal){
+				if(!def_grid_.second.ships().at(i) -> healed()){
+					def_grid_.second.ships().at(i) -> heal();
+				}
+			}
+		}
+		def_grid_.second.reload();
+	}
+}
 
 
 
@@ -272,13 +310,12 @@ void Game::search(int pl, int pos, Coord c) {
 			for (int j = (c.X()-2); j < (c.X()+3); j++) {
 				if (j < 0 || i < 0){
 					continue;
-				}else if (def_grid_.second.grid().at(i).at(j) != ' ') {
-					char valueFind = def_grid_.first.grid()[i][j];
+				}else if (def_grid_.second.get_char(Coord{i, j}) != ' ') {
+					char valueFind = def_grid_.first.get_char(Coord{i, j});
 					if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
-						att_grid_.first.grid().at(i).at(j) = 'Y';
-					}
-					else if (valueFind == 'c' || valueFind == 'e' || valueFind == 's') {
-						att_grid_.first.grid()[i][j] = 'x';
+						att_grid_.first.insert_char('Y', Coord{i, j});
+					}else if (valueFind == 'c' || valueFind == 'e' || valueFind == 's') {
+						att_grid_.first.insert_char('x', Coord{i, j});
 					}
 				}
         	}
@@ -288,13 +325,12 @@ void Game::search(int pl, int pos, Coord c) {
 			for (int j = (c.X()-2); j < (c.X()+3); j++) {
 				if (j < 0 || i < 0){
 					continue;
-				}else if (def_grid_.first.grid().at(i).at(j) != ' ') {
-					char valueFind = def_grid_.first.grid()[i][j];
+				}else if (def_grid_.first.get_char(Coord{i, j}) != ' ') {
+					char valueFind = def_grid_.first.get_char(Coord{i, j});
 					if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
-						att_grid_.second.grid()[i][j] = 'Y';
-					}
-					else if (valueFind == 'c' || valueFind == 'e' || valueFind == 'd') {
-						att_grid_.second.grid()[i][j] = 'X';
+						att_grid_.second.insert_char('Y', Coord{i, j});
+					}else if (valueFind == 'c' || valueFind == 'e' || valueFind == 'd') {
+						att_grid_.second.insert_char('x', Coord{i, j});
 					}
 				}
         	}

@@ -24,6 +24,10 @@ bool Grid::is_in_grid(char ch, Coord c) {
     return (ch == grid_[c.X()][c.Y()]);
 }
 
+void Grid::insert_char(char ch, Coord c){
+    grid_[c.X()][c.Y()] = ch;
+}
+
 std::string Grid::print_grid(void) {
     std::string grid_str = "";
     // stampo la griglia inserendo prima la lettera della riga

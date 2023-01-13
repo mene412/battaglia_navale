@@ -7,9 +7,8 @@
 #include <vector>
 
 Battleship::Battleship(Coord front, Coord back)
-  : Ship{front, back}
+    : Ship{front, back}
 {
-    type_='C';
     dim_= 5;
     armor_= 5;
     distance_ = 2;

@@ -115,11 +115,11 @@ void GamePlayer::make_move(int s){
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
-					move_help(pl2, pos, att);
+					move_ship(pl2, pos, att);
 					heal(pl2, pos, att);
 				}else if(type == 3){
-					move_sub(pl2, pos, att);
-					exploration(pl2, pos, att);
+					move_ship(pl2, pos, att);
+					search(pl2, pos, att);
 				}
 			}
 			if(pl2 == 2){
@@ -128,11 +128,11 @@ void GamePlayer::make_move(int s){
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
-					move_help(pl2, pos, att);
+					move_ship(pl2, pos, att);
 					heal(pl2, pos, att);
 				}else if(type == 3){
-					move_sub(pl2, pos, att);
-					exploration(pl2, pos, att);
+					move_ship(pl2, pos, att);
+					search(pl2, pos, att);
 				}
 			}
 		}catch(std::invalid_argument& e){
@@ -152,11 +152,11 @@ void GamePlayer::make_move(int s){
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
-					move_help(pl2, pos, att);
+					move_ship(pl2, pos, att);
 					heal(pl2, pos, att);
 				}else if(type == 3){
-					move_sub(pl2, pos, att);
-					exploration(pl2, pos, att);
+					move_ship(pl2, pos, att);
+					search(pl2, pos, att);
 				}
 			}
 			if(pl2 == 2){
@@ -165,11 +165,11 @@ void GamePlayer::make_move(int s){
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
-					move_help(pl2, pos, att);
+					move_ship(pl2, pos, att);
 					heal(pl2, pos, att);
 				}else if(type == 3){
-					move_sub(pl2, pos, att);
-					exploration(pl2, pos, att);
+					move_ship(pl2, pos, att);
+					search(pl2, pos, att);
 				}
 			}
 		}catch(std::invalid_argument& e){

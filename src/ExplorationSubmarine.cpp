@@ -8,10 +8,9 @@
 ExplorationSubmarine::ExplorationSubmarine(Coord front, Coord back)
     :   Ship{front, back}
 {
-    type_='E';
     dim_=1;
     armor_=1;
-    healed_=false;
+    distance_ = 0;
 }
 
 void ExplorationSubmarine::move(Coord c) {

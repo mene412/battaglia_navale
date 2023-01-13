@@ -119,3 +119,7 @@ std::ostream& operator<<(std::ostream& os, Coord a){
 bool operator==(Coord a, Coord b){
 	return a.X() == b.X() && a.Y() == b.Y();
 }
+
+bool operator!=(Coord a, Coord b){
+	return !(a==b);
+}

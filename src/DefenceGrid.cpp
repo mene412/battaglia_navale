@@ -10,7 +10,7 @@
 
 
 DefenceGrid::DefenceGrid(void)
-    : Grid{}
+    : Grid{}, ships_{}
 {}
 
 bool DefenceGrid::check_position(std::vector<Coord> coordinates) {
@@ -91,17 +91,24 @@ int DefenceGrid::type_ship(int pos){
     }
 }
 
-void DefenceGrid::add_ship(Ship newShip) {
-    if (!check_position(newShip.coord())) {      //da errore in compilazione perhè coord è, per ora, un vector di vector di int
+void DefenceGrid::add_ship(Ship* newShip) {
+    if (!check_position(newShip->coord())) {      //da errore in compilazione perhè coord è, per ora, un vector di vector di int
                                                 // deve essere invece un vector di Coord
         return;                                 //TO DO: lanciare eccezione
     }
-    for (int i = 0; i < newShip.coord().size(); i++) {
-        int rowSelected = newShip.coord().at(i).X();
-        int columnSelected = newShip.coord().at(i).Y();
-        grid_[rowSelected][columnSelected] = newShip.type();
+    ships_.push_back(newShip);
+    for (int i = 0; i < newShip->coord().size(); i++) {
+        int rowSelected = newShip->coord().at(i).X();
+        int columnSelected = newShip->coord().at(i).Y();
+        int type = type_ship(ships_.size()-1);
+        if(type == 1){
+            grid_[rowSelected][columnSelected] = 'C';
+        }else if(type == 2){
+            grid_[rowSelected][columnSelected] = 'S';
+        }else if(type == 3){
+            grid_[rowSelected][columnSelected] = 'E';
+        }
     }
-    ships_.push_back(&newShip);
 }
 
 DefenceGrid::~DefenceGrid(void){
@@ -151,4 +158,53 @@ bool DefenceGrid::destroyed(int pos){
 
 void DefenceGrid::remove_ship(int pos){
     ships_.erase(ships_.begin()+pos);
+}
+
+void DefenceGrid::reload(void){
+    for(int i=0; i<number_ship(); i++){
+        int type = type_ship(i);
+        for(int j = 0; j<ships_.at(i) -> coord().size(); j++){
+            if(type == 1){
+                bool hit = false;
+                for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
+                    if(ships_.at(i) -> coord_hit().at(k) == j){
+                        hit = true;
+                    }
+                    if(hit){
+                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'c';
+                    }else{
+                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'C';
+                    }
+                }
+            }else if(type == 2){
+                bool hit = false;
+                for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
+                    if(ships_.at(i) -> coord_hit().at(k) == j){
+                        hit = true;
+                    }
+                    if(hit){
+                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 's';
+                    }else{
+                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'S';
+                    }
+                }
+            }else if(type == 3){
+                bool hit = false;
+                for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
+                    if(ships_.at(i) -> coord_hit().at(k) == j){
+                        hit = true;
+                    }
+                    if(hit){
+                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'e';
+                    }else{
+                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'E';
+                    }
+                }
+            }
+        }   
+    }
+}
+
+void DefenceGrid::hit(Coord c){
+    grid_[c.X()][c.Y()] = tolower(grid_[c.X()][c.Y()]);
 }

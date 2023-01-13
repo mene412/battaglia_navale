@@ -18,7 +18,7 @@ class DefenceGrid : public Grid {
         // ritorna true se sono libere
         bool check_position(std::vector<Coord> coordinates);   
         // inserisce la nave nel vettore di ship, e scrive i char corrispondenti nella griglia
-        void add_ship(Ship newShip);
+        void add_ship(Ship* newShip);
         // date le coordinate centrali della nave, ritorna la posizione nell'array ships_,
         // se non la trova lancia un errore
         int find_ship(Coord x);
@@ -27,6 +27,8 @@ class DefenceGrid : public Grid {
         int type_ship(int pos);
         bool destroyed(int pos);
         void remove_ship(int pos);
+        void reload(void);
+        void hit(Coord c);
 
         ~DefenceGrid(void);
 

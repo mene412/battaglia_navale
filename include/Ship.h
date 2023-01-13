@@ -6,12 +6,12 @@
 class Ship
 {
     public:
-        char type(void) { return type_; }
         void set_direction(void);
         void set_center(void);
         void set_coord_center(Coord cord);
         void set_coord(std::vector<Coord>& coordinates);
         std::vector<Coord>& coord(void){ return coord_; }
+        std::vector<int>& coord_hit(void){ return coord_hit_;}
         Coord const coord(int a){return coord_[a];}
         int const dim(void) { return dim_; }
         int armor(void) { return armor_; }
@@ -19,17 +19,19 @@ class Ship
         bool healed(void) { return healed_; }
         Coord center(void){ return center_; }
         bool left(void) { return left_; }
-        void dec_armor() { armor_=armor_-1;}
+        void dec_armor();
         bool orizzontal(void) { return orizzontal_; }
         void set_armor(int a);
         virtual ~Ship(){};
+        void heal(void);
+        void hit(Coord c);
 
     protected:
         Ship(Coord front, Coord back);
         std::vector<Coord> coord_;
+        std::vector<int> coord_hit_;
         int dim_;
         int armor_;
-        char type_;
         bool healed_;
         int distance_;
 

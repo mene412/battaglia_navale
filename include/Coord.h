@@ -28,4 +28,5 @@ namespace UCoord {
 
 std::ostream& operator<<(std::ostream& os, Coord a);
 bool operator==(Coord a, Coord b);
+bool operator!=(Coord a, Coord b);
 #endif
