@@ -248,7 +248,7 @@ void Game::exploration(int pl, int pos, Coord c){
 	}
 }
 
-// bool Game::free_coord(Coord c){
+// bool Game::free_coord(Coord c, int dim){
 // 	std::vector<Coord> coord;
 // 	if(f.X()!=s.X() && f.Y()!=s.Y()){
 // 		return false;

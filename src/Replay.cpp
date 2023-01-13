@@ -122,6 +122,7 @@ void Replay::move_first(void){
         throw std::invalid_argument("Errore");
     }
     def_grid_.first.ships().at(s)->set_coord_center(UCoord::from_string_to_coord(tail));
+    attack_first(UCoord::from_string_to_coord(head), UCoord::from_string_to_coord(tail));
 }
 
 void Replay::move_second(void){
@@ -135,6 +136,7 @@ void Replay::move_second(void){
         throw std::invalid_argument("Errore");
     }
     def_grid_.second.ships().at(s)->set_coord_center(UCoord::from_string_to_coord(tail));
+    attack_second(UCoord::from_string_to_coord(head), UCoord::from_string_to_coord(tail));
 }
 
 void Replay::take_ships(int player){
@@ -179,10 +181,39 @@ void Replay::take_ships(int player){
     }
 }
 
-void Replay::attack_first(void){
-
+void Replay::attack_first(Coord a, Coord b){
+    int pos = position(def_grid_.first, a);
+    if(def_grid_.first.type_ship(pos) == 1){
+        attack(1, pos, b);
+    }else if(def_grid_.first.type_ship(pos) == 2){
+        move_help(1, pos, b);
+        heal(1, pos, b);
+    }else if(def_grid_.first.type_ship(pos) == 3){
+        move_sub(1, pos, b);
+        exploration(1, pos, b);
+    }
 }
 
-void Replay::attack_second(void){
 
+
+void Replay::attack_second(Coord a, Coord b){
+    int pos = position(def_grid_.second, a);
+    if(def_grid_.first.type_ship(pos) == 1){
+        attack(1, pos, b);
+    }else if(def_grid_.second.type_ship(pos) == 2){
+        move_help(1, pos, b);
+        heal(1, pos, b);
+    }else if(def_grid_.second.type_ship(pos) == 3){
+        move_sub(1, pos, b);
+        exploration(1, pos, b);
+    }
+}
+
+int Replay::position(DefenceGrid& def_grid, Coord c){
+    for(int i = 0; i<def_grid.number_ship(); i++){
+        if(def_grid.ships().at(i)->center()==c){
+            return i;
+        }
+    }
+    throw std::invalid_argument("Errore");
 }
