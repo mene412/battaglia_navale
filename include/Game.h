@@ -5,8 +5,6 @@
 
 #include <vector>
 #include <fstream>
-#include "Coord.h"
-#include "Ship.h"
 #include "DefenceGrid.h"
 #include "AttackGrid.h"
 
@@ -31,13 +29,14 @@ class Game{
 		std::pair<AttackGrid, AttackGrid> att_grid_;
 		std::pair<DefenceGrid, DefenceGrid> def_grid_;
 		bool end_max_turn(void) const;
-		void attack(int pl, int pos, Coord c);
-		void move_help(int pl, int pos, Coord c);
-		void move_sub(int pl, int pos, Coord c);
+		void fire(int pl, int pos, Coord c);
+		void move(int pl, int pos, Coord c);
 		void heal(int pl, int pos, Coord c);
-		void exploration(int pl, int pos, Coord c);
+		void search(int pl, int pos, Coord c);
 		bool free_coord(Coord c);
 		void increment_turn(void);
+		bool full_ship(int player, int pos);
+		void titanic(int pl, int pos);
 
 	private:
 		int turn_;

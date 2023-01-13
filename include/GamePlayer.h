@@ -4,7 +4,6 @@
 #define Game_Player_h
 
 #include "Game.h"
-#include "Coord.h"
 
 class GamePlayer: public Game{
  	public:

@@ -4,7 +4,6 @@
 #define AttackGrid_h
 
 #include "Grid.h"
-#include "DefenceGrid.h"
 
 class AttackGrid : public Grid{
     public:

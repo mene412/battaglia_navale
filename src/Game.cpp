@@ -1,13 +1,6 @@
 #include "../include/Game.h"
-#include "../include/GamePlayer.h"
-#include "../include/Game.h"
-#include "../include/Grid.h"
 #include "../include/DefenceGrid.h"
 #include "../include/AttackGrid.h"
-#include "../include/Coord.h"
-#include "../include/Battleship.h"
-#include "../include/HelpShip.h"
-#include "../include/ExplorationSubmarine.h"
 
 
 #include <ctime>
@@ -89,7 +82,7 @@ void Game::make_move(int s){
 		int pos = def_grid_.first.find_ship(def);
 		int type = def_grid_.first.type_ship(pos);
 		if(type == 1){
-			attack(pl1, pos, att);
+			fire(pl1, pos, att);
 		}else if(type == 2){
 			move_help(pl1, pos, att);
 			heal(pl1, pos, att);
@@ -102,7 +95,7 @@ void Game::make_move(int s){
 		int pos = def_grid_.second.find_ship(def);
 		int type = def_grid_.second.type_ship(pos);
 		if(type == 1){
-			attack(pl1, pos, att);
+			fire(pl1, pos, att);
 		}else if(type == 2){
 			move_help(pl1, pos, att);
 			heal(pl1, pos, att);
@@ -121,26 +114,26 @@ void Game::make_move(int s){
 				int pos = def_grid_.first.find_ship(def);
 				int type = def_grid_.first.type_ship(pos);
 				if(type == 1){
-					attack(pl2, pos, att);
+					fire(pl2, pos, att);
 				}else if(type == 2){
 					move_help(pl2, pos, att);
 					heal(pl2, pos, att);
 				}else if(type == 3){
 					move_sub(pl2, pos, att);
-					exploration(pl2, pos, att);
+					search(pl2, pos, att);
 				}
 			}
 			if(pl2 == 2){
 				int pos = def_grid_.second.find_ship(def);
 				int type = def_grid_.second.type_ship(pos);
 				if(type == 1){
-					attack(pl2, pos, att);
+					fire(pl2, pos, att);
 				}else if(type == 2){
 					move_help(pl2, pos, att);
 					heal(pl2, pos, att);
 				}else if(type == 3){
 					move_sub(pl2, pos, att);
-					exploration(pl2, pos, att);
+					search(pl2, pos, att);
 				}
 			}
 		}catch(std::invalid_argument& e){
@@ -198,23 +191,14 @@ bool Game::end_max_turn(void) const {
 	}
 }
 
-void Game::attack(int pl, int pos, Coord c){
-	if(pl == 1){
-		Battleship* ship = dynamic_cast<Battleship*>(def_grid_.first.ships().at(pos));
-		ship->fire(att_grid_.first, def_grid_.first, c);
-	}else{
-		Battleship* ship = dynamic_cast<Battleship*>(def_grid_.second.ships().at(pos));
-		ship->fire(att_grid_.second, def_grid_.second, c);
-	}
-}
 
-void Game::move_help(int pl, int pos, Coord c){
+void Game::move(int pl, int pos, Coord c){
 	if(pl == 1){
 		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.first.ships().at(pos));
-		ship->move(def_grid_.first, c, pos);
+		ship->move(def_grid_.first, c);
 	}else{
 		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.second.ships().at(pos));
-		ship->move(def_grid_.second, c, pos);
+		ship->move(def_grid_.second, c);
 	}
 }
 
@@ -228,25 +212,101 @@ void Game::heal(int pl, int pos, Coord c){
 	}
 }
 
-void Game::move_sub(int pl, int pos, Coord c){
-	if(pl == 1){
-		ExplorationSubmarine* ship = dynamic_cast<ExplorationSubmarine*>(def_grid_.first.ships().at(pos));
-		ship->move(def_grid_.first, c);
+
+
+
+void Game::fire(int pl, int pos, Coord c){
+    if(pl = 1){
+		for(int i = 0; i<def_grid_.second.number_ship(); i++){
+			for(int j = 0; j<def_grid_.second.ships().at(i)->coord().size(); j++){
+				if(def_grid_.second.ships().at(i)->coord().at(j) == c){
+					att_grid_.first.add_char('x', c);
+					def_grid_.second.ships().at(i) -> dec_armor();
+					if(def_grid_.second.destroyed(i)){
+						std::cout << "Nave abbattuta." << std::endl;
+					}
+					return;
+				}
+			}
+		}
+    	att_grid_.first.add_char('o', c);
+    	return;
 	}else{
-		ExplorationSubmarine* ship = dynamic_cast<ExplorationSubmarine*>(def_grid_.second.ships().at(pos));
-		ship->move(def_grid_.second, c);
+		for(int i = 0; i<def_grid_.first.number_ship(); i++){
+			for(int j = 0; j<def_grid_.first.ships().at(i)->coord().size(); j++){
+				if(def_grid_.first.ships().at(i)->coord().at(j) == c){
+					att_grid_.second.add_char('x', c);
+					def_grid_.first.ships().at(i) -> dec_armor();
+					if(def_grid_.first.destroyed(i)){
+						std::cout << "Nave abbattuta." << std::endl;
+					}
+					return;
+				}
+			}
+		}
+    	att_grid_.first.add_char('o', c);
+    	return;
+	} 
+}
+
+void Game::titanic(int pl, int pos){
+    if(pl == 1){
+		for(int i = 0; i<def_grid_.second.ships().at(pos)->coord().size(); i++){
+			att_grid_.first.add_char('X', def_grid_.second.ships().at(pos)->coord().at(i));
+		}
+		def_grid_.second.remove_ship(pos);
+		return;
+	}else{
+		for(int i = 0; i<def_grid_.first.ships().at(pos)->coord().size(); i++){
+			att_grid_.second.add_char('X', def_grid_.first.ships().at(pos)->coord().at(i));
+		}
+		def_grid_.first.remove_ship(pos);
+		return;
 	}
 }
 
-void Game::exploration(int pl, int pos, Coord c){
-	if(pl == 1){
-		ExplorationSubmarine* ship = dynamic_cast<ExplorationSubmarine*>(def_grid_.first.ships().at(pos));
-		ship->search(def_grid_.first, att_grid_.first, c);
+
+
+
+
+
+void Game::search(int pl, int pos, Coord c) {
+    if(pl == 1){
+		for (int i = (c.Y()-2); i < (c.Y()+3); i++) {
+			for (int j = (c.X()-2); j < (c.X()+3); j++) {
+				if (j < 0 || i < 0){
+					continue;
+				}else if (def_grid_.second.grid().at(i).at(j) != ' ') {
+					char valueFind = att_grid_.first.grid()[i][j];
+					if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
+						att_grid_.first.grid().at(i).at(j) = 'Y';
+					}
+					else if (valueFind == 'c' || valueFind == 'e' || valueFind == 's') {
+						att_grid_.first.grid()[i][j] = 'x';
+					}
+				}
+        	}
+    	}
 	}else{
-		ExplorationSubmarine* ship = dynamic_cast<ExplorationSubmarine*>(def_grid_.second.ships().at(pos));
-		ship->search(def_grid_.second, att_grid_.first, c);
+		for (int i = (c.Y()-2); i < (c.Y()+3); i++) {
+			for (int j = (c.X()-2); j < (c.X()+3); j++) {
+				if (j < 0 || i < 0){
+					continue;
+				}else if (enemyGrid.grid().at(i).at(j) != ' ') {
+					char valueFind = enemyGrid.grid()[i][j];
+					if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
+						myGrid.grid()[i][j] = 'Y';
+					}
+					else if (valueFind == 'c' || valueFind == 'e' || valueFind == 'd') {
+						myGrid.grid()[i][j] = 'X';
+					}
+				}
+        	}
+    	}
 	}
 }
+
+
 
 
 

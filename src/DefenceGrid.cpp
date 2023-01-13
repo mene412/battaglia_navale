@@ -97,8 +97,8 @@ void DefenceGrid::add_ship(Ship newShip) {
         return;                                 //TO DO: lanciare eccezione
     }
     for (int i = 0; i < newShip.coord().size(); i++) {
-        int rowSelected = newShip.coord().at(i)->X();
-        int columnSelected = newShip.coord().at(i)->Y();
+        int rowSelected = newShip.coord().at(i).X();
+        int columnSelected = newShip.coord().at(i).Y();
         grid_[rowSelected][columnSelected] = newShip.type();
     }
     ships_.push_back(&newShip);
@@ -135,4 +135,20 @@ std::vector<Coord> DefenceGrid::get_ship_coord(Coord c, int pos) {
 
 std::ostream& operator<<(std::ostream& os, DefenceGrid a){
     os << "\nGriglia di difesa\n\n" << a.print_grid() << std::endl;
+}
+
+bool DefenceGrid::destroyed(int pos){
+    if(ships_.at(pos)->armor() == 0){
+        return true;
+    }   
+    return false;
+
+    if(ships_.at(pos)->armor() == 0){
+        return true;
+    }   
+    return false;
+}
+
+void DefenceGrid::remove_ship(int pos){
+    ships_.erase(ships_.begin()+pos);
 }

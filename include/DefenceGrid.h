@@ -4,7 +4,6 @@
 #define DefenceGrid_h
 
 #include "Grid.h"
-#include "Coord.h"
 
 class DefenceGrid : public Grid {
     public: 
@@ -26,6 +25,8 @@ class DefenceGrid : public Grid {
         // ritorna il tipo della nave
         // 1 = , 2= , 3 = 
         int type_ship(int pos);
+        bool destroyed(int pos);
+        void remove_ship(int pos);
 
         ~DefenceGrid(void);
 
