@@ -14,12 +14,19 @@ class Replay{
         void start(void);
         void start(std::string file_output);
         ~Replay(){log.close();}
+
     private:
         void take_ships(int player);
         void move_first(void);
         void move_second(void);
-        void attack_first(void);
-        void attack_second(void);
+        void attack_first(Coord a, Coord b);
+        void attack_second(Coord a, Coord b);
+        int position(DefenceGrid& def_grid, Coord a);
+        void attack(int pl, int pos, Coord b);
+        void heal(int pl, int pos, Coord b);
+        void move_help(int pl, int pos, Coord b);
+        void move_sub(int pl, int pos, Coord b);
+        void exploration(int pl, int pos, Coord b);
 
         std::ifstream log;
         std::pair<DefenceGrid, DefenceGrid> def_grid_;
