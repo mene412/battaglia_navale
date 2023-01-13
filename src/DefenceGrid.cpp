@@ -27,8 +27,8 @@ bool DefenceGrid::check_position(std::vector<Coord> coordinates) {
 
 int DefenceGrid::find_ship(Coord x) {
     for (int i = 0; i < ships_.size(); i++) {
-        if (ships().at(i).armor() != 0) {
-            if (ships().at(i).center() == x) {
+        if (ships().at(i)->armor() != 0) {
+            if (ships().at(i)->center() == x) {
                 return i;
             }
         }
@@ -37,14 +37,6 @@ int DefenceGrid::find_ship(Coord x) {
 }
 
 
-
-std::vector<Ship&> DefenceGrid::ships(void){
-    std::vector<Ship&> x{};
-    for(int i = 0; i<ships_.size(); i++){
-        x.push_back(*ships_.at(i));
-    }
-    return x;
-}
 
 
 std::vector<Battleship> DefenceGrid::battle_ship(void){
@@ -113,5 +105,5 @@ void DefenceGrid::add_ship(Ship newShip) {
 }
 
 std::ostream& operator<<(std::ostream& os, DefenceGrid a){
-    os << "Griglia di difesa\n\n" << a.print_grid() << std::endl;
+    os << "\nGriglia di difesa\n\n" << a.print_grid() << std::endl;
 }

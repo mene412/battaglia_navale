@@ -10,7 +10,7 @@
 #include <stdlib.h>
 
 Replay::Replay(std::string file_log)
-    : log{file_log}, def_grid_{DefenceGrid{}, DefenceGrid{}}, att_grid_{AttackGrid{}, AttackGrid{}}
+    : log{file_log}, def_grid_{DefenceGrid{}, DefenceGrid{}}, att_grid_{AttackGrid{}, AttackGrid{}}, turn_{0}
 {
     std::cout << "Replay: " << file_log << std::endl;
 }
@@ -43,6 +43,7 @@ void Replay::start(void){
     }
 
     while(!log.eof()){
+        turn_++;
         if(first==1){
             move_first();
             std::cout << def_grid_.first;
@@ -76,7 +77,7 @@ void Replay::start(std::string file_output){
     }else if(first==2){
         second = 1;
     }
-    output << "Inizia il player " << first << "." << std::endl;
+    output << "Inizia il player " << first << ".\n" << std::endl;
     if(first == 1){
         take_ships(first);
         output << def_grid_.first;
@@ -89,6 +90,8 @@ void Replay::start(std::string file_output){
         output << def_grid_.first;
     }
     while(!log.eof()){
+        turn_++;
+        output << "Turno " << turn_  << std::endl;
         if(first==1){
             move_first();
             output << def_grid_.first;
@@ -174,4 +177,12 @@ void Replay::take_ships(int player){
             def_grid_.second.add_ship(ExplorationSubmarine{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)});
         }
     }
+}
+
+void Replay::attack_first(void){
+
+}
+
+void Replay::attack_second(void){
+
 }

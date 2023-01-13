@@ -100,14 +100,14 @@ std::pair<Coord, Coord> Game::select_move(int player){
 	if(player == 1){
 		srand(time(NULL));
 		int ran = rand()%(def_grid_.first.number_ship());
-		x = def_grid_.first.ships().at(ran).center().X();
-		y = def_grid_.first.ships().at(ran).center().Y();
+		x = def_grid_.first.ships().at(ran)->center().X();
+		y = def_grid_.first.ships().at(ran)->center().Y();
 	}else{
 		int x, y;
 		srand(time(NULL));
 		int ran = rand()%(def_grid_.second.number_ship());
-		x = def_grid_.second.ships().at(ran).center().X();
-		y = def_grid_.second.ships().at(ran).center().Y();
+		x = def_grid_.second.ships().at(ran)->center().X();
+		y = def_grid_.second.ships().at(ran)->center().Y();
 	}
 
 	Coord first{x,y};
@@ -147,13 +147,12 @@ void Game::attack(int pl, Coord c){
 
 void Game::heal(int pl, int pos, Coord c){
 	if(pl == 1){
-		HelpShip& ship = dynamic_cast<HelpShip&>(def_grid_.first.ships().at(pos));
-		ship.move(def_grid_.first, c);
+		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.first.ships().at(pos));
+		ship->move(def_grid_.first, c);
 	}else{
-		HelpShip& ship = dynamic_cast<HelpShip&>(def_grid_.second.ships().at(pos));
-		ship.move(def_grid_.second, c);
+		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.second.ships().at(pos));
+		ship->move(def_grid_.second, c);
 	}
-	def_grid_.first.ships_ship().at(pos)->center()
 }
 
 void Game::exploration(int pl, int pos, Coord c){

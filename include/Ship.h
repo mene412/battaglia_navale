@@ -11,7 +11,7 @@ class Ship
         void set_center(void);
         void set_coord_center(Coord cord);
         void set_coord(std::vector<Coord>& coordinates);
-        std::vector<Coord> const coord(void){ return coord_; }
+        std::vector<Coord>& const coord(void){ return coord_; }
         Coord const coord(int a){return coord_[a];}
         int const dim(void) { return dim_; }
         int armor(void) { return armor_; }

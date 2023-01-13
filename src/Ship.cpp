@@ -69,6 +69,6 @@ void Ship::set_healed(bool a){
 }
 
 void Ship::set_coord(std::vector<Coord>& coordinates){
-    coord_ship_=coordinates;
+    coord_=coordinates;
     set_coord_center(coordinates[(int)dim_/2]);
 }

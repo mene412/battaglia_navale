@@ -24,6 +24,7 @@ class Replay{
         std::ifstream log;
         std::pair<DefenceGrid, DefenceGrid> def_grid_;
         std::pair<AttackGrid, AttackGrid> att_grid_;
+        int turn_;
 };
 
 #endif
