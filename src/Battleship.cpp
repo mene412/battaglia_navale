@@ -14,33 +14,32 @@ Battleship::Battleship(Coord front, Coord back)
     armor_=5;
     distance_ = 2;
 }
-bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x,int y){
-    if(AttGrid.grid()[x][y]==' '){
-        if(DefGrid.grid()[x][y]==' '){
-            AttGrid.grid()[x][y]='O';
-      return false;         //colpo non andato a segno
-  }
-  else {
-      for(int i=0; i<DefGrid.ships().size(); i++){
-        for(int j=0; i<DefGrid.ships()[i].dim();j++){
-            if(DefGrid.ships()[i].coord(j).first==x && DefGrid.ships()[i].coord(j).second==y){
-                if(DefGrid.ships()[i].armor()>1){
-                    DefGrid.ships()[i].decArmor();
-                    DefGrid.grid()[x][y]=std::tolower(DefGrid.ships()[i].type());     //scrive il carattere minuscolo al posto del maiuscolo
-            }
-            else{
-                for(int k=0; k<DefGrid.ships()[i].dim(); k++)
-                    DefGrid.grid()[DefGrid.ships()[i].coord(k).first][DefGrid.ships()[i].coord(k).second]=' ';   //"reinizializza la grid dove è affondata la nave"
-                DefGrid.ships().erase(DefGrid.ships().begin()+i);                                                //rimuove la nave abbattuta dal vettore
-            }
-            }
-          }
+bool Battleship::fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, Coord cord){
+    if(AttGrid.grid()[cord.X()][cord.Y()]==' '){
+        if(DefGrid.grid()[cord.X()][cord.Y()]==' '){
+            AttGrid.grid()[cord.X()][cord.Y()]='O';
+            return false;                                                           //colpo non andato a segno
         }
-      AttGrid.grid()[x][y]='X';
-        return true;                      //colpo andato a segno
+        else {
+            for(int i=0; i<DefGrid.ships().size(); i++){
+                for(int j=0; i<DefGrid.ships()[i].dim();j++){
+                    if(DefGrid.ships()[i].coord(j).X()==cord.X() && DefGrid.ships()[i].coord(j).Y()==cord.Y()){
+                        if(DefGrid.ships()[i].armor()>1){
+                            DefGrid.ships()[i].decArmor();
+                            DefGrid.grid()[cord.X()][cord.Y()]=std::tolower(DefGrid.ships()[i].type());
+                        }
+                        else{
+                            for(int k=0; k<DefGrid.ships()[i].dim(); k++)
+                                DefGrid.grid()[DefGrid.ships()[i].coord(k).X()][DefGrid.ships()[i].coord(k).Y()]=' ';
+                                DefGrid.ships().erase(DefGrid.ships().begin()+i);
+                        }
+                    }
+                }
+            }
+            AttGrid.grid()[x][y]='X';
+            return true;
       }
     }
-    else{
-      return false; //DA rivedere
-    }                        //Come gestiamo il "colpo ripetuto"? Per esempio se le coordinate x,y generate dal computer sono quelle di un "pezzo" di nave già colpito?
+    else
+      return false;
   }

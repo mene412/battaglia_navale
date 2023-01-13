@@ -60,24 +60,15 @@ void Ship::set_coord_center(Coord cord){
     }
 }
 
+void Ship::set_armor(int a){
+    armor_=a;
+}
 
 void Ship::set_healed(bool a){
     healed_=a;
 }
 
-void Ship::decArmor(void){
-  armor_=armor_-1;
+void Ship::set_coord(std::vector<Coord>& coordinates){
+    coord_ship_=coordinates;
+    set_coord_center(coordinates[(int)dim_/2]);
 }
-
-void Ship::incArmor(void){
-  armor_=armor_+1;
-}
-
-bool Ship::ifSameCoord(int x, int y){
-  for(int i=0; i<dim_; i++){
-    if(coord_[i].first==x && coord_[i].second==y)
-      return true;
-  }
-  return false; 
-}
-
