@@ -14,7 +14,8 @@ class Grid {
         Grid(void);
         //getter
         int dimension(void){ return sizeof(grid_);}
-        bool is_in_grid(char c, Coord cord);
+        char get_char(Coord c);
+        bool is_in_grid(char ch, Coord c);
         //stampa la griglia
         std::string print_grid(void);
         virtual ~Grid(void){};
