@@ -17,14 +17,16 @@ class Ship
         int x(void) { return x_; }
         int y(void) { return y_; }
         void set_healed(bool a);
-        void set_coord(std::vector<Coord> coord);
+        void set_coord(std::vector<Coord>& coord);
         bool healed(void) { return healed_; }
-        bool ifSameCoord(int x, int y);
-        void incArmor(void);
-        void decArmor(void);
+        void inc_armor(void);
+        void dec_armor(void);
+        void heal(void);
         Coord center(void){ return center_; }
         bool left(void) { return left_; }
         bool orizzontal(void) { return orizzontal_; }
+        void hit(Coord c);
+        void set_armor(int a);
         virtual ~Ship() {};
     protected:
         std::vector<Coord> coord_;
