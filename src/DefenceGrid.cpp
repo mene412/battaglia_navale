@@ -26,7 +26,7 @@ bool DefenceGrid::check_position(std::vector<Coord> coordinates) {
 }
 
 int DefenceGrid::find_ship(Coord x) {
-    for (int i = 0; i < ships_.size(); i++) {
+    for (int i = 0; i < number_ship(); i++) {
         if (ships().at(i)->armor() != 0) {
             if (ships().at(i)->center() == x) {
                 return i;
@@ -42,7 +42,7 @@ int DefenceGrid::find_ship(Coord x) {
 std::vector<Battleship*>& DefenceGrid::battle_ship(void){
     std::vector<Battleship*> battle{};
     Battleship* battleship;
-    for(int i = 0; i<ships_.size(); i++){
+    for(int i = 0; i<number_ship(); i++){
         battleship = dynamic_cast<Battleship*>(ships_.at(i));
         if(battleship!=nullptr){
             battle.push_back(battleship);
@@ -55,7 +55,7 @@ std::vector<Battleship*>& DefenceGrid::battle_ship(void){
 std::vector<HelpShip*>& DefenceGrid::help_ship(void){
     std::vector<HelpShip*> help{};
     HelpShip* helpship;
-    for(int i = 0; i<ships_.size(); i++){
+    for(int i = 0; i<number_ship(); i++){
         helpship = dynamic_cast<HelpShip*>(ships_.at(i));
         if(helpship!=nullptr){
             help.push_back(helpship);
@@ -68,7 +68,7 @@ std::vector<HelpShip*>& DefenceGrid::help_ship(void){
 std::vector<ExplorationSubmarine*>& DefenceGrid::sub_ship(void){
     std::vector<ExplorationSubmarine*> sub{};
     ExplorationSubmarine* subship;
-    for(int i = 0; i<ships_.size(); i++){
+    for(int i = 0; i<number_ship(); i++){
         subship = dynamic_cast<ExplorationSubmarine*>(ships_.at(i));
         if(subship!=nullptr){
             sub.push_back(subship);

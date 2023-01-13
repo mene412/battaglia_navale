@@ -15,7 +15,7 @@ Battleship::Battleship(Coord front, Coord back)
     distance_ = 2;
 }
 void Battleship::fire(AttackGrid& att_grid, DefenceGrid& def_grid, Coord cord){
-    for(int i = 0; i<def_grid.ships().size(); i++){
+    for(int i = 0; i<def_grid.number_ship(); i++){
         for(int j = 0; j<def_grid.ships().at(i)->coord().size(); j++){
             if(def_grid.ships().at(i)->coord().at(j) == cord){
                 att_grid.add('x', cord);
