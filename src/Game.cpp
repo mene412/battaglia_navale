@@ -211,20 +211,20 @@ void Game::attack(int pl, int pos, Coord c){
 void Game::move_help(int pl, int pos, Coord c){
 	if(pl == 1){
 		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.first.ships().at(pos));
-		ship->move(def_grid_.first, c);
+		ship->move(def_grid_.first, c, pos);
 	}else{
 		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.second.ships().at(pos));
-		ship->move(def_grid_.second, c);
+		ship->move(def_grid_.second, c, pos);
 	}
 }
 
 void Game::heal(int pl, int pos, Coord c){
 	if(pl == 1){
 		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.first.ships().at(pos));
-		ship->move(def_grid_.first, c);
+		ship->heal(def_grid_.first, c);
 	}else{
 		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.second.ships().at(pos));
-		ship->move(def_grid_.second, c);
+		ship->heal(def_grid_.second, c);
 	}
 }
 
@@ -241,66 +241,14 @@ void Game::move_sub(int pl, int pos, Coord c){
 void Game::exploration(int pl, int pos, Coord c){
 	if(pl == 1){
 		ExplorationSubmarine* ship = dynamic_cast<ExplorationSubmarine*>(def_grid_.first.ships().at(pos));
-		ship->move(def_grid_.first, c);
+		ship->search(def_grid_.first, att_grid_.first, c);
 	}else{
 		ExplorationSubmarine* ship = dynamic_cast<ExplorationSubmarine*>(def_grid_.second.ships().at(pos));
-		ship->move(def_grid_.second, c);
+		ship->search(def_grid_.second, att_grid_.first, c);
 	}
 }
 
-// bool Game::free_coord(Coord c, int dim){
-// 	std::vector<Coord> coord;
-// 	if(f.X()!=s.X() && f.Y()!=s.Y()){
-// 		return false;
-// 	}
-// 	int dimx = std::abs(f.X()-s.X());
-// 	int dimy = std::abs(f.Y()-s.Y());
-// 	if(dimx!= 2 && dimx != 4 && dimx!= 0){
-// 		return false;
-// 	}
-// 	if(dimy!=2 && dimy!= 4 && dimy != 0){
-// 		return false;
-// 	}
-// 	if(f.X()<s.X()){
-// 		coord.push_back(Coord{f.X(), f.Y()});
-// 		for(int i = 1; i<dimx; i++){
-// 			coord.push_back(Coord{f.X()+i, f.Y()});
-// 		}
-// 		coord.push_back(Coord{s.X(), s.Y()});
-// 	}
-// 	if(f.X()>s.X()){
-// 		coord.push_back(Coord{s.X(), s.Y()});
-// 		for(int i = 1; i<dimx; i++){
-// 			coord.push_back(Coord{s.X()+i, s.Y()});
-// 		}
-// 		coord.push_back(Coord{f.X(), f.Y()});
-// 	}
-// 	if(f.Y()<s.Y()){
-// 		coord.push_back(Coord{f.X(), f.Y()});
-// 		for(int i = 1; i<dimy; i++){
-// 			coord.push_back(Coord{f.X(), f.Y()+i});
-// 		}
-// 		coord.push_back(Coord{s.X(), s.Y()});
-// 	}
-// 	if(f.X()>s.X()){
-// 		coord.push_back(Coord{s.X(), s.Y()});
-// 		for(int i = 1; i<dimy; i++){
-// 			coord.push_back(Coord{s.X(), s.Y()+i});
-// 		}
-// 		coord.push_back(Coord{f.X(), f.Y()});
-// 	}
 
-// 	for(int i = 0; i<def_grid_.first.number_ship(); i++){
-// 		for(int j = 0; j<def_grid_.first.ships().at(i)->coord().size(); j++){
-// 			for(int k = 0; k<coord.size(); k++){
-// 				if(def_grid_.first.ships().at(i)->coord().at(j)==coord.at(k)){
-// 					return false;
-// 				}
-// 			}
-// 		}
-// 	}
-// 	return true;
-// }
 
 void util::to_upper(std::string& x){
 	for(int i = 0; i<x.size(); i++){

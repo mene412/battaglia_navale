@@ -56,7 +56,9 @@ void GamePlayer::positioning_player(void){
 		try{
 			std::cout << "Inserire le coordinate della nave corazzata " << number_c << ": ";
 			std::cin >> punta;
+			util::to_upper(punta);
 			std::cin >> coda;
+			util::to_upper(coda);
 			Game::add_ship(pl, UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda), t);
 			number_c++;
 		}catch(std::invalid_argument& e){
@@ -70,7 +72,9 @@ void GamePlayer::positioning_player(void){
 		try{
 			std::cout << "Inserire le coordinate della nave di supporto " << number_s << ": ";
 			std::cin >> punta;
+			util::to_upper(punta);
 			std::cin >> coda;
+			util::to_upper(coda);
 			Game::add_ship(pl, UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda), t);
 			number_s++;
 		}catch(std::invalid_argument& e){
@@ -82,10 +86,10 @@ void GamePlayer::positioning_player(void){
 	t = 'E';
 	while(number_e < 3){
 		try{
-			std::cout << "Inserire le coordinate del sottomarino di esplorazione " << number_e << ": ";
+			std::cout << "Inserire la coordinata del sottomarino di esplorazione " << number_e << ": ";
 			std::cin >> punta;
-			std::cin >> coda;
-			Game::add_ship(pl, UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda), t);
+			util::to_upper(punta);
+			Game::add_ship(pl, UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(punta), t);
 			number_e++;
 		}catch(std::invalid_argument& e){
 			std::cout << "Coordinate non valide, reinserire." << std::endl;
