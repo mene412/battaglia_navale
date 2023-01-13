@@ -31,6 +31,12 @@ void AttackGrid::remove_char(char c) {
         }
     }
 }
+// aggiunge uno specifico char in una specifica Coord
+void AttackGrid::add_char(char ch, Coord coord) {
+    if (ch != 'X' || ch != 'O' || ch!='Y')
+        throw std::exception("Errore");
+    grid_[coord.X()][coord.Y()] = ch;
+}
 
 std::ostream& operator<<(std::ostream& os, AttackGrid a){
     os << "Griglia di attacco\n\n" << a.print_grid() << std::endl;
