@@ -8,7 +8,8 @@
 class HelpShip : public Ship {
     public:
         HelpShip(Coord front, Coord back);
-        void move(DefenceGrid& myGrid, std::vector<Coord> c);
+        // int pos = posizione della ship nel vector
+        void move(DefenceGrid& myGrid, Coord c, int pos);
         void heal(DefenceGrid& yourGrid, Coord c);
 };
 #endif

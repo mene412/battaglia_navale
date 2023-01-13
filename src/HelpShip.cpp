@@ -15,22 +15,23 @@ HelpShip::HelpShip(Coord front, Coord back)
 	healed_=false;
 }
 
-void HelpShip::move(DefenceGrid& myGrid, std::vector<Coord> c) {
+void HelpShip::move(DefenceGrid& myGrid, Coord c, int pos) {
+	std::vector<Coord> coordinate = myGrid.get_ship_coord(c, pos);
 	// controlla che la cella sia libera
-	if (!myGrid.check_position(c))
+	if (!myGrid.check_position(coordinate))
         throw std::invalid_argument("Errore");
 	// cancella la vecchia cella
 	for (int i = 0; i < coord().size(); i++) {
 		myGrid.grid()[coord().at(i).X()][coord().at(i).Y()] = ' ';
 	}
 	// scrive nelle nuove celle
-	for (int i = 0; i < c.size(); i++) {
-		int row = c.at(i).X();
-    	int column = c.at(i).Y();
+	for (int i = 0; i < coordinate.size(); i++) {
+		int row = coordinate.at(i).X();
+    	int column = coordinate.at(i).Y();
 		myGrid.grid()[row][column] = 'S';
 	}
 	// modifica i membri
-	set_coord(c);
+	set_coord(coordinate);
 }
 
 //A partire dalla cella centrale della nave, scorre una matrice 3x3
