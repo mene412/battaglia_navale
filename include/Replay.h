@@ -18,6 +18,8 @@ class Replay{
         void take_ships(int player);
         void move_first(void);
         void move_second(void);
+        void attack_first(void);
+        void attack_second(void);
 
         std::ifstream log;
         std::pair<DefenceGrid, DefenceGrid> def_grid_;

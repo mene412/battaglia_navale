@@ -11,7 +11,7 @@ class Ship
         void set_center(void);
         void set_coord_center(Coord cord);
         void set_coord(std::vector<Coord>& coordinates);
-        std::vector<Coord> const coord(void) { return coord_ship_; }
+        std::vector<Coord> const coord(void){ return coord_; }
         Coord const coord(int a){return coord_[a];}
         int const dim(void) { return dim_; }
         int armor(void) { return armor_; }
@@ -26,14 +26,14 @@ class Ship
 
     protected:
         Ship(Coord front, Coord back);
-        Coord coord_;
+        std::vector<Coord> coord_;
         int dim_;
         int armor_;
         char type_;
         bool healed_;
         int distance_;
+
     private:
-        std::vector<Coord> coord_ship_;
         Coord front_;
         Coord back_;
         Coord center_;
