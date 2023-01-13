@@ -85,9 +85,9 @@ void Game::make_move(int s){
 		int pos = def_grid_.first.find_ship(def);
 		int type = def_grid_.first.type_ship(pos);
 		if(type == 1){
-			
+			attack(pl1, pos, att);
 		}else if(type == 2){
-
+			heal(pl1, pos, att);
 		}else if(type == 3){
 
 		}
@@ -141,8 +141,14 @@ bool Game::end_max_turn(void) const {
 	}
 }
 
-void Game::attack(int pl, Coord c){
-
+void Game::attack(int pl, int pos, Coord c){
+	if(pl == 1){
+		Battleship* ship = dynamic_cast<Battleship*>(def_grid_.first.ships().at(pos));
+		ship->fire(att_grid_.first, def_grid_.first, c);
+	}else{
+		Battleship* ship = dynamic_cast<Battleship*>(def_grid_.second.ships().at(pos));
+		ship->fire(att_grid_.second, def_grid_.second, c);
+	}
 }
 
 void Game::heal(int pl, int pos, Coord c){
@@ -156,5 +162,11 @@ void Game::heal(int pl, int pos, Coord c){
 }
 
 void Game::exploration(int pl, int pos, Coord c){
-
+	if(pl == 1){
+		ExplorationSubmarine* ship = dynamic_cast<ExplorationSubmarine*>(def_grid_.first.ships().at(pos));
+		ship->move(def_grid_.first, c);
+	}else{
+		ExplorationSubmarine* ship = dynamic_cast<ExplorationSubmarine*>(def_grid_.second.ships().at(pos));
+		ship->move(def_grid_.second, c);
+	}
 }

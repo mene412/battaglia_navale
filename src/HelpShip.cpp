@@ -59,12 +59,12 @@ void HelpShip::heal(DefenceGrid& yourGrid, Coord c) {
 }
 
 void heal_battleship(Coord c, DefenceGrid yourGrid) {
-	std::vector<Battleship> ships = yourGrid.battle_ship();
+	std::vector<Battleship*> ships = yourGrid.battle_ship();
 	for (int i = 0; i < ships.size(); i++) {
-		for (int k = 0; k < ships.at(i).coord().size(); k++) {
-			if (ships.at(i).coord().at(i) == c) {
-				if (ships.at(i).armor() > 0 || ships.at(i).armor() < ships.at(i).dim()) {
-					ships.at(i).set_armor(5);
+		for (int k = 0; k < ships.at(i)->coord().size(); k++) {
+			if (ships.at(i)->coord().at(i) == c) {
+				if (ships.at(i)->armor() > 0 || ships.at(i)->armor() < ships.at(i)->dim()) {
+					ships.at(i)->set_armor(5);
 				}
 			}
 		}
@@ -72,12 +72,12 @@ void heal_battleship(Coord c, DefenceGrid yourGrid) {
 }
 
 void heal_helpShip(Coord c, DefenceGrid yourGrid) {
-	std::vector<HelpShip> ships = yourGrid.help_ship();
+	std::vector<HelpShip*> ships = yourGrid.help_ship();
 	for (int i = 0; i < ships.size(); i++) {
-		for (int k = 0; k < ships.at(i).coord().size(); k++) {
-			if (ships.at(i).coord().at(i) == c) {
-				if ((ships.at(i).armor() > 0 || ships.at(i).armor() < ships.at(i).dim()) && !ships.at(i).healed()) {
-					ships.at(i).set_armor(3);
+		for (int k = 0; k < ships.at(i)->coord().size(); k++) {
+			if (ships.at(i)->coord().at(i) == c) {
+				if ((ships.at(i)->armor() > 0 || ships.at(i)->armor() < ships.at(i)->dim()) && !ships.at(i)->healed()) {
+					ships.at(i)->set_armor(3);
 				}
 			}
 		}

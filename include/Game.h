@@ -31,7 +31,7 @@ class Game{
 		std::pair<AttackGrid, AttackGrid> att_grid_;
 		std::pair<DefenceGrid, DefenceGrid> def_grid_;
 		bool end_max_turn(void) const;
-		void attack(int pl, Coord c);
+		void attack(int pl, int pos, Coord c);
 		void heal(int pl, int pos, Coord c);
 		void exploration(int pl, int pos, Coord c);
 

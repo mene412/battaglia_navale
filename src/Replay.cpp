@@ -121,7 +121,7 @@ void Replay::move_first(void){
     if(s==-1){
         throw std::invalid_argument("Errore");
     }
-    def_grid_.first.ships().at(s).set_coord_center(UCoord::from_string_to_coord(tail));
+    def_grid_.first.ships().at(s)->set_coord_center(UCoord::from_string_to_coord(tail));
 }
 
 void Replay::move_second(void){
@@ -134,7 +134,7 @@ void Replay::move_second(void){
     if(s==-1){
         throw std::invalid_argument("Errore");
     }
-    def_grid_.second.ships().at(s).set_coord_center(UCoord::from_string_to_coord(tail));
+    def_grid_.second.ships().at(s)->set_coord_center(UCoord::from_string_to_coord(tail));
 }
 
 void Replay::take_ships(int player){

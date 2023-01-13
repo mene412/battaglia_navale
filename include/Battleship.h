@@ -11,6 +11,6 @@ class Battleship: public Ship
 {
     public:
         Battleship(Coord front, Coord back);
-        bool fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, int x,int y);
+        bool fire(AttackGrid& AttGrid, DefenceGrid& DefGrid, Coord cord);
 };
 #endif /* Battleship_h */

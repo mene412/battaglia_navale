@@ -39,39 +39,39 @@ int DefenceGrid::find_ship(Coord x) {
 
 
 
-std::vector<Battleship> DefenceGrid::battle_ship(void){
-    std::vector<Battleship> battle{};
+std::vector<Battleship*>& DefenceGrid::battle_ship(void){
+    std::vector<Battleship*> battle{};
     Battleship* battleship;
     for(int i = 0; i<ships_.size(); i++){
         battleship = dynamic_cast<Battleship*>(ships_.at(i));
         if(battleship!=nullptr){
-            battle.push_back(*battleship);
+            battle.push_back(battleship);
         }
     }
     delete battleship;
     return battle;
 }
 
-std::vector<HelpShip> DefenceGrid::help_ship(void){
-    std::vector<HelpShip> help{};
+std::vector<HelpShip*>& DefenceGrid::help_ship(void){
+    std::vector<HelpShip*> help{};
     HelpShip* helpship;
     for(int i = 0; i<ships_.size(); i++){
         helpship = dynamic_cast<HelpShip*>(ships_.at(i));
         if(helpship!=nullptr){
-            help.push_back(*helpship);
+            help.push_back(helpship);
         }
     }
     delete helpship;
     return help;
 }
 
-std::vector<ExplorationSubmarine> DefenceGrid::sub_ship(void){
-    std::vector<ExplorationSubmarine> sub{};
+std::vector<ExplorationSubmarine*>& DefenceGrid::sub_ship(void){
+    std::vector<ExplorationSubmarine*> sub{};
     ExplorationSubmarine* subship;
     for(int i = 0; i<ships_.size(); i++){
         subship = dynamic_cast<ExplorationSubmarine*>(ships_.at(i));
         if(subship!=nullptr){
-            sub.push_back(*subship);
+            sub.push_back(subship);
         }
     }
     delete subship;
