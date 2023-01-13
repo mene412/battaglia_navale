@@ -16,13 +16,13 @@ class Grid {
         // costruttore: crea una amtrice 12x12 di char vuoti
         Grid(void);
         //getter
-        char** grid(void) { return grid_; }
+        char grid(void) { return grid_[0][0]; }
         //stampa la griglia
         std::string print_grid(void);
         virtual ~Grid(void){};
 
     protected:    
-        char** grid_;
+        char grid_[12][12];
 };
 
 std::ostream& operator<<(std::ostream& os, Grid a);
