@@ -23,8 +23,9 @@ std::string Grid::print_grid(void) {
         int number_row = row;
         for (int column = 0; column < 12; column++) {
             // se il numero di riga è superiore all'8 (char I), aggiungo 2 per saltare i char J e K
-            if (number_row > 8)
+            if (number_row > 8){
                 number_row += 2;
+            }
             char char_row = 'A' + number_row;
             grid_str = grid_str + char_row + "|";
             grid_str = grid_str + grid_[row][column] + "|\n";

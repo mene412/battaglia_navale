@@ -31,24 +31,36 @@ void Game::add_ship(int player, Coord p, Coord c, char type){
 		switch(type){
 			case 'C':
 				def_grid_.first.add_ship(Battleship{p, c});
+				std::pair<Coord, Coord> coord{p, c}; 
+				write_log(coord);
 				break;
 			case 'S':
 				def_grid_.first.add_ship(HelpShip{p, c});
+				std::pair<Coord, Coord> coord{p, c}; 
+				write_log(coord);
 				break;
 			case 'E':
 				def_grid_.first.add_ship(ExplorationSubmarine{p, c});
+				std::pair<Coord, Coord> coord{p, c}; 
+				write_log(coord);
 				break;
 		}
 	}else{
 		switch(type){
 			case 'C':
 				def_grid_.second.add_ship(Battleship{p, c});
+				std::pair<Coord, Coord> coord{p, c}; 
+				write_log(coord);
 				break;
 			case 'S':
 				def_grid_.second.add_ship(HelpShip{p, c});
+				std::pair<Coord, Coord> coord{p, c}; 
+				write_log(coord);
 				break;
 			case 'E':
 				def_grid_.second.add_ship(ExplorationSubmarine{p, c});
+				std::pair<Coord, Coord> coord{p, c}; 
+				write_log(coord);
 				break;
 		}
 	}
@@ -75,35 +87,44 @@ void Game::make_move(int s){
 	bool valid = false;
 	std::pair<Coord, Coord> move;
 	Coord def, att;
-	move = select_move(pl1);
-	def = move.first;
-	att = move.second;
-	if(pl1 == 1){
-		int pos = def_grid_.first.find_ship(def);
-		int type = def_grid_.first.type_ship(pos);
-		if(type == 1){
-			fire(pl1, pos, att);
-		}else if(type == 2){
-			move_help(pl1, pos, att);
-			heal(pl1, pos, att);
-		}else if(type == 3){
-			move_sub(pl1, pos, att);
-			exploration(pl1, pos, att);
+	while(!valid){
+		try{
+			move = select_move(pl1);
+			def = move.first;
+			att = move.second;
+			if(pl1 == 1){
+				int pos = def_grid_.first.find_ship(def);
+				int type = def_grid_.first.type_ship(pos);
+				if(type == 1){
+					fire(pl1, pos, att);
+				}else if(type == 2){
+					move_ship(pl1, pos, att);
+					heal(pl1, pos, att);
+				}else if(type == 3){
+					move_ship(pl1, pos, att);
+					search(pl1, pos, att);
+				}
+			}
+			if(pl1 == 2){
+				int pos = def_grid_.second.find_ship(def);
+				int type = def_grid_.second.type_ship(pos);
+				if(type == 1){
+					fire(pl1, pos, att);
+				}else if(type == 2){
+					move_ship(pl1, pos, att);
+					heal(pl1, pos, att);
+				}else if(type == 3){
+					move_ship(pl1, pos, att);
+					search(pl1, pos, att);
+				}
+			}
+		}catch(std::invalid_argument& e){
+			valid  = false;
 		}
 	}
-	if(pl1 == 2){
-		int pos = def_grid_.second.find_ship(def);
-		int type = def_grid_.second.type_ship(pos);
-		if(type == 1){
-			fire(pl1, pos, att);
-		}else if(type == 2){
-			move_help(pl1, pos, att);
-			heal(pl1, pos, att);
-		}else if(type == 3){
-			move_sub(pl1, pos, att);
-			exploration(pl1, pos, att);
-		}
-	}
+	std::pair<Coord, Coord> coord{def, att}; 
+	write_log(coord);
+
 	valid = false;
 	while(!valid){
 		try{
@@ -116,10 +137,10 @@ void Game::make_move(int s){
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
-					move_help(pl2, pos, att);
+					move_ship(pl2, pos, att);
 					heal(pl2, pos, att);
 				}else if(type == 3){
-					move_sub(pl2, pos, att);
+					move_ship(pl2, pos, att);
 					search(pl2, pos, att);
 				}
 			}
@@ -129,20 +150,19 @@ void Game::make_move(int s){
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
-					move_help(pl2, pos, att);
+					move_ship(pl2, pos, att);
 					heal(pl2, pos, att);
 				}else if(type == 3){
-					move_sub(pl2, pos, att);
+					move_ship(pl2, pos, att);
 					search(pl2, pos, att);
 				}
 			}
 		}catch(std::invalid_argument& e){
 			valid  = false;
-			if(pl2 == 1){
-				std::cout << "Coordinate non valide" << std::endl;
-			}
 		}
 	}
+	std::pair<Coord, Coord> coord{def, att}; 
+	write_log(coord);
 }
 
 std::pair<Coord, Coord> Game::select_move(int player){
@@ -190,30 +210,6 @@ bool Game::end_max_turn(void) const {
 		exit(1);
 	}
 }
-
-
-void Game::move(int pl, int pos, Coord c){
-	if(pl == 1){
-		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.first.ships().at(pos));
-		ship->move(def_grid_.first, c);
-	}else{
-		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.second.ships().at(pos));
-		ship->move(def_grid_.second, c);
-	}
-}
-
-void Game::heal(int pl, int pos, Coord c){
-	if(pl == 1){
-		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.first.ships().at(pos));
-		ship->heal(def_grid_.first, c);
-	}else{
-		HelpShip* ship = dynamic_cast<HelpShip*>(def_grid_.second.ships().at(pos));
-		ship->heal(def_grid_.second, c);
-	}
-}
-
-
-
 
 void Game::fire(int pl, int pos, Coord c){
     if(pl = 1){
@@ -277,7 +273,7 @@ void Game::search(int pl, int pos, Coord c) {
 				if (j < 0 || i < 0){
 					continue;
 				}else if (def_grid_.second.grid().at(i).at(j) != ' ') {
-					char valueFind = att_grid_.first.grid()[i][j];
+					char valueFind = def_grid_.first.grid()[i][j];
 					if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
 						att_grid_.first.grid().at(i).at(j) = 'Y';
 					}
@@ -292,13 +288,13 @@ void Game::search(int pl, int pos, Coord c) {
 			for (int j = (c.X()-2); j < (c.X()+3); j++) {
 				if (j < 0 || i < 0){
 					continue;
-				}else if (enemyGrid.grid().at(i).at(j) != ' ') {
-					char valueFind = enemyGrid.grid()[i][j];
+				}else if (def_grid_.first.grid().at(i).at(j) != ' ') {
+					char valueFind = def_grid_.first.grid()[i][j];
 					if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
-						myGrid.grid()[i][j] = 'Y';
+						att_grid_.second.grid()[i][j] = 'Y';
 					}
 					else if (valueFind == 'c' || valueFind == 'e' || valueFind == 'd') {
-						myGrid.grid()[i][j] = 'X';
+						att_grid_.second.grid()[i][j] = 'X';
 					}
 				}
         	}
@@ -308,10 +304,71 @@ void Game::search(int pl, int pos, Coord c) {
 
 
 
-
+void Game::move_ship(int pl, int pos, Coord c){
+	if(pl == 1){
+		int type = def_grid_.first.type_ship(pos);
+		if(type == 2){
+			std::vector<Coord> coord;
+			if(def_grid_.first.ships().at(pos)->orizzontal()){
+				coord.push_back(Coord{def_grid_.first.ships().at(pos)->center().X(),def_grid_.first.ships().at(pos)->center().Y()-1});
+				coord.push_back(def_grid_.first.ships().at(pos)->center());
+				coord.push_back(Coord{def_grid_.first.ships().at(pos)->center().X(),def_grid_.first.ships().at(pos)->center().Y()+1});
+			}else{
+				coord.push_back(Coord{def_grid_.first.ships().at(pos)->center().X()-1,def_grid_.first.ships().at(pos)->center().Y()});
+				coord.push_back(def_grid_.first.ships().at(pos)->center());
+				coord.push_back(Coord{def_grid_.first.ships().at(pos)->center().X()+1,def_grid_.first.ships().at(pos)->center().Y()});
+			}
+			if(def_grid_.first.check_position(coord)){
+				dynamic_cast<HelpShip*>(def_grid_.first.ships().at(pos)) -> move(c);
+				return;
+			}else{
+				throw std::invalid_argument("Errore");
+			}
+		}else if(type == 3){
+			if(def_grid_.first.check_position(std::vector<Coord>{c})){
+				dynamic_cast<ExplorationSubmarine*>(def_grid_.first.ships().at(pos)) -> move(c);
+			return;
+			}else{
+				throw std::invalid_argument("Errore");
+			}
+		}else{
+			throw std::invalid_argument("Errore");
+		}
+	}else{
+		int type = def_grid_.second.type_ship(pos);
+		if(type == 2){
+			std::vector<Coord> coord;
+			if(def_grid_.second.ships().at(pos)->orizzontal()){
+				coord.push_back(Coord{def_grid_.second.ships().at(pos)->center().X(),def_grid_.second.ships().at(pos)->center().Y()-1});
+				coord.push_back(def_grid_.second.ships().at(pos)->center());
+				coord.push_back(Coord{def_grid_.second.ships().at(pos)->center().X(),def_grid_.second.ships().at(pos)->center().Y()+1});
+			}else{
+				coord.push_back(Coord{def_grid_.second.ships().at(pos)->center().X()-1,def_grid_.second.ships().at(pos)->center().Y()});
+				coord.push_back(def_grid_.second.ships().at(pos)->center());
+				coord.push_back(Coord{def_grid_.second.ships().at(pos)->center().X()+1,def_grid_.second.ships().at(pos)->center().Y()});
+			}
+			if(def_grid_.second.check_position(coord)){
+				dynamic_cast<HelpShip*>(def_grid_.second.ships().at(pos)) -> move(c);
+				return;
+			}else{
+				throw std::invalid_argument("Errore");
+			}
+		}else if(type == 3){
+			if(def_grid_.second.check_position(std::vector<Coord>{c})){
+				dynamic_cast<ExplorationSubmarine*>(def_grid_.second.ships().at(pos)) -> move(c);
+			return;
+			}else{
+				throw std::invalid_argument("Errore");
+			}
+		}else{
+			throw std::invalid_argument("Errore");
+		}
+	}
+}
 
 void util::to_upper(std::string& x){
 	for(int i = 0; i<x.size(); i++){
 		x.at(i) = std::toupper(x.at(i));
 	}
 }
+
