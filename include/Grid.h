@@ -19,7 +19,7 @@ class Grid {
         char** grid(void) { return grid_; }
         //stampa la griglia
         std::string print_grid(void);
-        virtual ~Grid(){};
+        virtual ~Grid(void){};
 
     protected:    
         char** grid_;

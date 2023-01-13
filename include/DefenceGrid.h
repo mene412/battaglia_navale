@@ -26,6 +26,7 @@ class DefenceGrid : public Grid {
         // ritorna il tipo della nave
         // 1 = , 2= , 3 = 
         int type_ship(int pos);
+        ~DefenceGrid(void);
     protected:
         std::vector<Ship*> ships_;
 };

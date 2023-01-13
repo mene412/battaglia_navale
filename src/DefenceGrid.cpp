@@ -104,6 +104,12 @@ void DefenceGrid::add_ship(Ship newShip) {
     ships_.push_back(&newShip);
 }
 
+DefenceGrid::~DefenceGrid(void){
+    for(int i = 0; i<number_ship(); i++){
+        delete ships_.at(i);
+    }
+}
+
 std::ostream& operator<<(std::ostream& os, DefenceGrid a){
     os << "\nGriglia di difesa\n\n" << a.print_grid() << std::endl;
 }
