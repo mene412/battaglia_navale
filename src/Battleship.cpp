@@ -1,10 +1,5 @@
 // Autore:
-#include "Ship.h"
-#include "Battleship.h"
-#include "DefenceGrid.h"
-#include "AttackGrid.h"
-#include "Grid.h"
-#include <vector>
+#include "../include/Battleship.h"
 
 Battleship::Battleship(Coord front, Coord back)
     : Ship{front, back}

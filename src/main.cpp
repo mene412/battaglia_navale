@@ -1,5 +1,4 @@
 // Autore:
-#include <iostream>
 #include "../include/GamePlayer.h"
 #include "../include/GamePc.h"
 

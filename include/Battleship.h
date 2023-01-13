@@ -2,7 +2,7 @@
 #ifndef Battleship_h
 #define Battleship_h
 
-#include "Coord.h"
+#include "Ship.h"
 
 class Battleship: public Ship{
     public:

@@ -1,12 +1,9 @@
 //Autore: Matteo
 
-#include "../include/Grid.h"
 #include "../include/DefenceGrid.h"
-#include "../include/Ship.h"
 #include "../include/Battleship.h"
 #include "../include/HelpShip.h"
 #include "../include/ExplorationSubmarine.h"
-#include "../include/Coord.h"
 
 
 DefenceGrid::DefenceGrid(void)

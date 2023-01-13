@@ -1,10 +1,6 @@
 // Autore: Matteo
 
-#include "../include/Ship.h"
 #include "../include/HelpShip.h"
-#include "../include/DefenceGrid.h"
-#include "../include/Grid.h"
-#include "../include/Coord.h"
 
 HelpShip::HelpShip(Coord front, Coord back)
 	:	Ship{front, back}

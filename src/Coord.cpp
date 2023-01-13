@@ -1,6 +1,6 @@
-#include "Coord.h"
-#include <time.h>
-#include <stdlib.h>
+#include "../include/Coord.h"
+#include <ctime>
+#include <cstdlib>
 #include <iostream>
 
 Coord::Coord()

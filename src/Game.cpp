@@ -1,10 +1,7 @@
 #include "../include/Game.h"
-#include "../include/DefenceGrid.h"
-#include "../include/AttackGrid.h"
 
 #include <ctime>
 #include <cstdlib>
-#include <iostream>
 #include <cmath>
 
 Game::Game(void)

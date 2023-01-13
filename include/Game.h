@@ -3,7 +3,6 @@
 #ifndef Game_h
 #define Game_h
 
-#include <vector>
 #include <fstream>
 #include "DefenceGrid.h"
 #include "AttackGrid.h"

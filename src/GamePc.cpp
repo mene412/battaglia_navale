@@ -1,17 +1,8 @@
-#include "../include/Game.h"
+// Autore: Andrea Mutti
 #include "../include/GamePc.h"
-#include "../include/Grid.h"
-#include "../include/DefenceGrid.h"
-#include "../include/AttackGrid.h"
-#include "../include/Coord.h"
-#include "../include/Battleship.h"
-#include "../include/HelpShip.h"
-#include "../include/ExplorationSubmarine.h"
 
-
-#include <time.h>
-#include <stdlib.h>
-#include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 GamePc::GamePc(void)
 :   Game{}

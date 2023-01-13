@@ -1,13 +1,6 @@
 // Autore: Andrea Mutti
 
 #include "../include/Replay.h"
-#include "../include/Coord.h"
-#include "../include/Ship.h"
-#include "../include/Battleship.h"
-#include "../include/HelpShip.h"
-#include "../include/Explorationsubmarine.h"
-#include <iostream>
-#include <stdlib.h>
 
 Replay::Replay(std::string file_log)
     : log{file_log}, def_grid_{DefenceGrid{}, DefenceGrid{}}, att_grid_{AttackGrid{}, AttackGrid{}}, turn_{0}

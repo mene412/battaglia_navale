@@ -1,6 +1,6 @@
 #include <iostream>
 #include <exception>
-#include "Ship.h"
+#include "../include/Ship.h"
 
 Ship::Ship(Coord front, Coord back)
     : front_{front}, back_{back}, distance_{0}, healed_{true}, coord_{0}, coord_hit_{}

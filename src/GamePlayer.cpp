@@ -1,10 +1,8 @@
 #include "../include/GamePlayer.h"
-#include "../include/Game.h"
 
 
-#include <time.h>
-#include <stdlib.h>
-#include <iostream>
+#include <ctime>
+#include <cstdlib>
 
 GamePlayer::GamePlayer(void)
 	: Game{}

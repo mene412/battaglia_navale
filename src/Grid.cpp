@@ -1,10 +1,6 @@
 //Autore: Matteo
 
-#include "../include/Ship.h"
 #include "../include/Grid.h"
-#include "../include/Coord.h"
-#include <vector>
-#include <iostream>
 
 Grid::Grid(void){
     // costriusco la griglia vuota e inizializzo tutte le celle a ' '
