@@ -29,23 +29,6 @@ void HelpShip::move(Coord c) {
             coordinate.push_back(new_c);
         }
     }
-	// controlla che la cella sia libera
-	if (!myGrid.check_position(coordinate))
-        throw std::invalid_argument("Errore");
-	// cancella la vecchia cella
-	for (int i = 0; i < coord().size(); i++) {
-		myGrid.grid()[coord().at(i).X()][coord().at(i).Y()] = ' ';
-	}
-	// scrive nelle nuove celle
-	for (int i = 0; i < coordinate.size(); i++) {
-		int row = coordinate.at(i).X();
-    	int column = coordinate.at(i).Y();
-		myGrid.grid()[row][column] = 'S';
-	}
 	// modifica i membri
 	set_coord(coordinate);
 }
-
-//A partire dalla cella centrale della nave, scorre una matrice 3x3
-//Se 1 <= armor < dim, allora armor++
-
