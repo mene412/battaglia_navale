@@ -10,6 +10,7 @@ class DefenceGrid : public Grid {
     public: 
         DefenceGrid(void);
         //getter
+        std::vector<Ship*> ships_ship(void){ return ships_;}
         std::vector<Ship&> ships(void);
         int number_ship(void){ return ships_.size(); }
         std::vector<Battleship> battle_ship(void);

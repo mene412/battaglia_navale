@@ -148,10 +148,12 @@ void Game::attack(int pl, Coord c){
 void Game::heal(int pl, int pos, Coord c){
 	if(pl == 1){
 		HelpShip& ship = dynamic_cast<HelpShip&>(def_grid_.first.ships().at(pos));
-		ship
+		ship.move(def_grid_.first, c);
 	}else{
 		HelpShip& ship = dynamic_cast<HelpShip&>(def_grid_.second.ships().at(pos));
+		ship.move(def_grid_.second, c);
 	}
+	def_grid_.first.ships_ship().at(pos)->center()
 }
 
 void Game::exploration(int pl, int pos, Coord c){
