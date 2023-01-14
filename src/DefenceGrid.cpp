@@ -110,7 +110,6 @@ int DefenceGrid::type_ship(Ship* ship){
 
 
 void DefenceGrid::add_ship(Coord& front, Coord& back, int type) {
-    std::cout << "Qua ci sono" << std::endl;
     if(type == 1){
         ships_.push_back(new Battleship{front, back});
     }else if(type == 2){
@@ -132,11 +131,6 @@ void DefenceGrid::add_ship(Coord& front, Coord& back, int type) {
     }
 }
 
-DefenceGrid::~DefenceGrid(void){
-    for(int i = 0; i<number_ship(); i++){
-        delete ships_.at(i);
-    }
-}
 
 
 std::vector<Coord> DefenceGrid::get_ship_coord(Coord& c, int pos) {
@@ -228,7 +222,14 @@ void DefenceGrid::hit(Coord& c){
 }
 
 
-std::ostream& operator<<(std::ostream& os, DefenceGrid a){
+std::ostream& operator<<(std::ostream& os, DefenceGrid& a){
     os << "\nGriglia di difesa\n\n" << a.print_grid() << "OK GRIGLIA" << std::endl;
     return os;
 }
+
+ DefenceGrid::~DefenceGrid(void){
+    for(int i = 0; i<number_ship(); i++){
+        delete ships_.at(i);
+        ships_.at(i) == nullptr;
+    }
+ }

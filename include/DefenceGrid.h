@@ -9,7 +9,8 @@ class DefenceGrid : public Grid {
     public: 
         DefenceGrid(void);
         //getter
-        std::vector<Ship*>& ships(void) {return ships_;}
+        std::vector<Ship*> ships(void) {return ships_;}
+        Ship* ship(int pos){ return ships_.at(pos);}
         int number_ship(void){ return ships_.size(); }
         //controlla che le celle non siano già occupate da altre navi
         // ritorna true se sono libere

@@ -3,18 +3,24 @@
 #include "../include/Ship.h"
 
 Ship::Ship(Coord& front, Coord& back)         // Costruttore di Ship, inizializza le variabili e richiama le funzioni per settare centro e orientamento della nave
-    : front_{front}, back_{back}, healed_{true}, coord_hit_{}, dim_{0}, coord_{}, armor_{0}, distance_{0}, orizzontal_{false}
+    : front_{front}, back_{back}, healed_{true}, coord_hit_{}, dim_{0}, coord_{}, armor_{0}, distance_{0}, orizzontal_{false}, x_{0}, y_{0}
 {}
 
 void Ship::set_center(void){                // Setta il centro della nave a partire da front e back
     if(orizzontal_){
         Coord c{front_.X(), (back_.Y() + front_.Y())/2};
         center_ = c;
+        x_ = front_.X();
+        y_ = (back_.Y() + front_.Y()/2);
     }else{
         Coord c{(back_.X() + front_.X())/2, front_.Y()};
         center_ = c;
+        x_ = (back_.X() + front_.X()/2);
+        y_ = front_.Y();
     }
 }
+
+
 
 void Ship::set_direction(void){     // Setta l'orientamento della nave [orizzontal_ = true -> orizzontale]
     if(front_.Y()==back_.Y()){
@@ -40,13 +46,11 @@ void Ship::set_coord_center(void){             // Setta le coordinate iniziali
             for(int i = 0; i<dim(); i++){
                 Coord c{front_.X(), front_.Y()+i};
                 coord_.push_back(c);
-                std::cout << i << " OK1 " << std::endl;
             }
         }else{
             for(int i = 0; i<dim(); i++){
                 Coord c{back_.X(), back_.Y()+i};
-                coord_.push_back(c);;
-                std::cout << i << " OK2 " << std::endl;
+                coord_.push_back(c);
             }
         }
     }
@@ -55,13 +59,11 @@ void Ship::set_coord_center(void){             // Setta le coordinate iniziali
             for(int i = 0; i<dim(); i++){
                 Coord c{front_.X()+i, front_.Y()};
                 coord_.push_back(c);
-                std::cout << i << " OK3" << std::endl;
             }
         }else{
             for(int i = 0; i<dim(); i++){
                 Coord c{back_.X()+i, back_.Y()};
                 coord_.push_back(c);
-                std::cout << i << " OK4 " << std::endl;
             }
         }
     }
@@ -76,6 +78,8 @@ void Ship::set_coord(std::vector<Coord>& coordinates){
 
 void Ship::set_coord_center(Coord& cord){        // Setta le coordinate a partire dal centro 
     center_ = cord;
+    x_ = cord.X();
+    y_ = cord.Y();
     if(orizzontal_){
         front_ = Coord{cord.X(), cord.Y()-distance_};
         back_ = Coord{cord.X(), cord.Y()+distance_};

@@ -17,7 +17,7 @@ class Game{
 		Game(void);
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
-		virtual std::pair<Coord,Coord> select_move(int player);
+		virtual int select_ship(int player);
 		void add_ship(int player, Coord& p, Coord& c, int type);
 		virtual void positioning(void) = 0;
 		virtual void select_starter(void);
@@ -31,7 +31,7 @@ class Game{
 		DefenceGrid def_grid2_;
 
 		std::pair<DefenceGrid, DefenceGrid> def_grid_;
-		bool end(void);
+		bool end(bool over);
 		void fire(int pl, int pos, Coord& c);
 		void move_ship(int pl, int pos, Coord& c);
 		void heal(int pl, int pos, Coord& c);
@@ -44,7 +44,7 @@ class Game{
 	private:
 		int turn_;
 		std::ofstream log;
-		const int MAX_TURNS = 250;
+		const int MAX_TURNS = 2500;
 };
 
 namespace util{

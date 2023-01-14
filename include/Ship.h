@@ -20,7 +20,8 @@ class Ship
         int armor(void) const { return armor_; }
         Coord& front(void) { return front_;}
         Coord& back(void) { return back_; }
-
+        int x(void){ return x_;}
+        int y(void){ return y_;}
 
         //metodi setter 
         void set_coord(std::vector<Coord>& coordinates);
@@ -49,6 +50,8 @@ class Ship
         int distance_;
         std::vector<Coord> coord_;
         Coord center_;
+        int x_;
+        int y_;
 
     private:
         //variabili private

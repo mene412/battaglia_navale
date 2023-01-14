@@ -1,5 +1,5 @@
 // Autore:
-#include "GamePlayer.cpp"
+// #include "GamePlayer.cpp"
 #include "GamePc.cpp"
 #include "Coord.cpp"
 #include "AttackGrid.cpp"

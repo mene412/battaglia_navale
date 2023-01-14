@@ -13,7 +13,8 @@ class GamePlayer: public Game{
 		void make_move(int s) override;
  		void select_starter(void) override;
  		void positioning(void) override;
-		std::pair<Coord,Coord> select_move(int player) override;
+		int select_ship(int player);
+		Coord select_target(int player);
  	private:
 		void positioning_player(void);
  		void positioning_pc(void);

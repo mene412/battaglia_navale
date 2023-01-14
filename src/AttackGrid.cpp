@@ -37,7 +37,7 @@ void AttackGrid::add_char(char ch, Coord& coord) {
     grid_[coord.X()][coord.Y()] = ch;
 }
 
-std::ostream& operator<<(std::ostream& os, AttackGrid a){
+std::ostream& operator<<(std::ostream& os, AttackGrid& a){
     os << "\nGriglia di attacco\n\n" << a.print_grid() << std::endl;
     return os;
 }

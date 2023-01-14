@@ -39,7 +39,9 @@ Coord& Coord::operator=(const Coord& c){
 	return *this;
 }
 
-Coord::Coord(Coord&& c){
+Coord::Coord(Coord&& c)
+	: X_{c.X()}, Y_{c.Y()}	
+{
 	c.setX(0);
 	c.setY(0);
 }
@@ -47,8 +49,7 @@ Coord::Coord(Coord&& c){
 Coord& Coord::operator=(Coord&& c){
 	X_ = c.X();
 	Y_ = c.Y();
-	c.setX(0);
-	c.setY(0);
+	return *this;
 }
 
 std::string Coord::coord(){

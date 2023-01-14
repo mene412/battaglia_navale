@@ -15,5 +15,5 @@ class AttackGrid : public Grid{
         void add_char(char ch, Coord& coord);
 };
 
-std::ostream& operator<<(std::ostream& os, AttackGrid a);
+std::ostream& operator<<(std::ostream& os, AttackGrid& a);
 #endif /* AttackGrid_h */

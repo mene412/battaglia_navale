@@ -110,7 +110,7 @@ void GamePlayer::make_move(int s){
 	bool valid = false;
 	while(!valid){
 		try{
-			move = select_move(pl1);
+			//move = select_move(pl1);
 			def = move.first;
 			att = move.second;
 			if(pl2 == 1){
@@ -147,7 +147,7 @@ void GamePlayer::make_move(int s){
 	valid = false;
 	while(!valid){
 		try{
-			move = select_move(pl1);
+			//move = select_move(pl1);
 			def = move.first;
 			att = move.second;
 			if(pl2 == 1){
@@ -185,7 +185,7 @@ void GamePlayer::make_move(int s){
 void GamePlayer::positioning_pc(void){
 	int const pl = 2;
 	int number_c = 1;
-	char t = 'C';
+	int t = 1;
 	int dim = 4;
 	while(number_c < 4){
 		try{
@@ -197,7 +197,7 @@ void GamePlayer::positioning_pc(void){
 	}
 	
 	int number_s = 1;
-	t = 'S';
+	t = 2;
 	dim = 2;
 	while(number_s < 4){
 		try{
@@ -209,7 +209,7 @@ void GamePlayer::positioning_pc(void){
 	}		
 	
 	int number_e = 1;
-	t = 'E';
+	t = 3;
 	while(number_e < 3){
 		try{
 			Coord punta = UCoord::random_coord();
@@ -220,60 +220,72 @@ void GamePlayer::positioning_pc(void){
 	}
 }
 
-std::pair<Coord,Coord> GamePlayer::select_move(int player){
-	if(player == 1){
-		bool end = false;
-		std::string first;
-		std::string second;
-		Coord f{};
-		Coord s{};
-		while(!end){
-			bool choice = false;
-			while(!choice){
-				std::cout << "Prossima mossa --> ";
-				std::cin >> first >> second;
-				choice = true;
-				util::to_upper(first);
-				if(first=="XX" && second=="XX"){
-					std::cout << att_grid1_;
-					choice = false;
-				}
-				if(first=="AA" && second=="AA"){
-					att_grid1_.remove_detections();
-					choice = false;
-				}
-				if(first=="BB" && second=="BB"){
-					att_grid1_.remove_hit();
-					choice = false;
-				}
-				if(first=="CC" && second=="CC"){
-					att_grid1_.remove_water();
-					choice = false;
-				}
-			}
-			try{
-				Coord f = UCoord::from_string_to_coord(first);
-				Coord s = UCoord::from_string_to_coord(second);
-				
-				if(!end){
-					std::cout << "Coordinate inserite non valide." << std::endl;
-				}
-			}catch(std::invalid_argument& e){
-				std::cout << "Coordinate inserite non valide." << std::endl;
-			}
-		}
-		std::pair<Coord, Coord> coord{f, s};
-		return coord;
-	}else{
-		int x, y;
-		srand(time(NULL));
-		int ran = rand()%(def_grid2_.number_ship());
-		x = def_grid2_.ships().at(ran)->center().X();
-		y = def_grid2_.ships().at(ran)->center().Y();
-		Coord first{x,y};
-		Coord second = UCoord::random_coord();
-		std::pair<Coord, Coord> coord{first, second};
-		return coord;
-	}
+int GamePlayer::select_ship(int player){
+	return 0;
 }
 
+// std::pair<Coord,Coord> GamePlayer::select_move(int player){
+// 	if(player == 1){
+// 		bool end = false;
+// 		std::string first;
+// 		std::string second;
+// 		Coord f{};
+// 		Coord s{};
+// 		while(!end){
+// 			bool choice = false;
+// 			while(!choice){
+// 				std::cout << "Prossima mossa --> ";
+// 				std::cin >> first >> second;
+// 				choice = true;
+// 				util::to_upper(first);
+// 				if(first=="XX" && second=="XX"){
+// 					std::cout << att_grid1_;
+// 					choice = false;
+// 				}
+// 				if(first=="AA" && second=="AA"){
+// 					att_grid1_.remove_detections();
+// 					choice = false;
+// 				}
+// 				if(first=="BB" && second=="BB"){
+// 					att_grid1_.remove_hit();
+// 					choice = false;
+// 				}
+// 				if(first=="CC" && second=="CC"){
+// 					att_grid1_.remove_water();
+// 					choice = false;
+// 				}
+// 			}
+// 			try{
+// 				Coord f = UCoord::from_string_to_coord(first);
+// 				Coord s = UCoord::from_string_to_coord(second);
+				
+// 				if(!end){
+// 					std::cout << "Coordinate inserite non valide." << std::endl;
+// 				}
+// 			}catch(std::invalid_argument& e){
+// 				std::cout << "Coordinate inserite non valide." << std::endl;
+// 			}
+// 		}
+// 		std::pair<Coord, Coord> coord{f, s};
+// 		return coord;
+// 	}else{
+// 		int x, y;
+// 		srand(time(NULL));
+// 		int ran = rand()%(def_grid2_.number_ship());
+// 		x = def_grid2_.ships().at(ran)->center().X();
+// 		y = def_grid2_.ships().at(ran)->center().Y();
+// 		Coord first{x,y};
+// 		Coord second = UCoord::random_coord();
+// 		std::pair<Coord, Coord> coord{first, second};
+// 		return coord;
+// 	}
+// }
+
+void GamePlayer::start(){
+	std::cout << def_grid2_.number_ship() << std::endl;
+	std::cout << def_grid1_.ship(4)->center() << std::endl;
+	for(int i = 0; i<def_grid1_.number_ship(); i++){
+		std::cout << def_grid1_.ship(i)->center() << std::endl;
+		std::cout << def_grid1_.ship(i)->center().X() << std::endl;
+	}
+}

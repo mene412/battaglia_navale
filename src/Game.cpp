@@ -67,6 +67,9 @@ void Game::increment_turn(void){
 
 void Game::make_move(int s){
  	increment_turn();
+	if(end(false)){
+		return;
+	}
 	int pl1 = 0;
 	int pl2 = 0;
 	if(s==1){
@@ -77,15 +80,13 @@ void Game::make_move(int s){
 		pl2 = 1;
 	}
 	bool valid = false;
-	std::pair<Coord, Coord> move;
 	Coord def, att;
 	while(!valid){
 		try{
-			move = select_move(pl1);
-			def = move.first;
-			att = move.second;
+			valid = true;
+			int pos = select_ship(pl1);
+			att = UCoord::random_coord();
 			if(pl1 == 1){
-				int pos = def_grid1_.find_ship(def);
 				int type = def_grid1_.type_ship(pos);
 				if(type == 1){
 					fire(pl1, pos, att);
@@ -96,9 +97,9 @@ void Game::make_move(int s){
 					move_ship(pl1, pos, att);
 					search(pl1, pos, att);
 				}
+				def = def_grid1_.ship(pos) -> center();
 			}
 			if(pl1 == 2){
-				int pos = def_grid2_.find_ship(def);
 				int type = def_grid2_.type_ship(pos);
 				if(type == 1){
 					fire(pl1, pos, att);
@@ -109,27 +110,27 @@ void Game::make_move(int s){
 					move_ship(pl1, pos, att);
 					search(pl1, pos, att);
 				}
+				def = def_grid2_.ship(pos) -> center();
+
 			}
 		}catch(std::invalid_argument& e){
 			valid  = false;
 		}
 	}
+	
 	std::pair<Coord, Coord> coord{def, att}; 
 	write_log(coord);
-	print_defence(pl1);
-
-	if(end()){
+	if(end(false)){
 		return;
 	}
 
 	valid = false;
 	while(!valid){
 		try{
-			move = select_move(pl1);
-			def = move.first;
-			att = move.second;
+			valid = true;
+			int pos = select_ship(pl2);
+			att = UCoord::random_coord();
 			if(pl2 == 1){
-				int pos = def_grid1_.find_ship(def);
 				int type = def_grid1_.type_ship(pos);
 				if(type == 1){
 					fire(pl2, pos, att);
@@ -140,9 +141,9 @@ void Game::make_move(int s){
 					move_ship(pl2, pos, att);
 					search(pl2, pos, att);
 				}
+				def = def_grid1_.ship(pos) -> center();
 			}
 			if(pl2 == 2){
-				int pos = def_grid2_.find_ship(def);
 				int type = def_grid2_.type_ship(pos);
 				if(type == 1){
 					fire(pl2, pos, att);
@@ -153,6 +154,7 @@ void Game::make_move(int s){
 					move_ship(pl2, pos, att);
 					search(pl2, pos, att);
 				}
+				def = def_grid2_.ship(pos) -> center();
 			}
 		}catch(std::invalid_argument& e){
 			valid  = false;
@@ -160,26 +162,16 @@ void Game::make_move(int s){
 	}
 	std::pair<Coord, Coord> coord2{def, att}; 
 	write_log(coord2);
-	print_defence(pl1);
 }
 
-std::pair<Coord, Coord> Game::select_move(int player){
-	int x, y;
+int Game::select_ship(int player){
 	if(player == 1){
 		int ran = rand()%(def_grid1_.number_ship());
-		x = def_grid1_.ships().at(ran)->center().X();
-		y = def_grid1_.ships().at(ran)->center().Y();
+		return ran;
 	}else{
-		int x, y;
 		int ran = rand()%(def_grid2_.number_ship());
-		x = def_grid2_.ships().at(ran)->center().X();
-		y = def_grid2_.ships().at(ran)->center().Y();
+		return ran;
 	}
-
-	Coord first{x,y};
-	Coord second = UCoord::random_coord();
-	std::pair<Coord, Coord> coord{first, second};
-	return coord;
 }
 
 
@@ -192,18 +184,23 @@ void Game::write_log(std::pair<Coord, Coord>& x){
 }
 
 
-bool Game::end(void){
-	turn_++;
+bool Game::end(bool over){
 	if(turn_>=MAX_TURNS){
-		std::cout << "\n\nPareggio!" << std::endl;
+		if(over){
+			std::cout << "\n\nPareggio!" << std::endl;
+		}
 		return true;
 	}
 	if(def_grid1_.number_ship()==0){
-		std::cout << "\n\nPlayer 2 ha vinto!" << std::endl;
-		return true;
+		if(over){
+			std::cout << "\n\nPlayer 2 ha vinto!" << std::endl;
+		}
+		return true;	
 	}
 	if(def_grid2_.number_ship()==0){		
-		std::cout << "\n\nPlayer 1 ha vinto!" << std::endl;
+		if(over){
+			std::cout << "\n\nPlayer 1 ha vinto!" << std::endl;
+		}
 		return true;
 	}
 	return false;
@@ -212,10 +209,10 @@ bool Game::end(void){
 void Game::fire(int pl, int pos, Coord& c){
     if(pl = 1){
 		for(int i = 0; i<def_grid2_.number_ship(); i++){
-			for(int j = 0; j<def_grid2_.ships().at(i)->coord().size(); j++){
-				if(def_grid2_.ships().at(i)->coord().at(j) == c){
+			for(int j = 0; j<def_grid2_.ship(i)->dim(); j++){
+				if(def_grid2_.ship(i)->coord().at(j) == c){
 					att_grid1_.add_char('x', c);
-					def_grid2_.ships().at(i) -> hit(c);
+					def_grid2_.ship(i) -> hit(c);
 					def_grid2_.hit(c);
 					if(def_grid2_.destroyed(i)){
 						def_grid2_.reload();
@@ -229,10 +226,10 @@ void Game::fire(int pl, int pos, Coord& c){
     	return;
 	}else{
 		for(int i = 0; i<def_grid1_.number_ship(); i++){
-			for(int j = 0; j<def_grid1_.ships().at(i)->coord().size(); j++){
-				if(def_grid1_.ships().at(i)->coord().at(j) == c){
+			for(int j = 0; j<def_grid1_.ship(i)->dim(); j++){
+				if(def_grid1_.ship(i)->coord().at(j) == c){
 					att_grid2_.add_char('x', c);
-					def_grid1_.ships().at(i) -> hit(c);
+					def_grid1_.ship(i) -> hit(c);
 					def_grid1_.hit(c);
 					if(def_grid1_.destroyed(i)){
 						def_grid1_.reload();
@@ -422,16 +419,16 @@ void util::to_upper(std::string& x){
 
 void Game::print_defence(int pl){
 	if(pl == 1){
-		std::cout << def_grid1_;
+		std::cout << &def_grid1_;
 	}else{
-		std::cout << def_grid2_;
+		std::cout << &def_grid2_;
 	}
 }
 
 void Game::print_attack(int pl){
 	if(pl == 1){
-		std::cout << att_grid1_;
+		std::cout << &att_grid1_;
 	}else{
-		std::cout << att_grid2_;
+		std::cout << &att_grid2_;
 	}
 }
