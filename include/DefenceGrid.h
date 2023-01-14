@@ -41,6 +41,6 @@ class DefenceGrid : public Grid {
         std::vector<Ship*> ships_;
 };
 
-std::ostream& operator<<(std::ostream& os, DefenceGrid a);
+std::ostream& operator<<(std::ostream& os, DefenceGrid& a);
 
 #endif /* DefenceGrid_h */
