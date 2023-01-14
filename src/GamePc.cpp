@@ -36,7 +36,7 @@ void GamePc::positioning(void){
 		}catch(std::invalid_argument& e){}
 	}
 	
-	std::cout << "SI" << std::endl;
+	// std::cout << "SI" << std::endl;
 	// Creazione e inserimento navi di supporto - pl1
 	int number_s = 0;
 	t = 2;
@@ -73,7 +73,7 @@ void GamePc::positioning(void){
 			Coord coda = UCoord::random_coord(punta, dim);
 			Game::add_ship(pl2, punta, coda, t);
 			number_c++;
-		}catch(std::invalid_argument& e){std::cout << "Errore";}
+		}catch(std::invalid_argument& e){}
 	}
 	// Creazione e inserimento navi di supporto - pl2
 	number_s = 1;
@@ -85,7 +85,7 @@ void GamePc::positioning(void){
 			Coord coda = UCoord::random_coord(punta, dim);
 			Game::add_ship(pl2, punta, coda, t);
 			number_s++;
-		}catch(std::invalid_argument& e){std::cout << "Errore";}
+		}catch(std::invalid_argument& e){}
 	}		
 	// Creazione e inserimento sottomarini - pl2
 	number_e = 1;
@@ -96,7 +96,7 @@ void GamePc::positioning(void){
 			Coord coda = punta;
 			Game::add_ship(pl2, punta, coda, t);
 			number_e++;
-		}catch(std::invalid_argument& e){std::cout << "Errore";}
+		}catch(std::invalid_argument& e){}
 	}
 
 }

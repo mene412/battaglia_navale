@@ -40,13 +40,13 @@ void Ship::set_coord_center(void){             // Setta le coordinate iniziali
             for(int i = 0; i<dim(); i++){
                 Coord c{front_.X(), front_.Y()+i};
                 coord_.push_back(c);
-                std::cout << i << " OK1 " << std::endl;
+                // std::cout << i << " OK1 " << std::endl;
             }
         }else{
             for(int i = 0; i<dim(); i++){
                 Coord c{back_.X(), back_.Y()+i};
                 coord_.push_back(c);;
-                std::cout << i << " OK2 " << std::endl;
+                // std::cout << i << " OK2 " << std::endl;
             }
         }
     }
@@ -55,13 +55,13 @@ void Ship::set_coord_center(void){             // Setta le coordinate iniziali
             for(int i = 0; i<dim(); i++){
                 Coord c{front_.X()+i, front_.Y()};
                 coord_.push_back(c);
-                std::cout << i << " OK3" << std::endl;
+                // std::cout << i << " OK3" << std::endl;
             }
         }else{
             for(int i = 0; i<dim(); i++){
                 Coord c{back_.X()+i, back_.Y()};
                 coord_.push_back(c);
-                std::cout << i << " OK4 " << std::endl;
+                // std::cout << i << " OK4 " << std::endl;
             }
         }
     }

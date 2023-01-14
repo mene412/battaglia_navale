@@ -77,7 +77,7 @@ int DefenceGrid::find_ship(Coord& x) {
             }
         }
     }
-    throw std::invalid_argument("Errore");
+    throw std::invalid_argument("Nave non trovata");
 }
 
 
@@ -91,7 +91,7 @@ int DefenceGrid::type_ship(int pos){
     if(dynamic_cast<ExplorationSubmarine*>(ships_.at(pos)) != nullptr){
         return 3; // Exploration
     }
-    throw std::invalid_argument("Errore");
+    throw std::invalid_argument("Tipo non trovato");
 }
 
 int DefenceGrid::type_ship(Ship* ship){
@@ -104,7 +104,7 @@ int DefenceGrid::type_ship(Ship* ship){
     if(dynamic_cast<ExplorationSubmarine*>(ship) != nullptr){
         return 3; // Exploration
     }
-    throw std::invalid_argument("Errore");
+    throw std::invalid_argument("Tipo non trovato");
 }
 
 
