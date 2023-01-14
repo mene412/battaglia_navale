@@ -38,10 +38,17 @@ bool DefenceGrid::check_position(Coord a, Coord b, int dim) {
         int checkColumn = coord[i].Y();    // numero colonna
         if (grid_[checkRow][checkColumn] != ' ') {
             // se la cella non è vuota, ritorna false
-            throw std::invalid_argument("Errore");
+            return false;
         } 
     }
     return true;
+}
+
+bool DefenceGrid::check_position(Coord a){
+    if(grid_[a.X()][a.Y()] == ' '){
+        return true;
+    }
+    return false;
 }
 
 bool DefenceGrid::check_position(std::vector<Coord>& coordinates) {
@@ -80,14 +87,27 @@ int DefenceGrid::type_ship(int pos){
     }
 }
 
-void DefenceGrid::add_ship(Ship* newShip) {
-    std::cout << newShip -> dim() << std::endl;
-    std::cout << newShip->center() << std::endl;
-    ships_.push_back(newShip);
-    for (int i = 0; i < ships_.at(ships_.size()-1)->coord().size(); i++){
-        int rowSelected = ships_.at(ships_.size()-1)->coord().at(i).X();
-        int columnSelected = ships_.at(ships_.size()-1)->coord().at(i).Y();
-        int type = type_ship(ships_.size()-1);
+int DefenceGrid::type_ship(Ship* ship){
+    if(dynamic_cast<Battleship*>(ship) != nullptr){
+        return 1; // battleship 
+    }
+    if(dynamic_cast<HelpShip*>(ship) != nullptr){
+        return 2; // helpship
+    }
+    if(dynamic_cast<ExplorationSubmarine*>(ship) != nullptr){
+        return 3; // Exploration
+    }
+}
+
+
+
+void DefenceGrid::add_ship(Ship* new_ship) {
+    std::cout << "Qua ci sono" << std::endl;
+    ships_.push_back(new_ship);
+    for (int i = 0; i < (new_ship->dim()); i++){
+        int rowSelected = new_ship->coord().at(i).X();
+        int columnSelected = new_ship->coord().at(i).Y();
+        int type = type_ship(new_ship);
         if(type == 1){
             grid_[rowSelected][columnSelected] = 'C';
         }else if(type == 2){
@@ -127,9 +147,6 @@ std::vector<Coord> DefenceGrid::get_ship_coord(Coord c, int pos) {
     return coord_ship;
 }
 
-std::ostream& operator<<(std::ostream& os, DefenceGrid a){
-    os << "\nGriglia di difesa\n\n" << a.print_grid() << std::endl;
-}
 
 bool DefenceGrid::destroyed(int pos){
     if(ships_.at(pos)->armor() == 0){
@@ -194,4 +211,10 @@ void DefenceGrid::reload(void){
 
 void DefenceGrid::hit(Coord c){
     grid_[c.X()][c.Y()] = tolower(grid_[c.X()][c.Y()]);
+}
+
+
+std::ostream& operator<<(std::ostream& os, DefenceGrid a){
+    os << "\nGriglia di difesa\n\n" << a.print_grid() << "OK GRIGLIA" << std::endl;
+    return os;
 }

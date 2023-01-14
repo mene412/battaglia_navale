@@ -18,6 +18,8 @@ class Ship
         Coord const coord(int a) const {return coord_.at(a);}
         int dim(void) const { return dim_; }
         int armor(void) const { return armor_; }
+        Coord front(void) const { return front_;}
+        Coord back(void) const{ return back_; }
 
 
         //metodi setter 
@@ -34,25 +36,25 @@ class Ship
         //costruttore protected (accessibile solo da classi derivate)
         Ship(Coord front, Coord back);
 
-        //variabili protected per classi derivate
-        int dim_;
-        int armor_;
-        bool healed_;
-        int distance_;
-
-    private:
-        
+         
         //metodi setter costruttore
         void set_direction(void);
         void set_center(void);
         void set_coord_center(void);
 
-        //variabili private
+        //variabili protected per classi derivate
+        int dim_;
+        int armor_;
+        bool healed_;
+        int distance_;
         std::vector<Coord> coord_;
+        Coord center_;
+
+    private:
+        //variabili private
         std::vector<int> coord_hit_;
         Coord front_;
         Coord back_;
-        Coord center_;
         bool orizzontal_;
 };
 #endif /* Ship_h */

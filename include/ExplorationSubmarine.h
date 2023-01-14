@@ -7,7 +7,7 @@
 
 class ExplorationSubmarine: public Ship {
     public:
-        ExplorationSubmarine(Coord front, Coord back);
+        ExplorationSubmarine(Coord front);
         // controlla se le celle sono vuote, se true allora
         // cancella quelle vecchie, scrive quelle nuove e modifica i membri della ship
         void move(Coord c);

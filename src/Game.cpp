@@ -28,7 +28,6 @@ void Game::add_ship(int player, Coord p, Coord c, int type){
 			Battleship ship{p, c};
 			Ship* s = &ship;
 			def_grid_.first.add_ship(s);
-			std::cout << "ciao";
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
 		}else if(type == 2 && def_grid_.first.check_position(p, c, 3)){
@@ -38,31 +37,35 @@ void Game::add_ship(int player, Coord p, Coord c, int type){
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
 		}else if(type == 3 && def_grid_.first.check_position(p, c, 1)){
-			ExplorationSubmarine ship{p, c};
+			ExplorationSubmarine ship{p};
 			Ship* s = &ship;
 			def_grid_.first.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
+		}else{
+			throw std::invalid_argument("Errore");
 		}
 	}else{
-		if(type == 1 && def_grid_.first.check_position(p, c, 5)){
+		if(type == 1 && def_grid_.second.check_position(p, c, 5)){
 			Battleship ship{p, c};
 			Ship* s = &ship;
 			def_grid_.second.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 2 && def_grid_.first.check_position(p, c, 3)){
+		}else if(type == 2 && def_grid_.second.check_position(p, c, 3)){
 			HelpShip ship{p, c};
 			Ship* s = &ship;
 			def_grid_.second.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 3 && def_grid_.first.check_position(p, c, 1)){
-			ExplorationSubmarine ship{p, c};
+		}else if(type == 3 && def_grid_.second.check_position(p, c, 1)){
+			ExplorationSubmarine ship{p};
 			Ship* s = &ship;
 			def_grid_.second.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
+		}else{
+			throw std::invalid_argument("Errore");
 		}
 	}
 }

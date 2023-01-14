@@ -51,4 +51,5 @@ std::string Grid::print_grid(void) {
 
 std::ostream& operator<<(std::ostream& os, Grid a){
     os << a.print_grid();
+    return os;
 }
