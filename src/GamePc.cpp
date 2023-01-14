@@ -57,7 +57,7 @@ void GamePc::positioning(void){
 
 	print_defence(pl1);
     
-	std::cout << "OK";
+	std::cout << "OK" << std::endl;
 
 	number_c = 1;
 	t = 1;

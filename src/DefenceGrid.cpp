@@ -14,24 +14,26 @@ bool DefenceGrid::check_position(Coord a, Coord b, int dim) {
     std::vector<Coord> coord;
     if(a.X()<b.X()){
         dim = b.X()-a.X();
-        for(int i = 0; i<dim; i++){
+        for(int i = 0; i<=dim; i++){
             coord.push_back(Coord{a.X()+i, a.Y()});
         }
     }else if(a.X()>b.X()){
         dim = a.X()-b.X();
-        for(int i = 0; i<dim; i++){
+        for(int i = 0; i<=dim; i++){
             coord.push_back(Coord{b.X()+i, a.Y()});
         }
     }else if(a.Y()<b.Y()){
         dim = b.Y()-a.Y();
-        for(int i = 0; i<dim; i++){
+        for(int i = 0; i<=dim; i++){
             coord.push_back(Coord{a.X(), a.Y()+i});
         }
     }else if(a.Y()>b.Y()){
         dim = a.Y()-b.Y();
-        for(int i = 0; i<dim; i++){
+        for(int i = 0; i<=dim; i++){
             coord.push_back(Coord{b.X(), a.Y()+i});
         }
+    } else if(a == b) {
+        coord.push_back(a);
     }
     for (int i = 0; i < coord.size(); i++) {
         int checkRow = coord[i].X();        // numero riga
@@ -85,6 +87,7 @@ int DefenceGrid::type_ship(int pos){
     if(dynamic_cast<ExplorationSubmarine*>(ships_.at(pos)) != nullptr){
         return 3; // Exploration
     }
+    throw std::invalid_argument("Errore");
 }
 
 int DefenceGrid::type_ship(Ship* ship){
@@ -97,6 +100,7 @@ int DefenceGrid::type_ship(Ship* ship){
     if(dynamic_cast<ExplorationSubmarine*>(ship) != nullptr){
         return 3; // Exploration
     }
+    throw std::invalid_argument("Errore");
 }
 
 
