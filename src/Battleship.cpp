@@ -1,7 +1,7 @@
 // Autore:
 #include "../include/Battleship.h"
 
-Battleship::Battleship(Coord front, Coord back)
+Battleship::Battleship(Coord& front, Coord& back)
     : Ship{front, back}
 {
     dim_= 5;

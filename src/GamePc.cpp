@@ -27,10 +27,14 @@ void GamePc::positioning(void){
 			Coord punta = UCoord::random_coord();
 			Coord coda = UCoord::random_coord(punta, dim);
 			Game::add_ship(pl1, punta, coda, t);
+			
+			std::cout << "SI";
 			number_c++;
 			std::cout << std::to_string(number_c) << std::endl;
 		}catch(std::invalid_argument& e){}
 	}
+	
+	std::cout << "SI" << std::endl;
 	
 	int number_s = 0;
 	t = 2;
@@ -43,7 +47,7 @@ void GamePc::positioning(void){
 			number_s++;
 		}catch(std::invalid_argument& e){}
 	}		
-	
+
 	int number_e = 0;
 	t = 3;
 	while(number_e < 2){
@@ -55,8 +59,6 @@ void GamePc::positioning(void){
 		}catch(std::invalid_argument& e){}
 	}
 
-	print_defence(pl1);
-    
 	std::cout << "OK" << std::endl;
 
 	number_c = 1;
@@ -93,11 +95,13 @@ void GamePc::positioning(void){
 		}catch(std::invalid_argument& e){std::cout << "Errore";}
 	}
 
-	print_defence(pl2);
 }
 
 void GamePc::start(void){
-	while(!end()){
-		make_move(starter());
-	}
+// 	while(!end()){
+// 		make_move(starter());
+// 	}
+	std::cout << "OK";
+	print_defence(1);
+	print_attack(2);	
 }

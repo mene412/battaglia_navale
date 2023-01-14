@@ -5,15 +5,20 @@
 #include <string>
 
 class Coord{
-	
 	public:
-		Coord();					
-		Coord(int X, int Y);		// costruttore: parametro X -> seleziona riga, parametro Y -> selezione colonna
+		Coord();	
+		Coord(const Coord& c);				
+		Coord(int X, int Y);
+		Coord(Coord&& c);		// costruttore: parametro X -> seleziona riga, parametro Y -> selezione colonna
 		void setX(int X);
 		void setY(int Y);
-		int X(void){return X_;};
-		int Y(void){return Y_;};
+		int X(void) const {return X_;};
+		int Y(void) const {return Y_;};
 		std::string coord(void);
+
+		Coord& operator=(const Coord& c);
+		Coord& operator=(Coord&& c);
+	
 	private:
 		int X_;
 		int Y_;
@@ -29,4 +34,5 @@ namespace UCoord {
 std::ostream& operator<<(std::ostream& os, Coord a);
 bool operator==(Coord a, Coord b);
 bool operator!=(Coord a, Coord b);
+
 #endif

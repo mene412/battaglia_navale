@@ -14,9 +14,9 @@ class Grid {
         Grid(void);
         //getter
         int dimension(void){ return sizeof(grid_);}
-        char get_char(Coord c);
-        bool is_in_grid(char ch, Coord c);
-        void insert_char(char ch, Coord c);
+        char get_char(Coord& c);
+        bool is_in_grid(char ch, Coord& c);
+        void insert_char(char ch, Coord& c);
         //stampa la griglia
         std::string print_grid(void);
         virtual ~Grid(void){};
@@ -25,6 +25,6 @@ class Grid {
         char grid_[12][12];
 };
 
-std::ostream& operator<<(std::ostream& os, Grid a);
+std::ostream& operator<<(std::ostream& os, Grid& a);
 
 #endif /* Grid_h */

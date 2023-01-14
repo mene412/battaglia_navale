@@ -18,19 +18,24 @@ class Game{
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
 		virtual std::pair<Coord,Coord> select_move(int player);
-		void add_ship(int player, Coord p, Coord c, int type);
+		void add_ship(int player, Coord& p, Coord& c, int type);
 		virtual void positioning(void) = 0;
 		virtual void select_starter(void);
 		int starter_;
 		void write_log(std::string x);
 		void write_log(std::pair<Coord, Coord>& x);
-		std::pair<AttackGrid, AttackGrid> att_grid_;
+
+		AttackGrid att_grid1_;
+		AttackGrid att_grid2_;
+		DefenceGrid def_grid1_;
+		DefenceGrid def_grid2_;
+
 		std::pair<DefenceGrid, DefenceGrid> def_grid_;
 		bool end(void);
-		void fire(int pl, int pos, Coord c);
-		void move_ship(int pl, int pos, Coord c);
-		void heal(int pl, int pos, Coord c);
-		void search(int pl, int pos, Coord c);
+		void fire(int pl, int pos, Coord& c);
+		void move_ship(int pl, int pos, Coord& c);
+		void heal(int pl, int pos, Coord& c);
+		void search(int pl, int pos, Coord& c);
 		void increment_turn(void);
 		void titanic(int pl, int pos);
 		void print_defence(int pl);

@@ -13,15 +13,15 @@ Grid::Grid(void)
     }
 }
 
-char Grid::get_char(Coord c) {
+char Grid::get_char(Coord& c) {
     return grid_[c.X()][c.Y()];
 }
 
-bool Grid::is_in_grid(char ch, Coord c) {
+bool Grid::is_in_grid(char ch, Coord& c) {
     return (ch == grid_[c.X()][c.Y()]);
 }
 
-void Grid::insert_char(char ch, Coord c){
+void Grid::insert_char(char ch, Coord& c){
     grid_[c.X()][c.Y()] = ch;
 }
 
@@ -49,7 +49,7 @@ std::string Grid::print_grid(void) {
 }
 
 
-std::ostream& operator<<(std::ostream& os, Grid a){
+std::ostream& operator<<(std::ostream& os, Grid& a){
     os << a.print_grid();
     return os;
 }

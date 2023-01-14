@@ -2,7 +2,7 @@
 #include "../include/ExplorationSubmarine.h"
 
 
-ExplorationSubmarine::ExplorationSubmarine(Coord front)
+ExplorationSubmarine::ExplorationSubmarine(Coord& front)
     :   Ship{front, front}
 {   
     dim_= 1;
@@ -12,7 +12,7 @@ ExplorationSubmarine::ExplorationSubmarine(Coord front)
     coord_.push_back(center_);
 }
 
-void ExplorationSubmarine::move(Coord c) {
+void ExplorationSubmarine::move(Coord& c) {
     set_coord_center(c);
 }
     
