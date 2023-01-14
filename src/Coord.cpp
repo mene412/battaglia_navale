@@ -69,8 +69,8 @@ static Coord UCoord::random_coord()
 
 static Coord UCoord::random_coord(Coord c, int dim){
 	int s = rand()%2;
-	int x;
-	int y;
+    int x=c.X();
+    int y=c.Y();
 	if(s == 0){
 		int t = (int)(c.X());
 		if((c.X()+dim)>=0 && (c.Y()+dim)<=11){
