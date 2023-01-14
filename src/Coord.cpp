@@ -72,17 +72,20 @@ static Coord UCoord::random_coord(Coord c, int dim){
 	int x;
 	int y;
 	if(s == 0){
-		int t = (int)(c.X());
-		if((c.X()+dim)>=0 && (c.Y()+dim)<=11){
+		if((c.X()+dim)>=0 && (c.X()+dim)<=11){
 			x = c.X()+dim;
+			y = c.Y();
 		}else{
 			x = c.X()-dim;
+			y = c.Y();
 		}
-	}else if(s == 1){
+	}else{
 		if((c.Y()+dim)>=0 && (c.Y()+dim)<=11){
 			y = c.Y()+dim;
+			x = c.X();
 		}else{
 			y = c.Y()-dim;
+			x = c.X();
 		}
 	}
 	

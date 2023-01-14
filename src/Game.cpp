@@ -6,8 +6,7 @@
 
 Game::Game(void)
 	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log{"../log.txt"}
-{	
-	std::srand(time(NULL));
+{
 	std::cout << "Inizio gioco.\n" << std::endl; 
 }
 
@@ -70,13 +69,11 @@ void Game::make_move(int s){
 	if(end(false)){
 		return;
 	}
-	int pl1 = 0;
-	int pl2 = 0;
-	if(s==1){
-		pl1 = 1;
+	int pl1 = s;
+	int pl2;
+	if(pl1 == 1){
 		pl2 = 2;
 	}else{
-		pl1 = 2;
 		pl2 = 1;
 	}
 	bool valid = false;
@@ -218,12 +215,13 @@ void Game::fire(int pl, int pos, Coord& c){
 						titanic(pl, i);
 						def_grid2_.reload();
 						std::cout << "Nave abbattuta." << std::endl;
+						std::cout << def_grid2_.number_ship() << std::endl;
 					}
 					return;
 				}
 			}
 		}
-    	att_grid1_.add_char('o', c);
+    	att_grid1_.add_char('O', c);
     	return;
 	}else{
 		for(int i = 0; i<def_grid1_.number_ship(); i++){
@@ -236,25 +234,26 @@ void Game::fire(int pl, int pos, Coord& c){
 						titanic(pl, i);
 						def_grid1_.reload();
 						std::cout << "Nave abbattuta." << std::endl;
+						std::cout << def_grid1_.number_ship() << std::endl;
 					}
 					return;
 				}
 			}
 		}
-    	att_grid1_.add_char('o', c);
+    	att_grid2_.add_char('O', c);
     	return;
 	} 
 }
 
 void Game::titanic(int pl, int pos){
     if(pl == 1){
-		for(int i = 0; i<def_grid2_.ship(pos)->coord().size(); i++){
+		for(int i = 0; i<def_grid2_.ship(pos)->dim(); i++){
 			att_grid1_.add_char('X', def_grid2_.ship(pos)->coord().at(i));
 		}
 		def_grid2_.remove_ship(pos);
 		return;
 	}else{
-		for(int i = 0; i<def_grid1_.ship(pos)->coord().size(); i++){
+		for(int i = 0; i<def_grid1_.ship(pos)->dim(); i++){
 			att_grid2_.add_char('X', def_grid1_.ship(pos)->coord().at(i));
 		}
 		def_grid1_.remove_ship(pos);
@@ -266,13 +265,13 @@ void Game::titanic(int pl, int pos){
 void Game::heal(int pl, int pos, Coord& c){
 	std::vector<Coord> coord_heal;
 	for(int i = 0; i<3; i++){
-		coord_heal.push_back(Coord{c.X()-1+i, c.Y()-1});
+		coord_heal.push_back(Coord{c.X()-1, c.Y()-1+i});
 	}
 	for(int i = 0; i<3; i++){
-		coord_heal.push_back(Coord{c.X()-1+i, c.Y()});
+		coord_heal.push_back(Coord{c.X(), c.Y()-1+i});
 	}
 	for(int i = 0; i<3; i++){
-		coord_heal.push_back(Coord{c.X()-1+i, c.Y()+1});
+		coord_heal.push_back(Coord{c.X()+1, c.Y()-1+i});
 	}
 	if(pl = 1){
 		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
@@ -282,12 +281,14 @@ void Game::heal(int pl, int pos, Coord& c){
 				if(coord_heal.at(i) == coord.at(j)){
 					heal = false;
 				}
-			}
-			if(heal){
-				if(!def_grid1_.ship(i) -> healed()){
-					def_grid1_.ship(i) -> heal();
-				}
-			}
+            }
+            if(heal){
+                int p = def_grid1_.find_ship(coord_heal.at(i));
+                if(!def_grid1_.ship(p) -> healed()){
+                    def_grid1_.ship(p) -> heal();
+                }
+            }
+            heal = true;
 		}
 		def_grid1_.reload();
 	}else{
@@ -300,10 +301,12 @@ void Game::heal(int pl, int pos, Coord& c){
 				}
 			}
 			if(heal){
-				if(!def_grid2_.ship(i) -> healed()){
-					def_grid2_.ship(i) -> heal();
+                int p = def_grid2_.find_ship(coord_heal.at(i));
+				if(!def_grid2_.ship(p) -> healed()){
+					def_grid2_.ship(p) -> heal();
 				}
 			}
+            heal = true;
 		}
 		def_grid2_.reload();
 	}
