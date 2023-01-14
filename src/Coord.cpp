@@ -29,6 +29,27 @@ Coord::Coord(int X, int Y)
 	}
 }
 
+Coord::Coord(const Coord& c)
+	: X_{c.X()}, Y_{c.Y()}
+{}
+
+Coord& Coord::operator=(const Coord& c){
+	X_ = c.X(); 
+	Y_ = c.Y();
+	return *this;
+}
+
+Coord::Coord(Coord&& c){
+	c.setX(0);
+	c.setY(0);
+}
+
+Coord& Coord::operator=(Coord&& c){
+	X_ = c.X();
+	Y_ = c.Y();
+	c.setX(0);
+	c.setY(0);
+}
 
 std::string Coord::coord(){
 	std::string c = "";

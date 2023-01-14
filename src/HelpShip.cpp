@@ -2,7 +2,7 @@
 
 #include "../include/HelpShip.h"
 
-HelpShip::HelpShip(Coord front, Coord back)
+HelpShip::HelpShip(Coord& front, Coord& back)
 	:	Ship{front, back}
 {
     dim_ = 3;
@@ -13,7 +13,7 @@ HelpShip::HelpShip(Coord front, Coord back)
     set_coord_center();
 }
 
-void HelpShip::move(Coord c) {
+void HelpShip::move(Coord& c) {
 	std::vector<Coord> coordinate;
 	int x = c.X();
 	int y = c.Y();

@@ -31,7 +31,7 @@ void AttackGrid::remove_char(char c) {
     }
 }
 // aggiunge uno specifico char in una specifica Coord
-void AttackGrid::add_char(char ch, Coord coord) {
+void AttackGrid::add_char(char ch, Coord& coord) {
     if (ch != 'X' || ch != 'O' || ch!='Y')
         throw std::invalid_argument("Errore");
     grid_[coord.X()][coord.Y()] = ch;

@@ -3,7 +3,7 @@
 #include "../include/Replay.h"
 
 Replay::Replay(std::string file_log)
-    : log{file_log}, def_grid_{DefenceGrid{}, DefenceGrid{}}, att_grid_{AttackGrid{}, AttackGrid{}}, turn_{0}
+    : log{file_log}, def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}
 {
     std::cout << "Replay: " << file_log << std::endl;
 }
@@ -21,17 +21,17 @@ void Replay::start(void){
     _sleep(1);
     if(first == 1){
         take_ships(first);
-        std::cout << def_grid_.first;
+        std::cout << def_grid1_;
         _sleep(1);
         take_ships(second);
-        std::cout << def_grid_.second;
+        std::cout << def_grid2_;
         _sleep(1);
     }else{
         take_ships(first);
-        std::cout << def_grid_.second;
+        std::cout << def_grid2_;
         _sleep(1);
         take_ships(second);
-        std::cout << def_grid_.first;
+        std::cout << def_grid1_;
         _sleep(1);
     }
 
@@ -39,21 +39,21 @@ void Replay::start(void){
         turn_++;
         if(first==1){
             move_first();
-            std::cout << def_grid_.first;
-            std::cout << att_grid_.first;
+            std::cout << def_grid1_;
+            std::cout << att_grid1_;
             _sleep(1);
             move_second();
-            std::cout << def_grid_.second;
-            std::cout << att_grid_.second;
+            std::cout << def_grid2_;
+            std::cout << att_grid2_;
             _sleep(1);
         }else{
             move_second();
-            std::cout << def_grid_.first;
-            std::cout << att_grid_.first;
+            std::cout << def_grid1_;
+            std::cout << att_grid1_;
             _sleep(1);
             move_first();
-            std::cout << def_grid_.second;
-            std::cout << att_grid_.second;
+            std::cout << def_grid2_;
+            std::cout << att_grid2_;
             _sleep(1);
         }
     }
@@ -73,32 +73,32 @@ void Replay::start(std::string file_output){
     output << "Inizia il player " << first << ".\n" << std::endl;
     if(first == 1){
         take_ships(first);
-        output << def_grid_.first;
+        output << def_grid1_;
         take_ships(second);
-        output << def_grid_.second;
+        output << def_grid2_;
     }else{
         take_ships(first);
-        output << def_grid_.second;
+        output << def_grid2_;
         take_ships(second);
-        output << def_grid_.first;
+        output << def_grid1_;
     }
     while(!log.eof()){
         turn_++;
         output << "Turno " << turn_  << std::endl;
         if(first==1){
             move_first();
-            output << def_grid_.first;
-            output << att_grid_.first;
+            output << def_grid1_;
+            output << att_grid1_;
             move_second();
-            output << def_grid_.second;
-            output << att_grid_.second;
+            output << def_grid2_;
+            output << att_grid2_;
         }else{
             move_second();
-            output << def_grid_.first;
-            output << att_grid_.first;
+            output << def_grid1_;
+            output << att_grid1_;
             move_first();
-            output << def_grid_.second;
-            output << att_grid_.second;
+            output << def_grid2_;
+            output << att_grid2_;
         }
     }
     std::cout << "Raplay completato e salvato su file." << std::endl;
@@ -110,12 +110,14 @@ void Replay::move_first(void){
     }
     std::string head, tail;
     log >> head >> tail;
-    int s = def_grid_.first.find_ship(UCoord::from_string_to_coord(head));
+    Coord h{UCoord::from_string_to_coord(head)};
+    Coord t{UCoord::from_string_to_coord(tail)};
+    int s = def_grid1_.find_ship(h);
     if(s==-1){
         throw std::invalid_argument("Errore");
     }
-    def_grid_.first.ships().at(s)->set_coord_center(UCoord::from_string_to_coord(tail));
-    attack_first(UCoord::from_string_to_coord(head), UCoord::from_string_to_coord(tail));
+    def_grid1_.ships().at(s)->set_coord_center(t);
+    attack_first(h, t);
 }
 
 void Replay::move_second(void){
@@ -124,12 +126,14 @@ void Replay::move_second(void){
     }
     std::string head, tail;
     log >> head >> tail;
-    int s = def_grid_.second.find_ship(UCoord::from_string_to_coord(head));
+    Coord h{UCoord::from_string_to_coord(head)};
+    Coord t{UCoord::from_string_to_coord(tail)};
+    int s = def_grid2_.find_ship(h);
     if(s==-1){
         throw std::invalid_argument("Errore");
     }
-    def_grid_.second.ships().at(s)->set_coord_center(UCoord::from_string_to_coord(tail));
-    attack_second(UCoord::from_string_to_coord(head), UCoord::from_string_to_coord(tail));
+    def_grid2_.ships().at(s)->set_coord_center(t);
+    attack_second(h, t);
 }
 
 void Replay::take_ships(int player){
@@ -138,62 +142,70 @@ void Replay::take_ships(int player){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            Battleship ship{Battleship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)}};
+            Coord p{UCoord::from_string_to_coord(punta)};
+            Coord c{UCoord::from_string_to_coord(coda)};
+            Battleship ship{p, c};
             Ship* s = &ship;
-            def_grid_.first.add_ship(s);
+            def_grid1_.add_ship(c, c, 1);
         }
         for(int i = 0; i<3; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            HelpShip ship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)};
+            Coord p{UCoord::from_string_to_coord(punta)};
+            Coord c{UCoord::from_string_to_coord(coda)};
+            HelpShip ship{p, c};
             Ship* s = &ship;
-            def_grid_.first.add_ship(s);
+            def_grid1_.add_ship(c , c, 2);
         }
         for(int i = 0; i<2; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            ExplorationSubmarine ship{UCoord::from_string_to_coord(punta)};
-            Ship* s = &ship;
-            def_grid_.first.add_ship(s);
+            Coord c{UCoord::from_string_to_coord(coda)};
+            def_grid1_.add_ship(c, c, 3);
         }
     }else{
         for(int i = 0; i<3; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            Battleship ship{Battleship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)}};
+            Coord p{UCoord::from_string_to_coord(punta)};
+            Coord c{UCoord::from_string_to_coord(coda)};
+            Battleship ship{Battleship{p, c}};
             Ship* s = &ship;
-            def_grid_.second.add_ship(s);
+            def_grid2_.add_ship(p, c, 1);
         }
         for(int i = 0; i<3; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            HelpShip ship{UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda)};
+            Coord p{UCoord::from_string_to_coord(punta)};
+            Coord c{UCoord::from_string_to_coord(coda)};
+            HelpShip ship{p, c};
             Ship* s = &ship;
-            def_grid_.second.add_ship(s);
+            def_grid2_.add_ship(p, c, 2);
         }
         for(int i = 0; i<2; i++){
             std::string punta;
             std::string coda;
             log >> punta >> coda;
-            ExplorationSubmarine ship{UCoord::from_string_to_coord(punta)};
+            Coord c{UCoord::from_string_to_coord(punta)};
+            ExplorationSubmarine ship{c};
             Ship* s = &ship;
-            def_grid_.second.add_ship(s);
+            def_grid2_.add_ship(c, c, 3);
         }
     }
 }
 
-void Replay::attack_first(Coord a, Coord b){
-    int pos = position(def_grid_.first, a);
-    if(def_grid_.first.type_ship(pos) == 1){
+void Replay::attack_first(Coord& a, Coord& b){
+    int pos = position(def_grid1_, a);
+    if(def_grid1_.type_ship(pos) == 1){
         attack(1, pos, b);
-    }else if(def_grid_.first.type_ship(pos) == 2){
+    }else if(def_grid1_.type_ship(pos) == 2){
         move_help(1, pos, b);
         heal(1, pos, b);
-    }else if(def_grid_.first.type_ship(pos) == 3){
+    }else if(def_grid1_.type_ship(pos) == 3){
         move_sub(1, pos, b);
         exploration(1, pos, b);
     }
@@ -201,20 +213,20 @@ void Replay::attack_first(Coord a, Coord b){
 
 
 
-void Replay::attack_second(Coord a, Coord b){
-    int pos = position(def_grid_.second, a);
-    if(def_grid_.first.type_ship(pos) == 1){
+void Replay::attack_second(Coord& a, Coord& b){
+    int pos = position(def_grid2_, a);
+    if(def_grid1_.type_ship(pos) == 1){
         attack(1, pos, b);
-    }else if(def_grid_.second.type_ship(pos) == 2){
+    }else if(def_grid2_.type_ship(pos) == 2){
         move_help(1, pos, b);
         heal(1, pos, b);
-    }else if(def_grid_.second.type_ship(pos) == 3){
+    }else if(def_grid2_.type_ship(pos) == 3){
         move_sub(1, pos, b);
         exploration(1, pos, b);
     }
 }
 
-int Replay::position(DefenceGrid& def_grid, Coord c){
+int Replay::position(DefenceGrid& def_grid, Coord& c){
     for(int i = 0; i<def_grid.number_ship(); i++){
         if(def_grid.ships().at(i)->center()==c){
             return i;

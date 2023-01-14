@@ -49,7 +49,9 @@ void GamePlayer::positioning_player(void){
 			util::to_upper(punta);
 			std::cin >> coda;
 			util::to_upper(coda);
-			Game::add_ship(pl, UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda), t);
+			Coord p{UCoord::from_string_to_coord(punta)};
+			Coord c{UCoord::from_string_to_coord(coda)};
+			Game::add_ship(pl, p, c, t);
 			number_c++;
 		}catch(std::invalid_argument& e){
 			std::cout << "Coordinate non valide, reinserire." << std::endl;
@@ -64,8 +66,10 @@ void GamePlayer::positioning_player(void){
 			std::cin >> punta;
 			util::to_upper(punta);
 			std::cin >> coda;
-			util::to_upper(coda);
-			Game::add_ship(pl, UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(coda), t);
+			util::to_upper(coda);			
+			Coord p{UCoord::from_string_to_coord(punta)};
+			Coord c{UCoord::from_string_to_coord(coda)};
+			Game::add_ship(pl, p, c, t);
 			number_s++;
 		}catch(std::invalid_argument& e){
 			std::cout << "Coordinate non valide, reinserire." << std::endl;
@@ -79,7 +83,9 @@ void GamePlayer::positioning_player(void){
 			std::cout << "Inserire la coordinata del sottomarino di esplorazione " << number_e << ": ";
 			std::cin >> punta;
 			util::to_upper(punta);
-			Game::add_ship(pl, UCoord::from_string_to_coord(punta), UCoord::from_string_to_coord(punta), t);
+			Coord p{UCoord::from_string_to_coord(punta)};
+			Coord c{UCoord::from_string_to_coord(punta)};
+			Game::add_ship(pl, p, c, t);
 			number_e++;
 		}catch(std::invalid_argument& e){
 			std::cout << "Coordinate non valide, reinserire." << std::endl;
@@ -108,8 +114,8 @@ void GamePlayer::make_move(int s){
 			def = move.first;
 			att = move.second;
 			if(pl2 == 1){
-				int pos = def_grid_.first.find_ship(def);
-				int type = def_grid_.first.type_ship(pos);
+				int pos = def_grid1_.find_ship(def);
+				int type = def_grid1_.type_ship(pos);
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
@@ -121,8 +127,8 @@ void GamePlayer::make_move(int s){
 				}
 			}
 			if(pl2 == 2){
-				int pos = def_grid_.second.find_ship(def);
-				int type = def_grid_.second.type_ship(pos);
+				int pos = def_grid2_.find_ship(def);
+				int type = def_grid2_.type_ship(pos);
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
@@ -145,8 +151,8 @@ void GamePlayer::make_move(int s){
 			def = move.first;
 			att = move.second;
 			if(pl2 == 1){
-				int pos = def_grid_.first.find_ship(def);
-				int type = def_grid_.first.type_ship(pos);
+				int pos = def_grid1_.find_ship(def);
+				int type = def_grid1_.type_ship(pos);
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
@@ -158,8 +164,8 @@ void GamePlayer::make_move(int s){
 				}
 			}
 			if(pl2 == 2){
-				int pos = def_grid_.second.find_ship(def);
-				int type = def_grid_.second.type_ship(pos);
+				int pos = def_grid2_.find_ship(def);
+				int type = def_grid2_.type_ship(pos);
 				if(type == 1){
 					fire(pl2, pos, att);
 				}else if(type == 2){
@@ -229,19 +235,19 @@ std::pair<Coord,Coord> GamePlayer::select_move(int player){
 				choice = true;
 				util::to_upper(first);
 				if(first=="XX" && second=="XX"){
-					std::cout << att_grid_.first;
+					std::cout << att_grid1_;
 					choice = false;
 				}
 				if(first=="AA" && second=="AA"){
-					att_grid_.first.remove_detections();
+					att_grid1_.remove_detections();
 					choice = false;
 				}
 				if(first=="BB" && second=="BB"){
-					att_grid_.first.remove_hit();
+					att_grid1_.remove_hit();
 					choice = false;
 				}
 				if(first=="CC" && second=="CC"){
-					att_grid_.first.remove_water();
+					att_grid1_.remove_water();
 					choice = false;
 				}
 			}
@@ -261,9 +267,9 @@ std::pair<Coord,Coord> GamePlayer::select_move(int player){
 	}else{
 		int x, y;
 		srand(time(NULL));
-		int ran = rand()%(def_grid_.second.number_ship());
-		x = def_grid_.second.ships().at(ran)->center().X();
-		y = def_grid_.second.ships().at(ran)->center().Y();
+		int ran = rand()%(def_grid2_.number_ship());
+		x = def_grid2_.ships().at(ran)->center().X();
+		y = def_grid2_.ships().at(ran)->center().Y();
 		Coord first{x,y};
 		Coord second = UCoord::random_coord();
 		std::pair<Coord, Coord> coord{first, second};
