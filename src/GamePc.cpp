@@ -101,6 +101,10 @@ void GamePc::positioning(void){
 void GamePc::start(void){
 	while(!end(false)){
 		make_move(starter());
+		std::cout << "\nTurno " << turn() << std::endl;	
+		print_defence(1);
+		print_defence(2);
+
 	}
 	if(end(true)){
 		std::cout << "\nChiusura programma...\n" << std::endl; 

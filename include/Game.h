@@ -24,6 +24,7 @@ class Game{
 		int starter_;
 		void write_log(std::string x);
 		void write_log(std::pair<Coord, Coord>& x);
+		int turn(void) const { return turn_;}
 
 		AttackGrid att_grid1_;
 		AttackGrid att_grid2_;

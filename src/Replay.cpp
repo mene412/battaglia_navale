@@ -16,23 +16,23 @@ void Replay::start(void){
     }else if(first==2){
         second = 1;
     }
-    _sleep(1);
+    //_sleep(1);
     std::cout << "Inizia il player " << first << "." << std::endl;
-    _sleep(1);
+    //_sleep(1);
     if(first == 1){
         take_ships(first);
         std::cout << def_grid1_;
-        _sleep(1);
+        //_sleep(1);
         take_ships(second);
         std::cout << def_grid2_;
-        _sleep(1);
+        //_sleep(1);
     }else{
         take_ships(first);
         std::cout << def_grid2_;
-        _sleep(1);
+        //_sleep(1);
         take_ships(second);
         std::cout << def_grid1_;
-        _sleep(1);
+        //_sleep(1);
     }
 
     while(!log.eof()){
@@ -41,20 +41,20 @@ void Replay::start(void){
             move_first();
             std::cout << def_grid1_;
             std::cout << att_grid1_;
-            _sleep(1);
+            //_sleep(1);
             move_second();
             std::cout << def_grid2_;
             std::cout << att_grid2_;
-            _sleep(1);
+            //_sleep(1);
         }else{
             move_second();
             std::cout << def_grid1_;
             std::cout << att_grid1_;
-            _sleep(1);
+            //_sleep(1);
             move_first();
             std::cout << def_grid2_;
             std::cout << att_grid2_;
-            _sleep(1);
+            //_sleep(1);
         }
     }
     std::cout << "Replay terminato." << std::endl;
@@ -116,7 +116,7 @@ void Replay::move_first(void){
     if(s==-1){
         throw std::invalid_argument("Errore");
     }
-    def_grid1_.ships().at(s)->set_coord_center(t);
+    def_grid1_.ship(s)->set_coord_center(t);
     attack_first(h, t);
 }
 
@@ -132,7 +132,7 @@ void Replay::move_second(void){
     if(s==-1){
         throw std::invalid_argument("Errore");
     }
-    def_grid2_.ships().at(s)->set_coord_center(t);
+    def_grid2_.ship(s)->set_coord_center(t);
     attack_second(h, t);
 }
 
@@ -216,19 +216,72 @@ void Replay::attack_first(Coord& a, Coord& b){
 void Replay::attack_second(Coord& a, Coord& b){
     int pos = position(def_grid2_, a);
     if(def_grid1_.type_ship(pos) == 1){
-        attack(1, pos, b);
+        attack(2, pos, b);
     }else if(def_grid2_.type_ship(pos) == 2){
-        move_help(1, pos, b);
-        heal(1, pos, b);
+        move_help(2, pos, b);
+        heal(2, pos, b);
     }else if(def_grid2_.type_ship(pos) == 3){
-        move_sub(1, pos, b);
-        exploration(1, pos, b);
+        move_sub(2, pos, b);
+        exploration(2, pos, b);
     }
 }
 
+void Replay::attack(int pl, int pos, Coord& c){
+    if(pl = 1){
+		for(int i = 0; i<def_grid2_.number_ship(); i++){
+			for(int j = 0; j<def_grid2_.ship(i)->dim(); j++){
+				if(def_grid2_.ship(i)->coord().at(j) == c){
+					att_grid1_.add_char('x', c);
+					def_grid2_.ship(i) -> hit(c);
+					def_grid2_.hit(c);
+					if(def_grid2_.destroyed(i)){
+						def_grid2_.reload();
+					}
+					return;
+				}
+			}
+		}
+    	att_grid1_.add_char('o', c);
+    	return;
+	}else{
+		for(int i = 0; i<def_grid1_.number_ship(); i++){
+			for(int j = 0; j<def_grid1_.ship(i)->dim(); j++){
+				if(def_grid1_.ship(i)->coord().at(j) == c){
+					att_grid2_.add_char('x', c);
+					def_grid1_.ship(i) -> hit(c);
+					def_grid1_.hit(c);
+					if(def_grid1_.destroyed(i)){
+						def_grid1_.reload();
+					}
+					return;
+				}
+			}
+		}
+    	att_grid1_.add_char('o', c);
+    	return;
+    }
+}
+
+void heal(int pl, int pos, Coord& b){
+
+}
+
+void move_help(int pl, int pos, Coord& b){
+
+}
+
+void move_sub(int pl, int pos, Coord& b){
+
+}
+
+void exploration(int pl, int pos, Coord& b){
+
+}
+
+
 int Replay::position(DefenceGrid& def_grid, Coord& c){
     for(int i = 0; i<def_grid.number_ship(); i++){
-        if(def_grid.ships().at(i)->center()==c){
+        if(def_grid.ship(i)->center()==c){
             return i;
         }
     }

@@ -71,8 +71,8 @@ bool DefenceGrid::check_position(std::vector<Coord>& coordinates) {
 
 int DefenceGrid::find_ship(Coord& x) {
     for (int i = 0; i < number_ship(); i++) {
-        if (ships().at(i)->armor() != 0) {
-            if (ships().at(i)->center() == x) {
+        if (ships_.at(i)->armor() != 0) {
+            if (ships_.at(i)->center() == x) {
                 return i;
             }
         }
@@ -170,6 +170,7 @@ bool DefenceGrid::destroyed(int pos){
 }
 
 void DefenceGrid::remove_ship(int pos){
+    delete ships_.at(pos);
     ships_.erase(ships_.begin()+pos);
 }
 
@@ -223,14 +224,14 @@ void DefenceGrid::hit(Coord& c){
 }
 
 
-std::ostream& operator<<(std::ostream& os, DefenceGrid a){
-    os << "\nGriglia di difesa\n\n" << a.print_grid() << "OK GRIGLIA" << std::endl;
+std::ostream& operator<<(std::ostream& os, DefenceGrid& a){
+    os << "Griglia di difesa\n\n" << a.print_grid() << "\n" << std::endl;
     return os;
 }
 
  DefenceGrid::~DefenceGrid(void){
     for(int i = 0; i<number_ship(); i++){
         delete ships_.at(i);
-        ships_.at(i) == nullptr;
+        ships_.at(i) = nullptr;
     }
  }

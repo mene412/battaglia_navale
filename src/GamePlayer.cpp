@@ -272,8 +272,8 @@ int GamePlayer::select_ship(int player){
 // 		int x, y;
 // 		srand(time(NULL));
 // 		int ran = rand()%(def_grid2_.number_ship());
-// 		x = def_grid2_.ships().at(ran)->center().X();
-// 		y = def_grid2_.ships().at(ran)->center().Y();
+// 		x = def_grid2_.ship(ran)->center().X();
+// 		y = def_grid2_.ship(ran)->center().Y();
 // 		Coord first{x,y};
 // 		Coord second = UCoord::random_coord();
 // 		std::pair<Coord, Coord> coord{first, second};

@@ -215,6 +215,7 @@ void Game::fire(int pl, int pos, Coord& c){
 					def_grid2_.ship(i) -> hit(c);
 					def_grid2_.hit(c);
 					if(def_grid2_.destroyed(i)){
+						titanic(pl, i);
 						def_grid2_.reload();
 						std::cout << "Nave abbattuta." << std::endl;
 					}
@@ -232,6 +233,7 @@ void Game::fire(int pl, int pos, Coord& c){
 					def_grid1_.ship(i) -> hit(c);
 					def_grid1_.hit(c);
 					if(def_grid1_.destroyed(i)){
+						titanic(pl, i);
 						def_grid1_.reload();
 						std::cout << "Nave abbattuta." << std::endl;
 					}
@@ -246,14 +248,14 @@ void Game::fire(int pl, int pos, Coord& c){
 
 void Game::titanic(int pl, int pos){
     if(pl == 1){
-		for(int i = 0; i<def_grid2_.ships().at(pos)->coord().size(); i++){
-			att_grid1_.add_char('X', def_grid2_.ships().at(pos)->coord().at(i));
+		for(int i = 0; i<def_grid2_.ship(pos)->coord().size(); i++){
+			att_grid1_.add_char('X', def_grid2_.ship(pos)->coord().at(i));
 		}
 		def_grid2_.remove_ship(pos);
 		return;
 	}else{
-		for(int i = 0; i<def_grid1_.ships().at(pos)->coord().size(); i++){
-			att_grid2_.add_char('X', def_grid1_.ships().at(pos)->coord().at(i));
+		for(int i = 0; i<def_grid1_.ship(pos)->coord().size(); i++){
+			att_grid2_.add_char('X', def_grid1_.ship(pos)->coord().at(i));
 		}
 		def_grid1_.remove_ship(pos);
 		return;
@@ -273,7 +275,7 @@ void Game::heal(int pl, int pos, Coord& c){
 		coord_heal.push_back(Coord{c.X()-1+i, c.Y()+1});
 	}
 	if(pl = 1){
-		std::vector<Coord> coord = def_grid1_.ships().at(pos) -> coord();
+		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
 		bool heal = true;
 		for(int i = 0; i<coord_heal.size(); i++){
 			for(int j = 0; j<coord.size(); j++){
@@ -282,14 +284,14 @@ void Game::heal(int pl, int pos, Coord& c){
 				}
 			}
 			if(heal){
-				if(!def_grid1_.ships().at(i) -> healed()){
-					def_grid1_.ships().at(i) -> heal();
+				if(!def_grid1_.ship(i) -> healed()){
+					def_grid1_.ship(i) -> heal();
 				}
 			}
 		}
 		def_grid1_.reload();
 	}else{
-		std::vector<Coord> coord = def_grid2_.ships().at(pos) -> coord();
+		std::vector<Coord> coord = def_grid2_.ship(pos) -> coord();
 		bool heal = true;
 		for(int i = 0; i<coord_heal.size(); i++){
 			for(int j = 0; j<coord.size(); j++){
@@ -298,8 +300,8 @@ void Game::heal(int pl, int pos, Coord& c){
 				}
 			}
 			if(heal){
-				if(!def_grid2_.ships().at(i) -> healed()){
-					def_grid2_.ships().at(i) -> heal();
+				if(!def_grid2_.ship(i) -> healed()){
+					def_grid2_.ship(i) -> heal();
 				}
 			}
 		}
@@ -352,26 +354,31 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		int type = def_grid1_.type_ship(pos);
 		if(type == 2){
 			std::vector<Coord> coord;
-			if(def_grid1_.ships().at(pos)->orizzontal()){
-				coord.push_back(Coord{def_grid1_.ships().at(pos)->center().X(),def_grid1_.ships().at(pos)->center().Y()-1});
-				coord.push_back(def_grid1_.ships().at(pos)->center());
-				coord.push_back(Coord{def_grid1_.ships().at(pos)->center().X(),def_grid1_.ships().at(pos)->center().Y()+1});
+			if(def_grid1_.ship(pos)->orizzontal()){
+				Coord c{def_grid1_.ship(pos)->x(), def_grid1_.ship(pos)->y()-1};
+				coord.push_back(c);
+				c = Coord{def_grid1_.ship(pos)->center()};
+				coord.push_back(c);
+				c = Coord{def_grid1_.ship(pos)->x(),def_grid1_.ship(pos)->y()+1};
+				coord.push_back(c);
 			}else{
-				coord.push_back(Coord{def_grid1_.ships().at(pos)->center().X()-1,def_grid1_.ships().at(pos)->center().Y()});
-				coord.push_back(def_grid1_.ships().at(pos)->center());
-				coord.push_back(Coord{def_grid1_.ships().at(pos)->center().X()+1,def_grid1_.ships().at(pos)->center().Y()});
+				Coord c{def_grid1_.ship(pos)->x()-1, def_grid1_.ship(pos)->y()};
+				coord.push_back(c);
+				c = Coord{def_grid1_.ship(pos)->center()};
+				coord.push_back(c);
+				c = Coord{def_grid1_.ship(pos)->x()+1,def_grid1_.ship(pos)->y()};
+				coord.push_back(c);
 			}
 			if(def_grid1_.check_position(coord)){
-				dynamic_cast<HelpShip*>(def_grid1_.ships().at(pos)) -> move(c);
+				dynamic_cast<HelpShip*>(def_grid1_.ship(pos)) -> move(c);
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
 			}
 		}else if(type == 3){
-			std::vector<Coord>cord {c};
-			if(def_grid1_.check_position(cord)){
-				dynamic_cast<ExplorationSubmarine*>(def_grid1_.ships().at(pos)) -> move(c);
-			return;
+			if(def_grid1_.check_position(c)){
+				dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos)) -> move(c);
+				return;
 			}else{
 				throw std::invalid_argument("Errore");
 			}
@@ -382,17 +389,23 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		int type = def_grid2_.type_ship(pos);
 		if(type == 2){
 			std::vector<Coord> coord;
-			if(def_grid2_.ships().at(pos)->orizzontal()){
-				coord.push_back(Coord{def_grid2_.ships().at(pos)->center().X(),def_grid2_.ships().at(pos)->center().Y()-1});
-				coord.push_back(def_grid2_.ships().at(pos)->center());
-				coord.push_back(Coord{def_grid2_.ships().at(pos)->center().X(),def_grid2_.ships().at(pos)->center().Y()+1});
+			if(def_grid2_.ship(pos)->orizzontal()){
+				Coord c{def_grid2_.ship(pos)->x(), def_grid2_.ship(pos)->y()-1};
+				coord.push_back(c);
+				c = Coord{def_grid2_.ship(pos)->center()};
+				coord.push_back(c);
+				c = Coord{def_grid2_.ship(pos)->x(),def_grid2_.ship(pos)->y()+1};
+				coord.push_back(c);
 			}else{
-				coord.push_back(Coord{def_grid2_.ships().at(pos)->center().X()-1,def_grid2_.ships().at(pos)->center().Y()});
-				coord.push_back(def_grid2_.ships().at(pos)->center());
-				coord.push_back(Coord{def_grid2_.ships().at(pos)->center().X()+1,def_grid2_.ships().at(pos)->center().Y()});
+				Coord c{def_grid2_.ship(pos)->x()-1, def_grid2_.ship(pos)->y()};
+				coord.push_back(c);
+				c = Coord{def_grid2_.ship(pos)->center()};
+				coord.push_back(c);
+				c = Coord{def_grid2_.ship(pos)->x()+1,def_grid2_.ship(pos)->y()};
+				coord.push_back(c);
 			}
 			if(def_grid2_.check_position(coord)){
-				dynamic_cast<HelpShip*>(def_grid2_.ships().at(pos)) -> move(c);
+				dynamic_cast<HelpShip*>(def_grid2_.ship(pos)) -> move(c);
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
@@ -400,7 +413,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		}else if(type == 3){
 			std::vector<Coord>cord {c};
 			if(def_grid2_.check_position(cord)){
-				dynamic_cast<ExplorationSubmarine*>(def_grid2_.ships().at(pos)) -> move(c);
+				dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos)) -> move(c);
 			return;
 			}else{
 				throw std::invalid_argument("Errore");
@@ -419,16 +432,16 @@ void util::to_upper(std::string& x){
 
 void Game::print_defence(int pl){
 	if(pl == 1){
-		std::cout << &def_grid1_;
+		std::cout << "Player " << pl << " - " << def_grid1_;
 	}else{
-		std::cout << &def_grid2_;
+		std::cout << "Player " << pl << " - " << def_grid2_;
 	}
 }
 
 void Game::print_attack(int pl){
 	if(pl == 1){
-		std::cout << &att_grid1_;
+		std::cout << "Player " << pl << " - " << att_grid1_;
 	}else{
-		std::cout << &att_grid2_;
+		std::cout << "Player " << pl << " - " << att_grid2_;
 	}
 }
