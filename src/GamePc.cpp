@@ -30,10 +30,9 @@ void GamePc::positioning(void){
 			Coord punta = UCoord::random_coord();
 			Coord coda = UCoord::random_coord(punta, dim);
 			Game::add_ship(pl1, punta, coda, t);
-			
-			std::cout << "SI";
+			// std::cout << "SI";
 			number_c++;
-			std::cout << std::to_string(number_c) << std::endl;
+			// std::cout << std::to_string(number_c) << std::endl;
 		}catch(std::invalid_argument& e){}
 	}
 	
@@ -106,7 +105,10 @@ void GamePc::start(void){
 // 	while(!end()){
 // 		make_move(starter());
 // 	}
-	std::cout << "OK";
+	std::cout << "- - - GIOCATORE 1 - - -" << std::endl;
 	print_defence(1);
+	print_attack(1);
+	std::cout << "- - - GIOCATORE 2 - - -" << std::endl;
+	print_defence(2);
 	print_attack(2);	
 }

@@ -426,7 +426,6 @@ void Game::print_defence(int pl){
 	}else{
 		std::cout << def_grid2_;
 	}
-	std::cout << "nice 2";
 }
 
 void Game::print_attack(int pl){
