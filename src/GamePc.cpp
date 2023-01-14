@@ -61,7 +61,7 @@ void GamePc::positioning(void){
 		}catch(std::invalid_argument& e){}
 	}
 
-	std::cout << "OK" << std::endl;
+	// std::cout << "OK" << std::endl;
 	// Inseriamo le navi nella griglia di pl2
 	// Creazione e inserimento corazzate - pl2
 	number_c = 1;
