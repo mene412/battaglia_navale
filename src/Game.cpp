@@ -432,10 +432,11 @@ void util::to_upper(std::string& x){
 
 void Game::print_defence(int pl){
 	if(pl == 1){
-		std::cout << def_grid_.first;
+		std::cout << def_grid_.first << "nice 1";
 	}else{
-		std::cout << def_grid_.second;
+		std::cout << def_grid_.second<< "nice 1";
 	}
+	std::cout << "nice 2";
 }
 
 void Game::print_attack(int pl){

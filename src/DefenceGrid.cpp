@@ -219,6 +219,6 @@ void DefenceGrid::hit(Coord c){
 
 
 std::ostream& operator<<(std::ostream& os, DefenceGrid a){
-    os << "\nGriglia di difesa\n\n" << a.print_grid() << "OK GRIGLIA" << std::endl;
-    return os;
+    return os << "\nGriglia di difesa\n\n" << a.print_grid() << "OK GRIGLIA" << std::endl;
+    
 }
