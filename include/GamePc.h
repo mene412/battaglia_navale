@@ -8,8 +8,9 @@
 class GamePc : public Game{
 	public:
 		GamePc(void);
+		void start(void);
+	protected:
 		void positioning(void) override;
-	private:
 		
 };
 #endif

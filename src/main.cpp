@@ -14,5 +14,6 @@
 int main(int argc, char* argv[]) {
     std::cout << "OK" << std::endl;
     GamePc game{};
+    game.start();
     return 0;
 }

@@ -10,14 +10,14 @@ class Ship
         virtual ~Ship(){};
 
         //metodi getter
-        bool healed(void) { return healed_; }
-        Coord center(void){ return center_; }
-        bool orizzontal(void) { return orizzontal_; }  
+        bool healed(void) const { return healed_; }
+        Coord center(void) const{ return center_; }
+        bool orizzontal(void) const { return orizzontal_; }  
         std::vector<Coord>& coord(void){ return coord_; }
         std::vector<int>& coord_hit(void){ return coord_hit_;}
-        Coord const coord(int a){return coord_[a];}
-        int const dim(void) { return dim_; }
-        int armor(void) { return armor_; }
+        Coord const coord(int a) const {return coord_.at(a);}
+        int dim(void) const { return dim_; }
+        int armor(void) const { return armor_; }
 
 
         //metodi setter 

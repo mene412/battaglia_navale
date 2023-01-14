@@ -39,7 +39,6 @@ std::string Coord::coord(){
 
 static Coord UCoord::random_coord()
 {
-    srand(time(NULL));
 	int x = rand()%11;
 	int y = rand()%11;
 	Coord coordinate{x,y};
@@ -47,7 +46,6 @@ static Coord UCoord::random_coord()
 }
 
 static Coord UCoord::random_coord(Coord c, int dim){
-	srand(time(NULL));
 	int s = rand()%2;
 	int x;
 	int y;
@@ -71,8 +69,7 @@ static Coord UCoord::random_coord(Coord c, int dim){
 }
 
 static char UCoord::from_int_to_char(int a){
-	char c;	
-	a--;
+	char c;
 	std::string letters = "ABCDEFGHILMN";
 	if(a<0 || a>11){
 		throw std::invalid_argument("Coordinate non valide");

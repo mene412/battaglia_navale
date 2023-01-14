@@ -7,6 +7,7 @@ Ship::Ship(Coord front, Coord back)         // Costruttore di Ship, inizializza 
 {
     set_direction();
     set_center();
+    set_coord_center();
 }
 
 void Ship::set_center(void){                // Setta il centro della nave a partire da front e back
@@ -35,12 +36,12 @@ void Ship::set_direction(void){     // Setta l'orientamento della nave [orizzont
 
 void Ship::set_coord_center(void){             // Setta le coordinate iniziali
     if(orizzontal_){
-        for(int i = 0; i<coord_.size(); i++){
+        for(int i = 0; i<dim_; i++){
             coord_.push_back(Coord{center_.X(), center_.Y()-distance_+i});
         }
     }
     if(!orizzontal_){
-        for(int i = 0; i<coord_.size(); i++){
+        for(int i = 0; i<dim_; i++){
             coord_.push_back(Coord{center_.X()-distance_+i, center_.Y()});
         }
     }

@@ -10,7 +10,41 @@ DefenceGrid::DefenceGrid(void)
     : Grid{}, ships_{}
 {}
 
-bool DefenceGrid::check_position(std::vector<Coord> coordinates) {
+bool DefenceGrid::check_position(Coord a, Coord b, int dim) {
+    std::vector<Coord> coord;
+    if(a.X()<b.X()){
+        dim = b.X()-a.X();
+        for(int i = 0; i<dim; i++){
+            coord.push_back(Coord{a.X()+i, a.Y()});
+        }
+    }else if(a.X()>b.X()){
+        dim = a.X()-b.X();
+        for(int i = 0; i<dim; i++){
+            coord.push_back(Coord{b.X()+i, a.Y()});
+        }
+    }else if(a.Y()<b.Y()){
+        dim = b.Y()-a.Y();
+        for(int i = 0; i<dim; i++){
+            coord.push_back(Coord{a.X(), a.Y()+i});
+        }
+    }else if(a.Y()>b.Y()){
+        dim = a.Y()-b.Y();
+        for(int i = 0; i<dim; i++){
+            coord.push_back(Coord{b.X(), a.Y()+i});
+        }
+    }
+    for (int i = 0; i < coord.size(); i++) {
+        int checkRow = coord[i].X();        // numero riga
+        int checkColumn = coord[i].Y();    // numero colonna
+        if (grid_[checkRow][checkColumn] != ' ') {
+            // se la cella non è vuota, ritorna false
+            throw std::invalid_argument("Errore");
+        } 
+    }
+    return true;
+}
+
+bool DefenceGrid::check_position(std::vector<Coord>& coordinates) {
     for (int i = 0; i < coordinates.size(); i++) {
         int checkRow = coordinates[i].X();        // numero riga
         int checkColumn = coordinates[i].Y();    // numero colonna
@@ -46,15 +80,13 @@ int DefenceGrid::type_ship(int pos){
     }
 }
 
-void DefenceGrid::add_ship(Ship& newShip) {
-    if (!check_position(newShip.coord())) {      //da errore in compilazione perhè coord è, per ora, un vector di vector di int
-                                                // deve essere invece un vector di Coord
-        return;                                 //TO DO: lanciare eccezione
-    }
-    ships_.push_back(&newShip);
-    for (int i = 0; i < newShip.coord().size(); i++) {
-        int rowSelected = newShip.coord().at(i).X();
-        int columnSelected = newShip.coord().at(i).Y();
+void DefenceGrid::add_ship(Ship* newShip) {
+    std::cout << newShip -> dim() << std::endl;
+    std::cout << newShip->center() << std::endl;
+    ships_.push_back(newShip);
+    for (int i = 0; i < ships_.at(ships_.size()-1)->coord().size(); i++){
+        int rowSelected = ships_.at(ships_.size()-1)->coord().at(i).X();
+        int columnSelected = ships_.at(ships_.size()-1)->coord().at(i).Y();
         int type = type_ship(ships_.size()-1);
         if(type == 1){
             grid_[rowSelected][columnSelected] = 'C';

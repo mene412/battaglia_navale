@@ -8,12 +8,14 @@
 class GamePlayer: public Game{
  	public:
  	    GamePlayer(void);
- 		void make_move(int s) override;
+		void start(void);
  	private:
+		void make_move(int s) override;
  		void select_starter(void) override;
  		void positioning(void) override;
 		std::pair<Coord,Coord> select_move(int player) override;
- 		void positioning_player(void);
+ 	private:
+		void positioning_player(void);
  		void positioning_pc(void);
 };
 #endif

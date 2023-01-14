@@ -6,12 +6,12 @@
 
 Game::Game(void)
 	: def_grid_{DefenceGrid{}, DefenceGrid{}}, att_grid_{AttackGrid{}, AttackGrid{}}, turn_{0}, starter_{0}, log{"../log.txt"}
-{
+{	
+	std::srand(time(NULL));
 	std::cout << "Inizio gioco.\n" << std::endl; 
 }
 
 void Game::select_starter(void){
-	std::srand(time(NULL));
 	int s = rand()%2+1;
 	if(s==1){
 		std::cout << "Inizia il player " << s << std::endl;
@@ -24,36 +24,43 @@ void Game::select_starter(void){
 
 void Game::add_ship(int player, Coord p, Coord c, int type){
 	if(player == 1){
-		if(type == 1){
+		if(type == 1 && def_grid_.first.check_position(p, c, 5)){
 			Battleship ship{p, c};
-			def_grid_.first.add_ship(ship);
+			Ship* s = &ship;
+			def_grid_.first.add_ship(s);
+			std::cout << "ciao";
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 2){
+		}else if(type == 2 && def_grid_.first.check_position(p, c, 3)){
 			HelpShip ship{p, c};
-			def_grid_.first.add_ship(ship);
+			Ship* s = &ship;
+			def_grid_.first.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 3){
+		}else if(type == 3 && def_grid_.first.check_position(p, c, 1)){
 			ExplorationSubmarine ship{p, c};
-			def_grid_.first.add_ship(ship);
+			Ship* s = &ship;
+			def_grid_.first.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
 		}
 	}else{
-		if(type == 1){
+		if(type == 1 && def_grid_.first.check_position(p, c, 5)){
 			Battleship ship{p, c};
-			def_grid_.second.add_ship(ship);
+			Ship* s = &ship;
+			def_grid_.second.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 2){
+		}else if(type == 2 && def_grid_.first.check_position(p, c, 3)){
 			HelpShip ship{p, c};
-			def_grid_.second.add_ship(ship);
+			Ship* s = &ship;
+			def_grid_.second.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 3){
+		}else if(type == 3 && def_grid_.first.check_position(p, c, 1)){
 			ExplorationSubmarine ship{p, c};
-			def_grid_.second.add_ship(ship);
+			Ship* s = &ship;
+			def_grid_.second.add_ship(s);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
 		}
@@ -71,7 +78,7 @@ void Game::make_move(int s){
  	increment_turn();
 	int pl1 = 0;
 	int pl2 = 0;
-	if(starter_==1){
+	if(s==1){
 		pl1 = 1;
 		pl2 = 2;
 	}else{
@@ -118,6 +125,11 @@ void Game::make_move(int s){
 	}
 	std::pair<Coord, Coord> coord{def, att}; 
 	write_log(coord);
+	print_defence(pl1);
+
+	if(end()){
+		return;
+	}
 
 	valid = false;
 	while(!valid){
@@ -157,18 +169,17 @@ void Game::make_move(int s){
 	}
 	std::pair<Coord, Coord> coord2{def, att}; 
 	write_log(coord2);
+	print_defence(pl1);
 }
 
 std::pair<Coord, Coord> Game::select_move(int player){
 	int x, y;
 	if(player == 1){
-		srand(time(NULL));
 		int ran = rand()%(def_grid_.first.number_ship());
 		x = def_grid_.first.ships().at(ran)->center().X();
 		y = def_grid_.first.ships().at(ran)->center().Y();
 	}else{
 		int x, y;
-		srand(time(NULL));
 		int ran = rand()%(def_grid_.second.number_ship());
 		x = def_grid_.second.ships().at(ran)->center().X();
 		y = def_grid_.second.ships().at(ran)->center().Y();
@@ -190,10 +201,21 @@ void Game::write_log(std::pair<Coord, Coord>& x){
 }
 
 
-bool Game::end_max_turn(void) const {
+bool Game::end(void){
+	turn_++;
 	if(turn_>=MAX_TURNS){
-		exit(1);
+		std::cout << "\n\nPareggio!" << std::endl;
+		return true;
 	}
+	if(def_grid_.first.number_ship()==0){
+		std::cout << "\n\nPlayer 2 ha vinto!" << std::endl;
+		return true;
+	}
+	if(def_grid_.second.number_ship()==0){		
+		std::cout << "\n\nPlayer 1 ha vinto!" << std::endl;
+		return true;
+	}
+	return false;
 }
 
 void Game::fire(int pl, int pos, Coord c){
@@ -356,7 +378,8 @@ void Game::move_ship(int pl, int pos, Coord c){
 				throw std::invalid_argument("Errore");
 			}
 		}else if(type == 3){
-			if(def_grid_.first.check_position(std::vector<Coord>{c})){
+			std::vector<Coord>cord {c};
+			if(def_grid_.first.check_position(cord)){
 				dynamic_cast<ExplorationSubmarine*>(def_grid_.first.ships().at(pos)) -> move(c);
 			return;
 			}else{
@@ -385,7 +408,8 @@ void Game::move_ship(int pl, int pos, Coord c){
 				throw std::invalid_argument("Errore");
 			}
 		}else if(type == 3){
-			if(def_grid_.second.check_position(std::vector<Coord>{c})){
+			std::vector<Coord>cord {c};
+			if(def_grid_.second.check_position(cord)){
 				dynamic_cast<ExplorationSubmarine*>(def_grid_.second.ships().at(pos)) -> move(c);
 			return;
 			}else{
@@ -403,3 +427,18 @@ void util::to_upper(std::string& x){
 	}
 }
 
+void Game::print_defence(int pl){
+	if(pl == 1){
+		std::cout << def_grid_.first;
+	}else{
+		std::cout << def_grid_.second;
+	}
+}
+
+void Game::print_attack(int pl){
+	if(pl == 1){
+		std::cout << att_grid_.first;
+	}else{
+		std::cout << att_grid_.second;
+	}
+}

@@ -9,11 +9,11 @@
 
 class Game{
 	public:
-		virtual ~Game(){log.close();};
-		virtual void make_move(int s);
-    	int starter(void){return starter_;}
-
+		virtual ~Game(){log.close();}
+		int starter(void){return starter_;}
+	
 	protected:
+		virtual void make_move(int s);
 		Game(void);
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
@@ -26,13 +26,15 @@ class Game{
 		void write_log(std::pair<Coord, Coord>& x);
 		std::pair<AttackGrid, AttackGrid> att_grid_;
 		std::pair<DefenceGrid, DefenceGrid> def_grid_;
-		bool end_max_turn(void) const;
+		bool end(void);
 		void fire(int pl, int pos, Coord c);
 		void move_ship(int pl, int pos, Coord c);
 		void heal(int pl, int pos, Coord c);
 		void search(int pl, int pos, Coord c);
 		void increment_turn(void);
 		void titanic(int pl, int pos);
+		void print_defence(int pl);
+		void print_attack(int pl);
 
 	private:
 		int turn_;
