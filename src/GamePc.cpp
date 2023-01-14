@@ -19,6 +19,9 @@ void GamePc::positioning(void){
 	}else{
 		pl2 = 1;
 	}
+
+	// Inseriamo le navi nella griglia di pl1
+	// Creazione e inserimento corazzate - pl1
 	int number_c = 0;
 	int t = 1;
 	int dim = 4;
@@ -35,7 +38,7 @@ void GamePc::positioning(void){
 	}
 	
 	std::cout << "SI" << std::endl;
-	
+	// Creazione e inserimento navi di supporto - pl1
 	int number_s = 0;
 	t = 2;
 	dim = 2;
@@ -47,7 +50,7 @@ void GamePc::positioning(void){
 			number_s++;
 		}catch(std::invalid_argument& e){}
 	}		
-
+	// Creazione e inserimento sottomarini - pl1
 	int number_e = 0;
 	t = 3;
 	while(number_e < 2){
@@ -60,7 +63,8 @@ void GamePc::positioning(void){
 	}
 
 	std::cout << "OK" << std::endl;
-
+	// Inseriamo le navi nella griglia di pl2
+	// Creazione e inserimento corazzate - pl2
 	number_c = 1;
 	t = 1;
     dim = 4;
@@ -72,6 +76,7 @@ void GamePc::positioning(void){
 			number_c++;
 		}catch(std::invalid_argument& e){std::cout << "Errore";}
 	}
+	// Creazione e inserimento navi di supporto - pl2
 	number_s = 1;
 	t = 2;
 	dim = 2;
@@ -83,7 +88,7 @@ void GamePc::positioning(void){
 			number_s++;
 		}catch(std::invalid_argument& e){std::cout << "Errore";}
 	}		
-	
+	// Creazione e inserimento sottomarini - pl2
 	number_e = 1;
 	t = 3;
 	while(number_e < 3){

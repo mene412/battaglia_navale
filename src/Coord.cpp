@@ -49,6 +49,7 @@ Coord& Coord::operator=(Coord&& c){
 	Y_ = c.Y();
 	c.setX(0);
 	c.setY(0);
+	return *this;
 }
 
 std::string Coord::coord(){
