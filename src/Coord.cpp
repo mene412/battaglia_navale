@@ -127,7 +127,7 @@ static Coord UCoord::from_string_to_coord(std::string c){
 	if(x=='N'){
 		xf = 11;
 	}
-	Coord coordinate{xf, y};
+	Coord coordinate{xf, (y-1)};
 	return coordinate; 
 }
 
