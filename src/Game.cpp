@@ -37,7 +37,7 @@ void Game::add_ship(int player, Coord& p, Coord& c, int type){
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
 		}else{
-			throw std::invalid_argument("Errore");
+			throw std::invalid_argument("Non puoi aggiungere una nave qua - linea 40");
 		}
 	}else{
 		if(type == 1 && def_grid2_.check_position(p, c, 5)){
@@ -53,7 +53,7 @@ void Game::add_ship(int player, Coord& p, Coord& c, int type){
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
 		}else{
-			throw std::invalid_argument("Errore");
+			throw std::invalid_argument("Non puoi aggiungere una nave qua - linea 56");
 		}
 	}
 }

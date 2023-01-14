@@ -77,7 +77,7 @@ int DefenceGrid::find_ship(Coord& x) {
             }
         }
     }
-    throw std::invalid_argument("Errore");
+    throw std::invalid_argument("Nave non trovata");
 }
 
 
@@ -91,7 +91,7 @@ int DefenceGrid::type_ship(int pos){
     if(dynamic_cast<ExplorationSubmarine*>(ships_.at(pos)) != nullptr){
         return 3; // Exploration
     }
-    throw std::invalid_argument("Errore");
+    throw std::invalid_argument("Tipo non trovato");
 }
 
 int DefenceGrid::type_ship(Ship* ship){
@@ -104,12 +104,13 @@ int DefenceGrid::type_ship(Ship* ship){
     if(dynamic_cast<ExplorationSubmarine*>(ship) != nullptr){
         return 3; // Exploration
     }
-    throw std::invalid_argument("Errore");
+    throw std::invalid_argument("Tipo non trovato");
 }
 
 
 
 void DefenceGrid::add_ship(Coord& front, Coord& back, int type) {
+
     if(type == 1){
         ships_.push_back(new Battleship{front, back});
     }else if(type == 2){
@@ -222,7 +223,7 @@ void DefenceGrid::hit(Coord& c){
 }
 
 
-std::ostream& operator<<(std::ostream& os, DefenceGrid& a){
+std::ostream& operator<<(std::ostream& os, DefenceGrid a){
     os << "\nGriglia di difesa\n\n" << a.print_grid() << "OK GRIGLIA" << std::endl;
     return os;
 }
