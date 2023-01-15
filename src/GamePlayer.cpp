@@ -127,20 +127,28 @@ void GamePlayer::make_move(int s){
                 nave=select_ship(computer);
                 Coord cMove;
                 cMove=UCoord::random_coord();//caso computer
+                //TEST
     std::cout<<cMove.X()<<"   "<<cMove.Y()<<std::endl;
                 std::cout<<"Azione: "<<cMove.X()<<" "<<cMove.Y()<<std::endl;
+                //FINE TEST
                 int type = def_grid2_.type_ship(nave);
                 if(type == 1){
                     fire(computer, nave, cMove);
+                    //TEST
                     std::cout<<"Fuoco"<<std::endl;
+                    //FINE TEST
                 }else if(type == 2){
                     move_ship(computer, nave, cMove);
                     heal(computer, nave , cMove);
+                    //TEST
                     std::cout<<"Move e HEal"<<std::endl;
+                    //FINE TEST
                 }else if(type == 3){
                     move_ship(computer, nave, cMove);
                     search(computer, nave, cMove);
+                    //TEST
                     std::cout<<"Move e search"<<std::endl;
+                    //FINE TEST
                 }
             }
         }catch(std::invalid_argument& e){
@@ -250,14 +258,17 @@ int GamePlayer::select_ship(int player){
 // }
 
 void GamePlayer::start(){
-	std::cout << def_grid2_.number_ship() << std::endl;
-	std::cout << def_grid1_.ship(4)->center() << std::endl;
-	for(int i = 0; i<def_grid1_.number_ship(); i++){
-		std::cout << def_grid1_.ship(i)->center() << std::endl;
-		std::cout << def_grid1_.ship(i)->center().X() << std::endl;
+//	std::cout << def_grid2_.number_ship() << std::endl;
+//	std::cout << def_grid1_.ship(4)->center() << std::endl;
+//	for(int i = 0; i<def_grid1_.number_ship(); i++){
+//		std::cout << def_grid1_.ship(i)->center() << std::endl;
+//		std::cout << def_grid1_.ship(i)->center().X() << std::endl;
 	}
     while(!end(false)){
         make_move(starter());
+        //TEST
+        std::cout<<"Mossa player fatta"<<std::endl;
         make_move((starter()%2)+1);
+        std::cout<<"Mossa computer fatta"<<std::endl;
     }
 }
