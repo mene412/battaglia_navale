@@ -90,7 +90,6 @@ void Game::make_move(int s){
 			if(pl1 == 1){
 				// Definisco il tipo di nave per l'azione da fare
 				int type = def_grid1_.type_ship(pos);
-				
 				if(type == 1){					// BATTLESHIP
 					fire(pl1, pos, att); 
 				} else if(type == 2) {			// HELPSHIP
@@ -101,7 +100,7 @@ void Game::make_move(int s){
 					search(pl1, pos, att);
 				}
 				// TEST
-				std::cout << "Scelta ed eseguita azione con nave di tipo " << type << std::endl;	
+				std::cout << "Scelta ed eseguita azione con nave in di tipo " << type << " in posizione " << pos << std::endl;	
 				// FINE TEST
 				// Scrive la casella di arrivo della nave
 				def = def_grid1_.ship(pos) -> center();
@@ -118,7 +117,7 @@ void Game::make_move(int s){
 					search(pl1, pos, att);
 				}
 				// TEST
-				std::cout << "Scelta ed eseguita azione con nave di tipo " << type << std::endl;	
+				std::cout << "Scelta ed eseguita azione con nave di tipo " << type << " in posizione " << pos << std::endl;		
 				// FINE TEST
 				def = def_grid2_.ship(pos) -> center();
 			}
@@ -217,15 +216,26 @@ bool Game::end(bool over){
 
 void Game::fire(int pl, int pos, Coord& c){
     if(pl = 1){
+		// scorre le navi nella  defGrid nemica
 		for(int i = 0; i<def_grid2_.number_ship(); i++){
+			// scorre le coord di ogni nave
 			for(int j = 0; j<def_grid2_.ship(i)->dim(); j++){
+				// Se trova la nave nella posizione colipta 
 				if(def_grid2_.ship(i)->coord().at(j) == c){
-					att_grid1_.add_char('x', c);
+					// stampa nella griglia di attacco una x
+					att_grid1_.add_char('X', c);
+					// segna nella nave che è stata colpita
 					def_grid2_.ship(i) -> hit(c);
+					// segna nella defGrid nemica che è stata colpita
 					def_grid2_.hit(c);
+					// controlla che la nave non sia distrutta
 					if(def_grid2_.destroyed(i)){
+						// se è distrutta
+						// 
 						titanic(pl, i);
+						// 
 						def_grid2_.reload();
+						// Stampa a schermo le navi rimaste
 						std::cout << "Nave abbattuta del player 2 - rimaste:";
 						std::cout << def_grid2_.number_ship() << std::endl;
 					}
@@ -233,6 +243,7 @@ void Game::fire(int pl, int pos, Coord& c){
 				}
 			}
 		}
+		// se non trova la nave, segna acqua ("O")
     	att_grid1_.add_char('O', c);
     	return;
 	}else{
