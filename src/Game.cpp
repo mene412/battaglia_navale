@@ -7,7 +7,9 @@
 Game::Game(void)
 	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log{"../log.txt"}
 {
-	std::cout << "Inizio gioco.\n" << std::endl; 
+	std::cout << "- - - - - - - - - - - - - - - - - - - - -" << std::endl; 
+	std::cout << "* * * I N I Z I A   I L   G I O C O * * *" << std::endl; 
+	std::cout << "- - - - - - - - - - - - - - - - - - - - -\n" << std::endl; 
 }
 
 void Game::select_starter(void){
@@ -100,7 +102,7 @@ void Game::make_move(int s){
 					search(s, pos, att);
 				}
 				// TEST
-				std::cout << "\nScelta ed eseguita azione con nave in di tipo " << type << " in posizione " << pos << std::endl;	
+				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << std::endl;	
 				// FINE TEST
 				// Scrive la casella di arrivo della nave
 				def = def_grid1_.ship(pos) -> center();
@@ -119,7 +121,7 @@ void Game::make_move(int s){
 					search(s, pos, att);
 				}
 				// TEST
-				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << " in posizione " << pos << std::endl;		
+				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << std::endl;		
 				// FINE TEST
 				def = def_grid2_.ship(pos) -> center();
 			}
@@ -440,6 +442,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				// TEST
 				std::cout << "Helpship spostata in " << c << std::endl;
 				// FINE TEST
+				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
@@ -454,6 +457,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				// TEST
 				std::cout << "Submarine spostato in " << c << std::endl;
 				// FINE TEST
+				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
@@ -487,6 +491,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				// TEST
 				std::cout << "Helpship spostata in " << c << std::endl;
 				// FINE TEST
+				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
@@ -499,6 +504,8 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				// TEST
 				std::cout << "Submarine spostato in " << c << std::endl;
 				// FINE TEST
+				// Ridisegniamo la nave sulla griglia
+				return;
 				return;
 			}else{
 				throw std::invalid_argument("Errore");

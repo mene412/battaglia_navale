@@ -92,21 +92,10 @@ void GamePc::positioning(void){
 			number_e++;
 		}catch(std::invalid_argument& e){}
 	}
-
-	std::cout << "Navi corrette" << std::endl;
+	std::cout << "Navi create e inserite correttamente" << std::endl;
 }
 
 void GamePc::start(void){
-		// Testo di controllo
-		std::cout << "Player 1: \nNumero navi: " << def_grid1_.number_ship() << std::endl;
-		for (int i = 0; i < def_grid1_.number_ship(); i++) {
-			std::cout << "\tNave " << i << ": tipo " << def_grid1_.type_ship(i) << std::endl;
-		}
-		std::cout << "Player 2: \nNumero navi: " << def_grid2_.number_ship() << std::endl;
-		for (int i = 0; i < def_grid2_.number_ship(); i++) {
-			std::cout << "\tNave " << i << ": tipo " << def_grid2_.type_ship(i) << std::endl;
-		}
-		// Fine testo di controllo da cancellare
 		print_defence(1);
 		print_attack(1);
 		print_defence(2);

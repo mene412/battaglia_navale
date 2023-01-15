@@ -220,7 +220,6 @@ void DefenceGrid::hit(Coord& c){
     grid_[c.X()][c.Y()] = tolower(grid_[c.X()][c.Y()]);
 }
 
-
 std::ostream& operator<<(std::ostream& os, DefenceGrid& a){
     os << "Griglia di difesa\n\n" << a.print_grid() << "\n" << std::endl;
     return os;
