@@ -58,10 +58,10 @@ void Game::add_ship(int player, Coord& p, Coord& c, int type){
 }
 
 void Game::increment_turn(void){
-	turn_++;
 	if(turn_ == MAX_TURNS){
 		return;
 	}
+	turn_++;
 }
 
 void Game::make_move(int s){
