@@ -65,50 +65,54 @@ void Game::increment_turn(void){
 }
 
 void Game::make_move(int s){
+	// incrementa il turno senza superare il limite
  	increment_turn();
+	// controlla che la partita non sia finita:
+	// - player senza navi
+	// - limite turni raggiunto
 	if(end(false)){
 		return;
 	}
 	int pl1 = s;
-	int pl2;
-	if(pl1 == 1){
-		pl2 = 2;
-	}else{
-		pl2 = 1;
-	}
 	bool valid = false;
 	Coord def, att;
 	while(!valid){
 		try{
 			valid = true;
+			// Seleziono la nave
 			int pos = select_ship(pl1);
+			std::cout << "Nave selezionata";
+			// Seleziono delle coordinate random dove attaccare
 			att = UCoord::random_coord();
+			// Determino il numero del player per modificare la griglia giusta
 			if(pl1 == 1){
+				// Definisco il tipo di nave per l'azione da fare
 				int type = def_grid1_.type_ship(pos);
-				if(type == 1){
-					fire(pl1, pos, att);
-				}else if(type == 2){
+				
+				if(type == 1){					// BATTLESHIP
+					fire(pl1, pos, att); 
+				} else if(type == 2) {			// HELPSHIP
 					move_ship(pl1, pos, att);
 					heal(pl1, pos, att);
-				}else if(type == 3){
+				} else if(type == 3) {			// EXPL SUBMARINE
 					move_ship(pl1, pos, att);
 					search(pl1, pos, att);
 				}
+				// Scrive la casella di arrivo della nave
 				def = def_grid1_.ship(pos) -> center();
 			}
 			if(pl1 == 2){
 				int type = def_grid2_.type_ship(pos);
-				if(type == 1){
-					fire(pl1, pos, att);
-				}else if(type == 2){
+				if(type == 1){					// BATTLESHIP
+					fire(pl1, pos, att); 
+				} else if(type == 2) {			// HELPSHIP
 					move_ship(pl1, pos, att);
 					heal(pl1, pos, att);
-				}else if(type == 3){
+				} else if(type == 3) {			// EXPL SUBMARINE
 					move_ship(pl1, pos, att);
 					search(pl1, pos, att);
 				}
 				def = def_grid2_.ship(pos) -> center();
-
 			}
 		}catch(std::invalid_argument& e){
 			valid  = false;
@@ -121,44 +125,44 @@ void Game::make_move(int s){
 		return;
 	}
 
-	valid = false;
-	while(!valid){
-		try{
-			valid = true;
-			int pos = select_ship(pl2);
-			att = UCoord::random_coord();
-			if(pl2 == 1){
-				int type = def_grid1_.type_ship(pos);
-				if(type == 1){
-					fire(pl2, pos, att);
-				}else if(type == 2){
-					move_ship(pl2, pos, att);
-					heal(pl2, pos, att);
-				}else if(type == 3){
-					move_ship(pl2, pos, att);
-					search(pl2, pos, att);
-				}
-				def = def_grid1_.ship(pos) -> center();
-			}
-			if(pl2 == 2){
-				int type = def_grid2_.type_ship(pos);
-				if(type == 1){
-					fire(pl2, pos, att);
-				}else if(type == 2){
-					move_ship(pl2, pos, att);
-					heal(pl2, pos, att);
-				}else if(type == 3){
-					move_ship(pl2, pos, att);
-					search(pl2, pos, att);
-				}
-				def = def_grid2_.ship(pos) -> center();
-			}
-		}catch(std::invalid_argument& e){
-			valid  = false;
-		}
-	}
-	std::pair<Coord, Coord> coord2{def, att}; 
-	write_log(coord2);
+	// valid = false;
+	// while(!valid){
+	// 	try{
+	// 		valid = true;
+	// 		int pos = select_ship(pl2);
+	// 		att = UCoord::random_coord();
+	// 		if(pl2 == 1){
+	// 			int type = def_grid1_.type_ship(pos);
+	// 			if(type == 1){
+	// 				fire(pl2, pos, att);
+	// 			}else if(type == 2){
+	// 				move_ship(pl2, pos, att);
+	// 				heal(pl2, pos, att);
+	// 			}else if(type == 3){
+	// 				move_ship(pl2, pos, att);
+	// 				search(pl2, pos, att);
+	// 			}
+	// 			def = def_grid1_.ship(pos) -> center();
+	// 		}
+	// 		if(pl2 == 2){
+	// 			int type = def_grid2_.type_ship(pos);
+	// 			if(type == 1){
+	// 				fire(pl2, pos, att);
+	// 			}else if(type == 2){
+	// 				move_ship(pl2, pos, att);
+	// 				heal(pl2, pos, att);
+	// 			}else if(type == 3){
+	// 				move_ship(pl2, pos, att);
+	// 				search(pl2, pos, att);
+	// 			}
+	// 			def = def_grid2_.ship(pos) -> center();
+	// 		}
+	// 	}catch(std::invalid_argument& e){
+	// 		valid  = false;
+	// 	}
+	// }
+	// std::pair<Coord, Coord> coord2{def, att}; 
+	// write_log(coord2);
 }
 
 int Game::select_ship(int player){

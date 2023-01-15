@@ -99,12 +99,17 @@ void GamePc::positioning(void){
 }
 
 void GamePc::start(void){
+		// Testo di controllo
+		std::cout << "Player 1: \nNumero navi: " << def_grid1_.number_ship() << std::endl;
+		std::cout << "Player 2: \nNumero navi: " << def_grid2_.number_ship() << std::endl;
+		// Fine testo di controllo da cancellare
 		print_defence(1);
 		print_attack(1);
 		print_defence(2);
 		print_attack(2);
 	while(!end(false)){
 		make_move(starter());
+		make_move((starter()%2)+1);
 		std::cout << "\nTurno " << turn() << std::endl;	
 	}
 		print_defence(1);
