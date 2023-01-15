@@ -317,8 +317,14 @@ void Game::heal(int pl, int pos, Coord& c){
 		def_grid1_.ship(pos)->set_healed(true);
 		// scorro la griglia 3x3 da curare
 		for(int i = 0; i<coord_heal.size(); i++){
+			// TEST
+			std::cout << "Inizio a cercare se devo curare" << std::endl;
+			// FINE TEST
 			// se è occupata cerca la nave
 			if (!def_grid1_.check_position(coord_heal.at(i))) {
+				// TEST
+				std::cout << "Cerco la nave in posizione " << coord_heal.at(i) << std::endl;
+				// FINE TEST
                 int p = def_grid1_.find_ship(coord_heal.at(i));
                 if(!def_grid1_.ship(p) -> healed()){
                     def_grid1_.ship(p) -> heal();
