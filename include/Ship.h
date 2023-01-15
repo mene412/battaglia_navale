@@ -3,6 +3,7 @@
 #define Ship_h
 #include <vector>
 #include "Coord.h"
+#include <iostream>
 class Ship
 {
     public:
@@ -24,9 +25,9 @@ class Ship
         int y(void){ return y_;}
 
         //metodi setter 
-        void set_coord(std::vector<Coord>& coordinates);
-        void set_coord_center(Coord& cord);
-        void set_armor(int a);
+        virtual void set_coord(std::vector<Coord>& coordinates);
+        virtual void set_coord_from_center(Coord& cord);
+        virtual void set_armor(int a);
         void set_healed(bool heal);
        
        //metodi ausiliari
@@ -53,12 +54,12 @@ class Ship
         Coord center_;
         int x_;
         int y_;
+        bool orizzontal_;
+        Coord front_;
+        Coord back_;
 
     private:
         //variabili private
         std::vector<int> coord_hit_;
-        Coord front_;
-        Coord back_;
-        bool orizzontal_;
 };
 #endif /* Ship_h */

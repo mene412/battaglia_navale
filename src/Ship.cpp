@@ -1,5 +1,4 @@
 #include <iostream>
-#include <exception>
 #include "../include/Ship.h"
 
 Ship::Ship(Coord& front, Coord& back)         // Costruttore di Ship, inizializza le variabili e richiama le funzioni per settare centro e orientamento della nave
@@ -43,12 +42,12 @@ void Ship::set_direction(void){     // Setta l'orientamento della nave [orizzont
 void Ship::set_coord_center(void){             // Setta le coordinate iniziali
     if(orizzontal_){
         if(front_.Y()<back_.Y()){
-            for(int i = 0; i<dim(); i++){
+            for(int i = 0; i<dim_; i++){
                 Coord c{front_.X(), front_.Y()+i};
                 coord_.push_back(c);
             }
         }else{
-            for(int i = 0; i<dim(); i++){
+            for(int i = 0; i<dim_; i++){
                 Coord c{back_.X(), back_.Y()+i};
                 coord_.push_back(c);
             }
@@ -56,12 +55,12 @@ void Ship::set_coord_center(void){             // Setta le coordinate iniziali
     }
     if(!orizzontal_){
         if(front_.X()<back_.X()){
-            for(int i = 0; i<dim(); i++){
+            for(int i = 0; i<dim_; i++){
                 Coord c{front_.X()+i, front_.Y()};
                 coord_.push_back(c);
             }
         }else{
-            for(int i = 0; i<dim(); i++){
+            for(int i = 0; i<dim_; i++){
                 Coord c{back_.X()+i, back_.Y()};
                 coord_.push_back(c);
             }
@@ -71,19 +70,22 @@ void Ship::set_coord_center(void){             // Setta le coordinate iniziali
 
 
 void Ship::set_coord(std::vector<Coord>& coordinates){
+    if(coordinates.size()!=dim_){
+        throw std::invalid_argument("Dimensione coordinate non valida");
+    }
     coord_=coordinates;
-    set_coord_center(coordinates[distance_+1]);
+    set_coord_from_center(coordinates[distance_+1]);
 }
 
 
-void Ship::set_coord_center(Coord& cord){        // Setta le coordinate a partire dal centro 
+void Ship::set_coord_from_center(Coord& cord){        // Setta le coordinate a partire dal centro 
     center_ = cord;
     x_ = cord.X();
     y_ = cord.Y();
     if(orizzontal_){
         front_ = Coord{cord.X(), cord.Y()-distance_};
         back_ = Coord{cord.X(), cord.Y()+distance_};
-        for(int i = 0; i<coord_.size(); i++){
+        for(int i = 0; i<dim_; i++){
             Coord c{front_.X(), front_.Y()+i};
             coord_.at(i) = c;
         }
@@ -91,7 +93,7 @@ void Ship::set_coord_center(Coord& cord){        // Setta le coordinate a partir
     if(!orizzontal_){
         front_ = Coord{cord.X()-distance_, cord.Y()};
         back_ = Coord{cord.X()+distance_, cord.Y()};
-        for(int i = 0; i<coord_.size(); i++){
+        for(int i = 0; i<dim_; i++){
             Coord c{front_.X()+i, front_.Y()};
             coord_.at(i) = c;
         }
@@ -99,6 +101,9 @@ void Ship::set_coord_center(Coord& cord){        // Setta le coordinate a partir
 }
 
 void Ship::set_armor(int a){
+    if(a<0 || a>dim_){
+        throw std::invalid_argument("Errore");
+    }
     armor_ = a;
 }
 
@@ -118,7 +123,7 @@ void Ship::heal(void){
 }
 
 void Ship::hit(Coord& c){
-    for(int i = 0; i<coord_.size(); i++){
+    for(int i = 0; i<dim(); i++){
         if(coord_.at(i)==c){
             coord_hit_.push_back(i);
             dec_armor();

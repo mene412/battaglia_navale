@@ -113,10 +113,7 @@ void Replay::move_first(void){
     Coord h{UCoord::from_string_to_coord(head)};
     Coord t{UCoord::from_string_to_coord(tail)};
     int s = def_grid1_.find_ship(h);
-    if(s==-1){
-        throw std::invalid_argument("Errore");
-    }
-    def_grid1_.ship(s)->set_coord_center(t);
+    def_grid1_.ship(s)->set_coord_from_center(t);
     attack_first(h, t);
 }
 
@@ -129,10 +126,8 @@ void Replay::move_second(void){
     Coord h{UCoord::from_string_to_coord(head)};
     Coord t{UCoord::from_string_to_coord(tail)};
     int s = def_grid2_.find_ship(h);
-    if(s==-1){
-        throw std::invalid_argument("Errore");
-    }
-    def_grid2_.ship(s)->set_coord_center(t);
+    
+    def_grid2_.ship(s)->set_coord_from_center(t);
     attack_second(h, t);
 }
 

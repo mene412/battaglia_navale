@@ -14,5 +14,5 @@ HelpShip::HelpShip(Coord& front, Coord& back)
 }
 
 void HelpShip::move(Coord& c) {
-	set_coord_center(c);
+	set_coord_from_center(c);
 }
