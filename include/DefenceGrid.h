@@ -27,8 +27,8 @@ class DefenceGrid : public Grid {
         int type_ship(int pos);
         int type_ship(Ship* ship);
         bool destroyed(int pos);
-        void remove_ship(int pos);
         void reload(void);
+        void remove_ship(int pos);
         void hit(Coord& c);
 
         ~DefenceGrid(void);

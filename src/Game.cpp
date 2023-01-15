@@ -65,56 +65,39 @@ void Game::increment_turn(void){
 }
 
 void Game::make_move(int s){
-	// incrementa il turno senza superare il limite
- 	increment_turn();
 	// controlla che la partita non sia finita:
 	// - player senza navi
 	// - limite turni raggiunto
 	if(end(false)){
 		return;
 	}
-	int pl1 = s;
 	bool valid = false;
 	Coord def, att;
 	// TEST
-	std::cout << "\n* * Turno " << turn() << "\tPlayer " << pl1 <<std::endl;	
+	std::cout << "\n* * Turno " << turn() << "\tPlayer " << s <<std::endl;	
 	// FINE TEST
 	while(!valid){
 		try{
 			valid = true;
 			// Seleziono la nave
-			int pos = select_ship(pl1);
+			int pos = select_ship(s);
 			// Seleziono delle coordinate random dove attaccare
 			att = UCoord::random_coord();
 			// Determino il numero del player per modificare la griglia giusta
-			if(pl1 == 1){
+			if(s == 1){
 				// Definisco il tipo di nave per l'azione da fare
 				int type = def_grid1_.type_ship(pos);
 				std::cout << "\tTipo:" << type;
 				if(type == 1){					// BATTLESHIP
-					fire(pl1, pos, att); 
-				} else if(type == 2) {			// HELPSHIP
+					fire(s, pos, att); 
+				} else if(type == 2) {	
+					std::cout << "\n\nOLEEEE\n\n" << std::endl;		// HELPSHIP
 					// mofifica la ship
-					move_ship(pl1, pos, att);
-					// modifica la griglia
-					Coord punta;
-					Coord coda;
-					if (def_grid1_.ship(pos)->orizzontal()) {
-						punta.setX(att.X());
-						punta.setY(att.Y()-1);
-						coda.setX(att.X());
-						coda.setY(att.Y()+1);
-					} else {
-						punta.setX(att.X()-1);
-						punta.setY(att.Y());
-						coda.setX(att.X()+1);
-						coda.setY(att.Y());
-					}
-					def_grid1_.add_ship(punta, coda, 2);
-					heal(pl1, pos, att);
+					move_ship(s, pos, att);
+					heal(s, pos, att);
 				} else if(type == 3) {			// EXPL SUBMARINE
-					move_ship(pl1, pos, att);
-					search(pl1, pos, att);
+					move_ship(s, pos, att);
+					search(s, pos, att);
 				}
 				// TEST
 				std::cout << "\nScelta ed eseguita azione con nave in di tipo " << type << " in posizione " << pos << std::endl;	
@@ -122,17 +105,18 @@ void Game::make_move(int s){
 				// Scrive la casella di arrivo della nave
 				def = def_grid1_.ship(pos) -> center();
 			}
-			if(pl1 == 2){
+			if(s == 2){
 				int type = def_grid2_.type_ship(pos);
 				std::cout << "\tTipo:" << type;
 				if(type == 1){					// BATTLESHIP
-					fire(pl1, pos, att); 
-				} else if(type == 2) {			// HELPSHIP
-					move_ship(pl1, pos, att);
-					heal(pl1, pos, att);
+					fire(s, pos, att); 
+				} else if(type == 2) {		
+					std::cout << "\n\nOLEEEE\n\n" << std::endl;	// HELPSHIP
+					move_ship(s, pos, att);
+					heal(s, pos, att);
 				} else if(type == 3) {			// EXPL SUBMARINE
-					move_ship(pl1, pos, att);
-					search(pl1, pos, att);
+					move_ship(s, pos, att);
+					search(s, pos, att);
 				}
 				// TEST
 				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << " in posizione " << pos << std::endl;		
@@ -234,7 +218,7 @@ bool Game::end(bool over){
 }
 
 void Game::fire(int pl, int pos, Coord& c){
-    if(pl = 1){
+    if(pl == 1){
 		// scorre le navi nella  defGrid nemica
 		for(int i = 0; i<def_grid2_.number_ship(); i++){
 			// scorre le coord di ogni nave
@@ -242,7 +226,7 @@ void Game::fire(int pl, int pos, Coord& c){
 				// Se trova la nave nella posizione colipta 
 				if(def_grid2_.ship(i)->coord().at(j) == c){
 					// stampa nella griglia di attacco una x
-					att_grid1_.add_char('X', c);
+					att_grid1_.add_char('x', c);
 					// segna nella nave che è stata colpita
 					def_grid2_.ship(i) -> hit(c);
 					// segna nella defGrid nemica che è stata colpita
@@ -258,8 +242,7 @@ void Game::fire(int pl, int pos, Coord& c){
 						// 
 						def_grid2_.reload();
 						// Stampa a schermo le navi rimaste
-						std::cout << "Nave abbattuta del player 2 - rimaste:";
-						std::cout << def_grid2_.number_ship() << std::endl;
+						std::cout << "Nave abbattuta del player 2 - rimaste: " << def_grid2_.number_ship() << std::endl;
 					}
 					return;
 				}
@@ -327,7 +310,7 @@ void Game::heal(int pl, int pos, Coord& c){
 	for(int i = 0; i<3; i++){
 		coord_heal.push_back(Coord{c.X()+1, c.Y()-1+i});
 	}
-	if(pl = 1){
+	if(pl == 1){
 		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
 		def_grid1_.ship(pos)->set_healed(true);
 		// scorro la griglia 3x3 da curare
@@ -366,43 +349,63 @@ void Game::heal(int pl, int pos, Coord& c){
 
 void Game::search(int pl, int pos, Coord& c) {
     if(pl == 1){
-		for (int i = (c.Y()-2); i < (c.Y()+3); i++) {
-			for (int j = (c.X()-2); j < (c.X()+3); j++) {
-				Coord c{i, j};
-				if (j < 0 || i < 0){
-					continue;
-				}else if (def_grid2_.get_char(c) != ' ') {
-					char valueFind = def_grid1_.get_char(c);
-					if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
-						att_grid1_.insert_char('Y', c);
-					}else if (valueFind == 'c' || valueFind == 'e' || valueFind == 's') {
-						att_grid1_.insert_char('x', c);
-					}
-					// TEST
-					std::cout << "Mostrati rilevamenti " << std::endl;
-					// FINE TEST
-				}
-        	}
-    	}
+		std::vector<Coord> coord;
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X()-2, c.Y()-2+i};
+			coord.push_back(temp);
+		}
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X()-1, c.Y()-2+i};
+			coord.push_back(temp);
+		}
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X(), c.Y()-2+i};
+			coord.push_back(temp);
+		}
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X()+1, c.Y()-2+i};
+			coord.push_back(temp);
+		}
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X()+2, c.Y()-2+i};
+			coord.push_back(temp);
+		}
+
+		for(int i = 0; i<coord.size(); i++){
+			try{
+				int pos = def_grid2_.find_ship(coord.at(i));
+				att_grid1_.add_char('Y', coord.at(i));
+			}catch(std::invalid_argument& e){}
+		}
 	}else{
-		for (int i = (c.Y()-2); i < (c.Y()+3); i++) {
-			for (int j = (c.X()-2); j < (c.X()+3); j++) {
-				Coord c{i, j};
-				if (j < 0 || i < 0){
-					continue;
-				}else if (def_grid1_.get_char(c) != ' ') {
-					char valueFind = def_grid1_.get_char(c);
-					if (valueFind == 'C' || valueFind == 'E' || valueFind == 'S') {
-						att_grid2_.insert_char('Y', c);
-					}else if (valueFind == 'c' || valueFind == 'e' || valueFind == 'd') {
-						att_grid2_.insert_char('x', c);
-					}
-					// TEST
-					std::cout << "Mostrati rilevamenti " << std::endl;
-					// FINE TEST
-				}
-        	}
-    	}
+		std::vector<Coord> coord;
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X()-2, c.Y()-2+i};
+			coord.push_back(temp);
+		}
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X()-1, c.Y()-2+i};
+			coord.push_back(temp);
+		}
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X(), c.Y()-2+i};
+			coord.push_back(temp);
+		}
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X()+1, c.Y()-2+i};
+			coord.push_back(temp);
+		}
+		for(int i = 0; i<5; i++){
+			Coord temp{c.X()+2, c.Y()-2+i};
+			coord.push_back(temp);
+		}
+
+		for(int i = 0; i<coord.size(); i++){
+			try{
+				int pos = def_grid1_.find_ship(coord.at(i));
+				att_grid2_.add_char('Y', coord.at(i));
+			}catch(std::invalid_argument& e){}
+		}
 	}
 }
 
@@ -432,7 +435,8 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				new_coord.push_back(new_c);
 			}
 			if(def_grid1_.check_position(new_coord)){
-				dynamic_cast<HelpShip*>(def_grid1_.ship(pos)) -> move(c);
+				HelpShip* s = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
+				s -> move(c);
 				// TEST
 				std::cout << "Helpship spostata in " << c << std::endl;
 				// FINE TEST
@@ -445,7 +449,8 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		else if(type == 3){
 			// controllo che la cella sia libera
 			if(def_grid1_.check_position(c)){
-				dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos)) -> move(c);
+				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos));
+				s -> move(c);
 				// TEST
 				std::cout << "Submarine spostato in " << c << std::endl;
 				// FINE TEST
@@ -477,7 +482,8 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				new_coord.push_back(new_c);
 			}
 			if(def_grid1_.check_position(new_coord)){
-				dynamic_cast<HelpShip*>(def_grid2_.ship(pos)) -> move(c);
+				HelpShip* s = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
+				s -> move(c);
 				// TEST
 				std::cout << "Helpship spostata in " << c << std::endl;
 				// FINE TEST
@@ -488,7 +494,8 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		}else if(type == 3){
 			std::vector<Coord>cord {c};
 			if(def_grid2_.check_position(cord)){
-				dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos)) -> move(c);
+				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos));
+				s -> move(c);
 				// TEST
 				std::cout << "Submarine spostato in " << c << std::endl;
 				// FINE TEST

@@ -13,26 +13,25 @@ DefenceGrid::DefenceGrid(void)
 bool DefenceGrid::check_position(Coord& a, Coord& b, int dim) {
     std::vector<Coord> coord;
     if(a.X()<b.X()){
-        dim = b.X()-a.X();
-        for(int i = 0; i<=dim; i++){
+        for(int i = 0; i<dim; i++){
             Coord c{a.X()+i, a.Y()};
             coord.push_back(c);
         }
     }else if(a.X()>b.X()){
         dim = a.X()-b.X();
-        for(int i = 0; i<=dim; i++){
+        for(int i = 0; i<dim; i++){
             Coord c{b.X()+i, a.Y()};
             coord.push_back(c);
         }
     }else if(a.Y()<b.Y()){
         dim = b.Y()-a.Y();
-        for(int i = 0; i<=dim; i++){
+        for(int i = 0; i<dim; i++){
             Coord c{a.X(), a.Y()+i};
             coord.push_back(c);
         }
     }else if(a.Y()>b.Y()){
         dim = a.Y()-b.Y();
-        for(int i = 0; i<=dim; i++){
+        for(int i = 0; i<dim; i++){
             Coord c{a.X(), a.Y()+i};
             coord.push_back(c);
         }

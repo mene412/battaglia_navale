@@ -41,10 +41,7 @@ Coord& Coord::operator=(const Coord& c){
 
 Coord::Coord(Coord&& c)
 	: X_{c.X()}, Y_{c.Y()}	
-{
-	c.setX(0);
-	c.setY(0);
-}
+{}
 
 Coord& Coord::operator=(Coord&& c){
 	X_ = c.X();

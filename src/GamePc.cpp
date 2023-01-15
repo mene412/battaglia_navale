@@ -112,6 +112,7 @@ void GamePc::start(void){
 		print_defence(2);
 		print_attack(2);
 	while(!end(false)){
+		increment_turn();
 		make_move(starter());
 		make_move((starter()%2)+1);
 	}
