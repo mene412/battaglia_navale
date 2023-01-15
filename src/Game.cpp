@@ -219,7 +219,7 @@ bool Game::end(bool over){
 }
 
 void Game::fire(int pl, int pos, Coord& c){
-    if(pl = 1){
+    if(pl == 1){
 		// scorre le navi nella  defGrid nemica
 		for(int i = 0; i<def_grid2_.number_ship(); i++){
 			// scorre le coord di ogni nave
