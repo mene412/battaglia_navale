@@ -256,4 +256,8 @@ void GamePlayer::start(){
 		std::cout << def_grid1_.ship(i)->center() << std::endl;
 		std::cout << def_grid1_.ship(i)->center().X() << std::endl;
 	}
+    while(!end(false)){
+        make_move(starter());
+        make_move((starter()%2)+1);
+    }
 }
