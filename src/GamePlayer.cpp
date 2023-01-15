@@ -148,7 +148,7 @@ void GamePlayer::make_move(int s){
         }
     valid=false;
     }
-
+}
 
 void GamePlayer::positioning_pc(void){
 	int const pl = 2;
