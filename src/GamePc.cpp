@@ -56,8 +56,6 @@ void GamePc::positioning(void){
 			number_e++;
 		}catch(std::invalid_argument& e){}
 	}
-
-	// std::cout << "OK" << std::endl;
 	// Inseriamo le navi nella griglia di pl2
 	// Creazione e inserimento corazzate - pl2
 	number_c = 1;
@@ -101,7 +99,13 @@ void GamePc::positioning(void){
 void GamePc::start(void){
 		// Testo di controllo
 		std::cout << "Player 1: \nNumero navi: " << def_grid1_.number_ship() << std::endl;
+		for (int i = 0; i < def_grid1_.number_ship(); i++) {
+			std::cout << "\tNave " << i << ": tipo " << def_grid1_.type_ship(i) << std::endl;
+		}
 		std::cout << "Player 2: \nNumero navi: " << def_grid2_.number_ship() << std::endl;
+		for (int i = 0; i < def_grid2_.number_ship(); i++) {
+			std::cout << "\tNave " << i << ": tipo " << def_grid2_.type_ship(i) << std::endl;
+		}
 		// Fine testo di controllo da cancellare
 		print_defence(1);
 		print_attack(1);
@@ -110,7 +114,6 @@ void GamePc::start(void){
 	while(!end(false)){
 		make_move(starter());
 		make_move((starter()%2)+1);
-		std::cout << "\nTurno " << turn() << std::endl;	
 	}
 		print_defence(1);
 		print_attack(1);

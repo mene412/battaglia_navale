@@ -76,12 +76,14 @@ void Game::make_move(int s){
 	int pl1 = s;
 	bool valid = false;
 	Coord def, att;
+	// TEST
+	std::cout << "\nTurno " << turn() << "\tPlayer " << pl1 <<std::endl;	
+	// FINE TEST
 	while(!valid){
 		try{
 			valid = true;
 			// Seleziono la nave
 			int pos = select_ship(pl1);
-			std::cout << "Nave selezionata";
 			// Seleziono delle coordinate random dove attaccare
 			att = UCoord::random_coord();
 			// Determino il numero del player per modificare la griglia giusta
@@ -98,6 +100,9 @@ void Game::make_move(int s){
 					move_ship(pl1, pos, att);
 					search(pl1, pos, att);
 				}
+				// TEST
+				std::cout << "Scelta ed eseguita azione con nave di tipo " << type << std::endl;	
+				// FINE TEST
 				// Scrive la casella di arrivo della nave
 				def = def_grid1_.ship(pos) -> center();
 			}
@@ -112,6 +117,9 @@ void Game::make_move(int s){
 					move_ship(pl1, pos, att);
 					search(pl1, pos, att);
 				}
+				// TEST
+				std::cout << "Scelta ed eseguita azione con nave di tipo " << type << std::endl;	
+				// FINE TEST
 				def = def_grid2_.ship(pos) -> center();
 			}
 		}catch(std::invalid_argument& e){
@@ -218,7 +226,7 @@ void Game::fire(int pl, int pos, Coord& c){
 					if(def_grid2_.destroyed(i)){
 						titanic(pl, i);
 						def_grid2_.reload();
-						std::cout << "Nave abbattuta." << std::endl;
+						std::cout << "Nave abbattuta del player 2 - rimaste:";
 						std::cout << def_grid2_.number_ship() << std::endl;
 					}
 					return;
@@ -237,7 +245,7 @@ void Game::fire(int pl, int pos, Coord& c){
 					if(def_grid1_.destroyed(i)){
 						titanic(pl, i);
 						def_grid1_.reload();
-						std::cout << "Nave abbattuta." << std::endl;
+						std::cout << "Nave abbattuta del player 1 - rimaste:";
 						std::cout << def_grid1_.number_ship() << std::endl;
 					}
 					return;
