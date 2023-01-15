@@ -122,6 +122,7 @@ void Game::make_move(int s){
 				def = def_grid2_.ship(pos) -> center();
 			}
 		}catch(std::invalid_argument& e){
+			std::cout << "Qualcosa non va ln 125 Game.cpp";
 			valid  = false;
 		}
 	}
@@ -298,38 +299,25 @@ void Game::heal(int pl, int pos, Coord& c){
 	}
 	if(pl = 1){
 		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
-		bool heal = true;
+		def_grid1_.ship(pos)->set_healed(true);
+		// scorro la griglia 3x3 da curare
 		for(int i = 0; i<coord_heal.size(); i++){
-			for(int j = 0; j<coord.size(); j++){
-				if(coord_heal.at(i) == coord.at(j)){
-					heal = false;
-				}
-            }
-            if(heal){
                 int p = def_grid1_.find_ship(coord_heal.at(i));
                 if(!def_grid1_.ship(p) -> healed()){
                     def_grid1_.ship(p) -> heal();
                 }
-            }
-            heal = true;
 		}
 		def_grid1_.reload();
 	}else{
 		std::vector<Coord> coord = def_grid2_.ship(pos) -> coord();
-		bool heal = true;
+		def_grid2_.ship(pos)->set_healed(true);
 		for(int i = 0; i<coord_heal.size(); i++){
-			for(int j = 0; j<coord.size(); j++){
-				if(coord_heal.at(i) == coord.at(j)){
-					heal = false;
-				}
-			}
-			if(heal){
-                int p = def_grid2_.find_ship(coord_heal.at(i));
-				if(!def_grid2_.ship(p) -> healed()){
-					def_grid2_.ship(p) -> heal();
-				}
-			}
-            heal = true;
+			try {
+				int p = def_grid2_.find_ship(coord_heal.at(i));
+            	if(!def_grid2_.ship(p) -> healed()){
+                	def_grid2_.ship(p) -> heal();
+            	}
+			} catch (std::invalid_argument(e)) {std::cout << "Nave non trovata linea 319";}
 		}
 		def_grid2_.reload();
 	}

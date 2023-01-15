@@ -102,6 +102,10 @@ void Ship::set_armor(int a){
     armor_ = a;
 }
 
+void Ship::set_healed(bool heal) {
+    healed_ = heal;
+}
+
 
 void Ship::dec_armor(void){
     armor_--;

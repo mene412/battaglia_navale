@@ -27,6 +27,7 @@ class Ship
         void set_coord(std::vector<Coord>& coordinates);
         void set_coord_center(Coord& cord);
         void set_armor(int a);
+        void set_healed(bool heal);
        
        //metodi ausiliari
         void dec_armor();
