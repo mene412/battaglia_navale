@@ -417,10 +417,18 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				new_coord.push_back(new_c);
 			}
 			if(def_grid1_.check_position(new_coord)){
+				// Cancelliamo la vecchia posizione
+				for (int i = 0; i < (def_grid1_.ship(pos)->coord().size()); i++){
+					def_grid1_.insert_char(' ', def_grid1_.ship(pos)->coord().at(i));
+				}
 				dynamic_cast<HelpShip*>(def_grid1_.ship(pos)) -> move(c);
 				// TEST
 				std::cout << "Helpship spostata in " << c << std::endl;
 				// FINE TEST
+				// Ridisegniamo la nave sulla griglia
+				for (int i = 0; i < (def_grid1_.ship(pos)->coord().size()); i++){
+					def_grid1_.insert_char('S', def_grid1_.ship(pos)->coord().at(i));
+				}
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
@@ -430,10 +438,18 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		else if(type == 3){
 			// controllo che la cella sia libera
 			if(def_grid1_.check_position(c)){
+				// Cancelliamo la vecchia posizione
+				for (int i = 0; i < (def_grid1_.ship(pos)->coord().size()); i++){
+					def_grid1_.insert_char(' ', def_grid1_.ship(pos)->coord().at(i));
+				}
 				dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos)) -> move(c);
 				// TEST
 				std::cout << "Submarine spostato in " << c << std::endl;
 				// FINE TEST
+				// Ridisegniamo la nave sulla griglia
+				for (int i = 0; i < (def_grid1_.ship(pos)->coord().size()); i++){
+					def_grid1_.insert_char('E', def_grid1_.ship(pos)->coord().at(i));
+				}
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
@@ -462,10 +478,18 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				new_coord.push_back(new_c);
 			}
 			if(def_grid1_.check_position(new_coord)){
+				// Cancelliamo la vecchia posizione
+				for (int i = 0; i < (def_grid2_.ship(pos)->coord().size()); i++){
+					def_grid2_.insert_char(' ', def_grid2_.ship(pos)->coord().at(i));
+				}
 				dynamic_cast<HelpShip*>(def_grid2_.ship(pos)) -> move(c);
 				// TEST
 				std::cout << "Helpship spostata in " << c << std::endl;
 				// FINE TEST
+				// Ridisegniamo la nave sulla griglia
+				for (int i = 0; i < (def_grid2_.ship(pos)->coord().size()); i++){
+					def_grid2_.insert_char('S', def_grid2_.ship(pos)->coord().at(i));
+				}
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
@@ -473,10 +497,19 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		}else if(type == 3){
 			std::vector<Coord>cord {c};
 			if(def_grid2_.check_position(cord)){
+				// Cancelliamo la vecchia posizione
+				for (int i = 0; i < (def_grid2_.ship(pos)->coord().size()); i++){
+					def_grid2_.insert_char(' ', def_grid2_.ship(pos)->coord().at(i));
+				}
 				dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos)) -> move(c);
 				// TEST
 				std::cout << "Submarine spostato in " << c << std::endl;
 				// FINE TEST
+				// Ridisegniamo la nave sulla griglia
+				for (int i = 0; i < (def_grid2_.ship(pos)->coord().size()); i++){
+					def_grid2_.insert_char('E', def_grid2_.ship(pos)->coord().at(i));
+				}
+				return;
 				return;
 			}else{
 				throw std::invalid_argument("Errore");
