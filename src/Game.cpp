@@ -7,7 +7,9 @@
 Game::Game(void)
 	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log{"../log.txt"}
 {
-	std::cout << "Inizio gioco.\n" << std::endl; 
+	std::cout << "- - - - - - - - - - - - - - - - - - - - -" << std::endl; 
+	std::cout << "* * * I N I Z I A   I L   G I O C O * * *" << std::endl; 
+	std::cout << "- - - - - - - - - - - - - - - - - - - - -\n" << std::endl; 
 }
 
 void Game::select_starter(void){
