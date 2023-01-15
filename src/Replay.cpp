@@ -242,7 +242,6 @@ void Replay::attack(int pl, int pos, Coord& c){
 			}
 		}
     	att_grid1_.add_char('o', c);
-    	return;
 	}else{
 		for(int i = 0; i<def_grid1_.number_ship(); i++){
 			for(int j = 0; j<def_grid1_.ship(i)->dim(); j++){
@@ -258,12 +257,57 @@ void Replay::attack(int pl, int pos, Coord& c){
 			}
 		}
     	att_grid1_.add_char('o', c);
-    	return;
     }
 }
 
-void heal(int pl, int pos, Coord& b){
-
+void Replay::heal(int pl, int pos, Coord& c){
+    std::vector<Coord> coord_heal;
+	for(int i = 0; i<3; i++){
+		coord_heal.push_back(Coord{c.X()-1, c.Y()-1+i});
+	}
+	for(int i = 0; i<3; i++){
+		coord_heal.push_back(Coord{c.X(), c.Y()-1+i});
+	}
+	for(int i = 0; i<3; i++){
+		coord_heal.push_back(Coord{c.X()+1, c.Y()-1+i});
+	}
+	if(pl = 1){
+		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
+		bool heal = true;
+		for(int i = 0; i<coord_heal.size(); i++){
+			for(int j = 0; j<coord.size(); j++){
+				if(coord_heal.at(i) == coord.at(j)){
+					heal = false;
+				}
+            }
+            if(heal){
+                int p = def_grid1_.find_ship(coord_heal.at(i));
+                if(!def_grid1_.ship(p) -> healed()){
+                    def_grid1_.ship(p) -> heal();
+                }
+            }
+            heal = true;
+		}
+		def_grid1_.reload();
+	}else{
+		std::vector<Coord> coord = def_grid2_.ship(pos) -> coord();
+		bool heal = true;
+		for(int i = 0; i<coord_heal.size(); i++){
+			for(int j = 0; j<coord.size(); j++){
+				if(coord_heal.at(i) == coord.at(j)){
+					heal = false;
+				}
+			}
+			if(heal){
+                int p = def_grid2_.find_ship(coord_heal.at(i));
+				if(!def_grid2_.ship(p) -> healed()){
+					def_grid2_.ship(p) -> heal();
+				}
+			}
+            heal = true;
+		}
+		def_grid2_.reload();
+	}
 }
 
 void move_help(int pl, int pos, Coord& b){

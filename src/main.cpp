@@ -12,6 +12,7 @@
 #include "Ship.cpp"
 
 int main(int argc, char* argv[]) {
+    std::srand(time(NULL));
     GamePc game{};
     game.start();
     return 0;

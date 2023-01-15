@@ -59,8 +59,8 @@ bool DefenceGrid::check_position(Coord& a){
 
 bool DefenceGrid::check_position(std::vector<Coord>& coordinates) {
     for (int i = 0; i < coordinates.size(); i++) {
-        int checkRow = coordinates[i].X();        // numero riga
-        int checkColumn = coordinates[i].Y();    // numero colonna
+        int checkRow = coordinates.at(i).X();        // numero riga
+        int checkColumn = coordinates.at(i).Y();    // numero colonna
         if (grid_[checkRow][checkColumn] != ' ') {
             // se la cella non è vuota, ritorna false
             return false;
@@ -110,7 +110,6 @@ int DefenceGrid::type_ship(Ship* ship){
 
 
 void DefenceGrid::add_ship(Coord& front, Coord& back, int type) {
-
     if(type == 1){
         ships_.push_back(new Battleship{front, back});
     }else if(type == 2){
@@ -162,22 +161,18 @@ bool DefenceGrid::destroyed(int pos){
         return true;
     }   
     return false;
-
-    if(ships_.at(pos)->armor() == 0){
-        return true;
-    }   
-    return false;
 }
 
 void DefenceGrid::remove_ship(int pos){
     delete ships_.at(pos);
+    ships_.at(pos) = nullptr;
     ships_.erase(ships_.begin()+pos);
 }
 
 void DefenceGrid::reload(void){
     for(int i=0; i<number_ship(); i++){
         int type = type_ship(i);
-        for(int j = 0; j<ships_.at(i) -> coord().size(); j++){
+        for(int j = 0; j<ships_.at(i) -> dim(); j++){
             if(type == 1){
                 bool hit = false;
                 for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
@@ -189,6 +184,7 @@ void DefenceGrid::reload(void){
                     }else{
                         grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'C';
                     }
+                    hit = false;
                 }
             }else if(type == 2){
                 bool hit = false;
@@ -201,6 +197,7 @@ void DefenceGrid::reload(void){
                     }else{
                         grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'S';
                     }
+                    hit = true;
                 }
             }else if(type == 3){
                 bool hit = false;
@@ -213,6 +210,7 @@ void DefenceGrid::reload(void){
                     }else{
                         grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'E';
                     }
+                    hit = true;
                 }
             }
         }   
