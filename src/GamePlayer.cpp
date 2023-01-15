@@ -9,6 +9,8 @@ GamePlayer::GamePlayer(void)
 {
 	select_starter();
 	positioning();
+    std::cout<<"PLAYER"<<def_grid1_<<std::endl;
+    std::cout<<"COMPUTER"<<def_grid2_<<std::endl;
 }
 
 void GamePlayer::select_starter(void) {
@@ -128,7 +130,7 @@ void GamePlayer::make_move(int s){
                 Coord cMove;
                 cMove=UCoord::random_coord();//caso computer
                 //TEST
-    std::cout<<cMove.X()<<"   "<<cMove.Y()<<std::endl;
+                std::cout<<cMove.X()<<"   "<<cMove.Y()<<std::endl;
                 std::cout<<"Azione: "<<cMove.X()<<" "<<cMove.Y()<<std::endl;
                 //FINE TEST
                 int type = def_grid2_.type_ship(nave);
@@ -263,12 +265,27 @@ void GamePlayer::start(){
 //	for(int i = 0; i<def_grid1_.number_ship(); i++){
 //		std::cout << def_grid1_.ship(i)->center() << std::endl;
 //		std::cout << def_grid1_.ship(i)->center().X() << std::endl;
-	}
+
     while(!end(false)){
         make_move(starter());
-        //TEST
-        std::cout<<"Mossa player fatta"<<std::endl;
+        if(starter()==1){
+            std::cout<<"Mossa player fatta"<<std::endl;
+            std::cout<<def_grid1_<<"      "<<att_grid1_<<std::endl;
+        }
+        else{
+            std::cout<<"Mossa computer fatta"<<std::endl;
+            std::cout<<def_grid2_<<"      "<<att_grid2_<<std::endl;
+        }
         make_move((starter()%2)+1);
-        std::cout<<"Mossa computer fatta"<<std::endl;
+        if((starter()%2+1)==1){
+            std::cout<<"Mossa player fatta"<<std::endl;
+            std::cout<<def_grid1_<<"      "<<att_grid1_<<std::endl;
+        }
+        else{
+            std::cout<<"Mossa computer fatta"<<std::endl;
+            std::cout<<def_grid2_<<"      "<<att_grid2_<<std::endl;
+        }
+        
+       
     }
 }
