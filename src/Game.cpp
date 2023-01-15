@@ -312,7 +312,7 @@ void Game::heal(int pl, int pos, Coord& c){
 	for(int i = 0; i<3; i++){
 		coord_heal.push_back(Coord{c.X()+1, c.Y()-1+i});
 	}
-	if(pl = 1){
+	if(pl == 1){
 		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
 		def_grid1_.ship(pos)->set_healed(true);
 		// scorro la griglia 3x3 da curare
