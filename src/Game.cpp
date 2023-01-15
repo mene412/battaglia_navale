@@ -370,7 +370,9 @@ void Game::search(int pl, int pos, Coord& c) {
 
 void Game::move_ship(int pl, int pos, Coord& c){
 	if(pl == 1){
+		// determino il tipo di nave che devo muovere
 		int type = def_grid1_.type_ship(pos);
+		// caso: HELSHIP
 		if(type == 2){
 			std::vector<Coord> coord;
 			if(def_grid1_.ship(pos)->orizzontal()){
@@ -394,7 +396,9 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			}else{
 				throw std::invalid_argument("Errore");
 			}
-		}else if(type == 3){
+		}
+		// caso: SUBMARINE
+		else if(type == 3){
 			if(def_grid1_.check_position(c)){
 				dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos)) -> move(c);
 				return;
