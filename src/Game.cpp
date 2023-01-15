@@ -90,6 +90,7 @@ void Game::make_move(int s){
 			if(pl1 == 1){
 				// Definisco il tipo di nave per l'azione da fare
 				int type = def_grid1_.type_ship(pos);
+				std::cout << "\tTipo:" << type;
 				if(type == 1){					// BATTLESHIP
 					fire(pl1, pos, att); 
 				} else if(type == 2) {			// HELPSHIP
@@ -100,13 +101,14 @@ void Game::make_move(int s){
 					search(pl1, pos, att);
 				}
 				// TEST
-				std::cout << "Scelta ed eseguita azione con nave in di tipo " << type << " in posizione " << pos << std::endl;	
+				std::cout << "\nScelta ed eseguita azione con nave in di tipo " << type << " in posizione " << pos << std::endl;	
 				// FINE TEST
 				// Scrive la casella di arrivo della nave
 				def = def_grid1_.ship(pos) -> center();
 			}
 			if(pl1 == 2){
 				int type = def_grid2_.type_ship(pos);
+				std::cout << "\tTipo:" << type;
 				if(type == 1){					// BATTLESHIP
 					fire(pl1, pos, att); 
 				} else if(type == 2) {			// HELPSHIP
@@ -117,12 +119,12 @@ void Game::make_move(int s){
 					search(pl1, pos, att);
 				}
 				// TEST
-				std::cout << "Scelta ed eseguita azione con nave di tipo " << type << " in posizione " << pos << std::endl;		
+				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << " in posizione " << pos << std::endl;		
 				// FINE TEST
 				def = def_grid2_.ship(pos) -> center();
 			}
 		}catch(std::invalid_argument& e){
-			std::cout << "Qualcosa non va ln 125 Game.cpp";
+			std::cout << " Questo tipo non va ";
 			valid  = false;
 		}
 	}
@@ -302,22 +304,25 @@ void Game::heal(int pl, int pos, Coord& c){
 		def_grid1_.ship(pos)->set_healed(true);
 		// scorro la griglia 3x3 da curare
 		for(int i = 0; i<coord_heal.size(); i++){
+			// se è occupata cerca la nave
+			if (!def_grid1_.check_position(coord_heal.at(i))) {
                 int p = def_grid1_.find_ship(coord_heal.at(i));
                 if(!def_grid1_.ship(p) -> healed()){
                     def_grid1_.ship(p) -> heal();
                 }
+			}
 		}
 		def_grid1_.reload();
 	}else{
 		std::vector<Coord> coord = def_grid2_.ship(pos) -> coord();
 		def_grid2_.ship(pos)->set_healed(true);
 		for(int i = 0; i<coord_heal.size(); i++){
-			try {
+			if (!def_grid2_.check_position(coord_heal.at(i))) {
 				int p = def_grid2_.find_ship(coord_heal.at(i));
             	if(!def_grid2_.ship(p) -> healed()){
                 	def_grid2_.ship(p) -> heal();
             	}
-			} catch (std::invalid_argument(e)) {std::cout << "Nave non trovata linea 319";}
+			}
 		}
 		def_grid2_.reload();
 	}
