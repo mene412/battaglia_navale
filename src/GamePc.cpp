@@ -92,7 +92,6 @@ void GamePc::positioning(void){
 			number_e++;
 		}catch(std::invalid_argument& e){}
 	}
-
 	std::cout << "Navi create e inserite correttamente" << std::endl;
 }
 

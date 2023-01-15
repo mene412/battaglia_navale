@@ -45,7 +45,7 @@ class Game{
 	private:
 		int turn_;
 		std::ofstream log;
-		const int MAX_TURNS = 5;
+		const int MAX_TURNS = 25;
 };
 
 namespace util{

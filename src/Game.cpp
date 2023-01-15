@@ -104,7 +104,7 @@ void Game::make_move(int s){
 					search(pl1, pos, att);
 				}
 				// TEST
-				std::cout << "\nScelta ed eseguita azione con nave in di tipo " << type << " in posizione " << pos << std::endl;	
+				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << std::endl;	
 				// FINE TEST
 				// Scrive la casella di arrivo della nave
 				def = def_grid1_.ship(pos) -> center();
@@ -122,7 +122,7 @@ void Game::make_move(int s){
 					search(pl1, pos, att);
 				}
 				// TEST
-				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << " in posizione " << pos << std::endl;		
+				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << std::endl;		
 				// FINE TEST
 				def = def_grid2_.ship(pos) -> center();
 			}
