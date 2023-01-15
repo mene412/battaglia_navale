@@ -96,21 +96,6 @@ void Game::make_move(int s){
 				} else if(type == 2) {			// HELPSHIP
 					// mofifica la ship
 					move_ship(pl1, pos, att);
-					// modifica la griglia
-					Coord punta;
-					Coord coda;
-					if (def_grid1_.ship(pos)->orizzontal()) {
-						punta.setX(att.X());
-						punta.setY(att.Y()-1);
-						coda.setX(att.X());
-						coda.setY(att.Y()+1);
-					} else {
-						punta.setX(att.X()-1);
-						punta.setY(att.Y());
-						coda.setX(att.X()+1);
-						coda.setY(att.Y());
-					}
-					def_grid1_.add_ship(punta, coda, 2);
 					heal(pl1, pos, att);
 				} else if(type == 3) {			// EXPL SUBMARINE
 					move_ship(pl1, pos, att);
