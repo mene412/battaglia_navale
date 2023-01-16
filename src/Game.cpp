@@ -5,7 +5,7 @@
 #include <cmath>
 
 Game::Game(void)
-	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log{"../log.txt"}
+	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log{"log.txt"}
 {
 	std::cout << "- - - - - - - - - - - - - - - - - - - - -" << std::endl; 
 	std::cout << "* * * I N I Z I A   I L   G I O C O * * *" << std::endl; 
@@ -20,7 +20,7 @@ void Game::select_starter(void){
 		std::cout << "Inizia il player " << s << std::endl;
 	}
 	starter_ = s;
-	write_log(std::to_string(s));
+	write_log(s);
 }
 
 void Game::add_ship(int player, Coord& p, Coord& c, int type){
@@ -150,6 +150,10 @@ int Game::select_ship(int player){
 
 void Game::check_dim(Coord& a, Coord&b, int dim){
 	
+}
+
+void Game::write_log(int player){
+	log << std::to_string(player);
 }
 
 void Game::write_log(std::string x){

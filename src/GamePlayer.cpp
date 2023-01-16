@@ -12,7 +12,6 @@ GamePlayer::GamePlayer(void)
 }
 
 void GamePlayer::select_starter(void) {
-	std::srand(time(NULL));
 	int s = rand()%2+1;
 	if(s==1){
 		std::cout << "Inizia il player " << s << " (You)" << std::endl;
@@ -20,10 +19,11 @@ void GamePlayer::select_starter(void) {
 		std::cout << "Inizia il player " << s << " (Pc)" << std::endl;
 	}
 	starter_ = s;
+	write_log(s);
 }
 
 void GamePlayer::positioning(void){
- 	if(starter_==0){
+ 	if(starter_ == 0){
  		throw std::invalid_argument("Errore");
  	}
  	if(starter_==1){
@@ -95,85 +95,11 @@ void GamePlayer::positioning_player(void){
 			std::cout << "Coordinate non valide, reinserire." << std::endl;
 		}
 	}
+	
 }
 
 
 void GamePlayer::make_move(int s){
-<<<<<<< Updated upstream
-     increment_turn();
-    int computer=2;
-    int player=1;
-    std::string coord_nave;
-    std::string coord_move;
-    int nave;
-    bool valid = true;
-    bool check=true;
-    while(valid==true){
-        try{
-            if(s == player){                //caso player
-                while(check==true){
-                try{
-    
-                std::cout<<"Inserisci coordinate azione"<<std::endl;
-                std::cin>>coord_nave;
-                util::to_upper(coord_nave);
-                std::cin>>coord_move;
-                util::to_upper(coord_move);
-                Coord cNave{UCoord::from_string_to_coord(coord_nave)};
-                Coord cMove{UCoord::from_string_to_coord(coord_move)};
-                int pos = def_grid1_.find_ship(cNave);
-    
-                int type = def_grid1_.type_ship(pos);
-                if(type == 1){
-                    fire(player, pos, cMove);
-                }else if(type == 2){
-                    move_ship(player, pos, cMove);
-                    heal(player, pos, cMove);
-                }else if(type == 3){
-                    move_ship(player, pos, cMove);
-                    search(player, pos, cMove);
-                }check=false;
-                }catch(std::invalid_argument& e){
-                    std::cout<<"Non centro o coord...reinserire coordinate"<<std::endl;
-                    check=true;
-                    }
-                }
-    
-            }
-            else if(s == computer){             //caso computer
-                nave=select_ship(computer);
-                Coord cMove;
-                cMove=UCoord::random_coord();
-                //TEST
-                std::cout<<cMove.X()<<"   "<<cMove.Y()<<std::endl;
-                std::cout<<"Azione: "<<cMove.X()<<" "<<cMove.Y()<<std::endl;
-                //FINE TEST
-                int type = def_grid2_.type_ship(nave);
-                if(type == 1){
-                    fire(computer, nave, cMove);
-                    //TEST
-                    std::cout<<"Fuoco"<<std::endl;
-                    //FINE TEST
-                }else if(type == 2){
-                    move_ship(computer, nave, cMove);
-                    heal(computer, nave , cMove);
-                    //TEST
-                    std::cout<<"Move e HEal"<<std::endl;
-                    //FINE TEST
-                }else if(type == 3){
-                    move_ship(computer, nave, cMove);
-                    search(computer, nave, cMove);
-                    //TEST
-                    std::cout<<"Move e search"<<std::endl;
-                    //FINE TEST
-                }
-            }
-        }catch(std::invalid_argument& e){
-            valid  = true;
-        }
-    valid=false;
-    }
-=======
     // controlla che la partita non sia finita:
 	// - player senza navi
 	// - limite turni raggiunto
@@ -250,7 +176,6 @@ void GamePlayer::make_move(int s){
 	if(end(false)){
 		return;
 	}
->>>>>>> Stashed changes
 }
 
 
@@ -290,6 +215,10 @@ void GamePlayer::positioning_pc(void){
 			number_e++;
 		}catch(std::invalid_argument& e){}
 	}
+	// TEST
+	for(int i = 0; i<def_grid2_.number_ship(); i++){
+		std::cout << def_grid2_.ship(i) -> center() << std::endl;
+	}
 }
 
 bool GamePlayer::special_insert(std::string first, std::string second){
@@ -324,7 +253,7 @@ bool GamePlayer::special_insert(std::string first, std::string second){
 		}
 	}
 	return false;
-}
+}	
 
 
 void GamePlayer::start(){

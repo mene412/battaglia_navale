@@ -22,6 +22,7 @@ class Game{
 		virtual void positioning(void) = 0;
 		virtual void select_starter(void);
 		int starter_;
+		void write_log(int player);
 		void write_log(std::string x);
 		void write_log(std::pair<Coord, Coord>& x);
 		int turn(void) const { return turn_;}
