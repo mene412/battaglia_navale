@@ -7,7 +7,6 @@
 #include "DefenceGrid.h"
 #include "AttackGrid.h"
 
-
 class Replay{
     public:
         Replay(std::string file_log);

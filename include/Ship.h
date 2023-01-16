@@ -38,7 +38,6 @@ class Ship
     protected:
         //costruttore protected (accessibile solo da classi derivate)
         Ship(Coord& front, Coord& back);
-
          
         //metodi setter costruttore
         void set_direction(void);

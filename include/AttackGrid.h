@@ -7,11 +7,22 @@
 
 class AttackGrid : public Grid{
     public:
+        // Costruttore
         AttackGrid(void);
+
+        // Rimuove uno specifico char
         void remove_char(char c);
-        void remove_detections(void);    //rimuove le Y
-        void remove_hit(void);           //rimuove le X
-        void remove_water(void);         //rimuove le O
+
+        // Rimuove le Y
+        void remove_detections(void); 
+
+        // Rimuove le X
+        void remove_hit(void);    
+
+        // Rimuove le O       
+        void remove_water(void); 
+
+        // Aggiunge un char in una specifica posizione   
         void add_char(char ch, Coord& coord);
 };
 

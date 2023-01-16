@@ -10,18 +10,27 @@
 
 class Grid {
     public:
-        // costruttore: crea una amtrice 12x12 di char vuoti
+        // Costruttore
         Grid(void);
-        //getter
+
+        // Metodi getter
         int dimension(void){ return sizeof(grid_);}
         char get_char(Coord& c);
+
+        // Controlla se uno specifico char sia in una specifica posizione
         bool is_in_grid(char ch, Coord& c);
+
+        // Inserisce un char in una specifica posizione
         void insert_char(char ch, Coord& c);
-        //stampa la griglia
+
+        // Stampa la griglia
         std::string print_grid(void);
-        virtual ~Grid(void){};
+
+        // Rimuove tutti i char dalla griglia
         void flush_grid(void);
 
+        virtual ~Grid(void){};
+        
     protected:    
         char grid_[12][12];
 };

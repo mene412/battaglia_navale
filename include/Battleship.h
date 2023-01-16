@@ -6,6 +6,7 @@
 
 class Battleship: public Ship{
     public:
+        // Costruttore
         Battleship(Coord& front, Coord& back);
 };
 #endif /* Battleship_h */

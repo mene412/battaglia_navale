@@ -6,12 +6,17 @@
 
 class Coord{
 	public:
+		// Costruttori
 		Coord();	
 		Coord(const Coord& c);				
 		Coord(int X, int Y);
-		Coord(Coord&& c);		// costruttore: parametro X -> seleziona riga, parametro Y -> selezione colonna
+		Coord(Coord&& c);		
+
+		// Metodi setter
 		void setX(int X);
 		void setY(int Y);
+
+		// Metodi getter
 		int X(void) const {return X_;};
 		int Y(void) const {return Y_;};
 		std::string coord(void);
@@ -20,8 +25,8 @@ class Coord{
 		Coord& operator=(Coord&& c);
 	
 	private:
-		int X_;
-		int Y_;
+		int X_;		// numero riga
+		int Y_;		// numero colonna
 };
 
 namespace UCoord {
