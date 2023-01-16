@@ -175,43 +175,40 @@ void DefenceGrid::reload(void){
         for(int j = 0; j<ships_.at(i) -> dim(); j++){
             if(type == 1){
                 bool hit = false;
-                for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
-                    if(ships_.at(i) -> coord_hit().at(k) == j){
-                        hit = true;
+                if(ships_.at(i) -> coord_hit().size() == 0){
+                    grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'C';
+                }else{
+                    for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
+                        if(ships_.at(i) -> coord_hit().at(k) == j){
+                            hit = true;
+                        }
+                        if(hit){
+                            grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'c';
+                        }else{
+                            grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'C';
+                        }
+                        hit = false;
                     }
-                    if(hit){
-                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'c';
-                    }else{
-                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'C';
-                    }
-                    hit = false;
                 }
             }else if(type == 2){
                 bool hit = false;
-                for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
-                    if(ships_.at(i) -> coord_hit().at(k) == j){
+                if(ships_.at(i) -> coord_hit().size() == 0){
+                    grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'S';
+                }else{
+                    for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
+                        if(ships_.at(i) -> coord_hit().at(k) == j){
+                            hit = true;
+                        }
+                        if(hit){
+                            grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 's';
+                        }else{
+                            grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'S';
+                        }
                         hit = true;
                     }
-                    if(hit){
-                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 's';
-                    }else{
-                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'S';
-                    }
-                    hit = true;
                 }
             }else if(type == 3){
-                bool hit = false;
-                for(int k = 0; k<ships_.at(i) -> coord_hit().size(); k++){
-                    if(ships_.at(i) -> coord_hit().at(k) == j){
-                        hit = true;
-                    }
-                    if(hit){
-                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'e';
-                    }else{
-                        grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'E';
-                    }
-                    hit = true;
-                }
+                grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'E';
             }
         }   
     }
