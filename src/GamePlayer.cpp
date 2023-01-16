@@ -216,8 +216,10 @@ void GamePlayer::make_move(int s){
                     move_ship(player, pos, cMove);
                     search(player, pos, cMove);
                 }check=false;
-                }catch(std::invalid_argument& e){std::cout<<"Non centro o coord...reinserire coordinate"<<std::endl;
-                check=true;}
+                }catch(std::invalid_argument& e){
+                    std::cout<<"Non centro o coord...reinserire coordinate"<<std::endl;
+                    check=true;
+                    }
                 }
     
             }
