@@ -242,10 +242,11 @@ void Game::fire(int pl, int pos, Coord& c){
 						// 
 						titanic(pl, i);
 						// 
-						def_grid2_.reload();
+						
 						// Stampa a schermo le navi rimaste
 						std::cout << "Nave abbattuta del player 2 - rimaste: " << def_grid2_.number_ship() << std::endl;
 					}
+					def_grid2_.reload();
 					return;
 				}
 			}
@@ -253,7 +254,7 @@ void Game::fire(int pl, int pos, Coord& c){
 		// se non trova la nave, segna acqua ("O")
     	att_grid1_.add_char('O', c);
 		// TEST
-			std::cout << "\nAcqua in " << c << std::endl;
+		std::cout << "\nAcqua in " << c << std::endl;
 		// FINE TEST
     	return;
 	}else{
@@ -268,10 +269,10 @@ void Game::fire(int pl, int pos, Coord& c){
 					// FINE TEST
 					if(def_grid1_.destroyed(i)){
 						titanic(pl, i);
-						def_grid1_.reload();
 						std::cout << "Nave abbattuta del player 1 - rimaste:";
 						std::cout << def_grid1_.number_ship() << std::endl;
 					}
+					def_grid1_.reload();
 					return;
 				}
 			}
@@ -476,7 +477,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		if(type == 2){
 			// Creo il vettore di coord dove andrà la nave
 			std::vector<Coord> new_coord;
-			if(def_grid1_.ship(pos)->orizzontal()){
+			if(def_grid2_.ship(pos)->orizzontal()){
 				Coord new_c{c.X(), c.Y()-1};
 				new_coord.push_back(new_c);
 				new_c = Coord{c};
@@ -491,8 +492,8 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				new_c = Coord{c.X()+1, c.Y()};
 				new_coord.push_back(new_c);
 			}
-			if(def_grid1_.check_position(new_coord)){
-				HelpShip* s = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
+			if(def_grid2_.check_position(new_coord)){
+				HelpShip* s = dynamic_cast<HelpShip*>(def_grid2_.ship(pos));
 				s -> move(c);
 				// TEST
 				std::cout << "Helpship spostata in " << c << std::endl;
@@ -505,7 +506,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 		}else if(type == 3){
 			std::vector<Coord>cord {c};
 			if(def_grid2_.check_position(cord)){
-				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos));
+				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos));
 				s -> move(c);
 				// TEST
 				std::cout << "Submarine spostato in " << c << std::endl;

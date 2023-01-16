@@ -105,6 +105,8 @@ void GamePc::start(void){
 		make_move(starter());
 		make_move((starter()%2)+1);
 	}
+		def_grid2_.reload();
+		def_grid1_.reload();
 		print_defence(1);
 		print_attack(1);
 		print_defence(2);

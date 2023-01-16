@@ -1,4 +1,4 @@
-#include <iostream>
+
 #include "../include/Ship.h"
 
 Ship::Ship(Coord& front, Coord& back)         // Costruttore di Ship, inizializza le variabili e richiama le funzioni per settare centro e orientamento della nave

@@ -25,6 +25,14 @@ void Grid::insert_char(char ch, Coord& c){
     grid_[c.X()][c.Y()] = ch;
 }
 
+void Grid::flush(void){
+    for(int i = 0; i<12; i++){
+        for(int j = 0; j<12; j++){
+            grid_[i][j] = ' ';
+        }
+    }
+}
+
 std::string Grid::print_grid(void) {
     std::string grid_str = "---------------------------------------------------\n";
     // stampo la griglia inserendo prima la lettera della riga

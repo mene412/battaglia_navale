@@ -58,8 +58,8 @@ std::string Coord::coord(){
 
 static Coord UCoord::random_coord()
 {
-	int x = rand()%11;
-	int y = rand()%11;
+	int x = rand()%12;
+	int y = rand()%12;
 	Coord coordinate{x,y};
 	return coordinate;
 }

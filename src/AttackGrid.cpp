@@ -36,7 +36,6 @@ void AttackGrid::add_char(char ch, Coord& coord) {
         throw std::invalid_argument("Errore");
     }
     if(ch == 'Y'){
-        std::cout << coord.X() << " LLLL" << coord.Y() << std::endl;
         if(grid_[coord.X()][coord.Y()] != 'x'){
             grid_[coord.X()][coord.Y()] = ch;
         };
