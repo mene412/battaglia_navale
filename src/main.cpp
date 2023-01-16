@@ -21,7 +21,7 @@ int main(int argc, char* argv[]) {
 
 //int main(int argc, char* argv[]) {
 //    std::srand(time(NULL));
-//    if(argc>1){
+//    if(argc==2){
 //        if(!strcmp(argv[1], "pc")){
 //            GamePlayer game{};
 //            game.start();
@@ -34,9 +34,11 @@ int main(int argc, char* argv[]) {
 //            std::cout<<"Invalid argument"<<std::endl;
 //        }
 //    }
-//    else{
+//    else if(argc==1)
 //        std::cout<<"Command line argument required"<<std::endl;
-//    }
+//
+//    else
+//        std::cout<<"Too many command line arguments"<<std::endl;
     
 //    return 0;
 //}
