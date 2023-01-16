@@ -169,7 +169,7 @@ void DefenceGrid::remove_ship(int pos){
 }
 
 void DefenceGrid::reload(void){
-    flush();
+    flush_grid();
     for(int i=0; i<number_ship(); i++){
         int type = type_ship(i);
         for(int j = 0; j<ships_.at(i) -> dim(); j++){

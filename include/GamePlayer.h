@@ -13,10 +13,9 @@ class GamePlayer: public Game{
 		void make_move(int s) override;
  		void select_starter(void) override;
  		void positioning(void) override;
-		int select_ship(int player);
-		Coord select_target(int player);
  	private:
 		void positioning_player(void);
  		void positioning_pc(void);
+		bool special_insert(std::string first, std::string second);
 };
 #endif

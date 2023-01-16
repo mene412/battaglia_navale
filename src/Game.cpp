@@ -136,45 +136,6 @@ void Game::make_move(int s){
 	if(end(false)){
 		return;
 	}
-
-	// valid = false;
-	// while(!valid){
-	// 	try{
-	// 		valid = true;
-	// 		int pos = select_ship(pl2);
-	// 		att = UCoord::random_coord();
-	// 		if(pl2 == 1){
-	// 			int type = def_grid1_.type_ship(pos);
-	// 			if(type == 1){
-	// 				fire(pl2, pos, att);
-	// 			}else if(type == 2){
-	// 				move_ship(pl2, pos, att);
-	// 				heal(pl2, pos, att);
-	// 			}else if(type == 3){
-	// 				move_ship(pl2, pos, att);
-	// 				search(pl2, pos, att);
-	// 			}
-	// 			def = def_grid1_.ship(pos) -> center();
-	// 		}
-	// 		if(pl2 == 2){
-	// 			int type = def_grid2_.type_ship(pos);
-	// 			if(type == 1){
-	// 				fire(pl2, pos, att);
-	// 			}else if(type == 2){
-	// 				move_ship(pl2, pos, att);
-	// 				heal(pl2, pos, att);
-	// 			}else if(type == 3){
-	// 				move_ship(pl2, pos, att);
-	// 				search(pl2, pos, att);
-	// 			}
-	// 			def = def_grid2_.ship(pos) -> center();
-	// 		}
-	// 	}catch(std::invalid_argument& e){
-	// 		valid  = false;
-	// 	}
-	// }
-	// std::pair<Coord, Coord> coord2{def, att}; 
-	// write_log(coord2);
 }
 
 int Game::select_ship(int player){
@@ -187,13 +148,16 @@ int Game::select_ship(int player){
 	}
 }
 
+void Game::check_dim(Coord& a, Coord&b, int dim){
+	
+}
 
 void Game::write_log(std::string x){
-	log << x << std::endl;
+	log << "\n" << x;
 }
 
 void Game::write_log(std::pair<Coord, Coord>& x){
-	log << x.first << " " << x.second << std::endl;
+	log << "\n" << x.first << " " << x.second;
 }
 
 

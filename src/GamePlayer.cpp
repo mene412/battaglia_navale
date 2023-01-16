@@ -51,6 +51,8 @@ void GamePlayer::positioning_player(void){
 			util::to_upper(coda);
 			Coord p{UCoord::from_string_to_coord(punta)};
 			Coord c{UCoord::from_string_to_coord(coda)};
+			int dim = 4;
+			check_dim(p, c, dim);
 			Game::add_ship(pl, p, c, t);
 			number_c++;
 		}catch(std::invalid_argument& e){
@@ -69,6 +71,8 @@ void GamePlayer::positioning_player(void){
 			util::to_upper(coda);			
 			Coord p{UCoord::from_string_to_coord(punta)};
 			Coord c{UCoord::from_string_to_coord(coda)};
+			int dim = 2;
+			check_dim(p, c, dim);
 			Game::add_ship(pl, p, c, t);
 			number_s++;
 		}catch(std::invalid_argument& e){
@@ -93,96 +97,9 @@ void GamePlayer::positioning_player(void){
 	}
 }
 
-//void GamePlayer::make_move(int s){
-// 	increment_turn();
-//	int pl1 = 0;
-//	int pl2 = 0;
-//	if(starter_==1){
-//		pl1 = 1;
-//		pl2 = 2;
-//	}else{
-//		pl1 = 2;
-//		pl2 = 1;
-//	}
-//	std::pair<Coord, Coord> move;
-//	Coord def;
-//	Coord att;
-//	bool valid = false;
-//	while(!valid){
-//		try{
-//			//move = select_move(pl1);
-//			def = move.first;
-//			att = move.second;
-//			if(pl2 == 1){
-//				int pos = def_grid1_.find_ship(def);
-//				int type = def_grid1_.type_ship(pos);
-//				if(type == 1){
-//					fire(pl2, pos, att);
-//				}else if(type == 2){
-//					move_ship(pl2, pos, att);
-//					heal(pl2, pos, att);
-//				}else if(type == 3){
-//					move_ship(pl2, pos, att);
-//					search(pl2, pos, att);
-//				}
-//			}
-//			if(pl2 == 2){
-//				int pos = def_grid2_.find_ship(def);
-//				int type = def_grid2_.type_ship(pos);
-//				if(type == 1){
-//					fire(pl2, pos, att);
-//				}else if(type == 2){
-//					move_ship(pl2, pos, att);
-//					heal(pl2, pos, att);
-//				}else if(type == 3){
-//					move_ship(pl2, pos, att);
-//					search(pl2, pos, att);
-//				}
-//			}
-//		}catch(std::invalid_argument& e){
-//			valid  = false;
-//		}
-//	}
-//
-//	valid = false;
-//	while(!valid){
-//		try{
-			//move = select_move(pl1);
-//			def = move.first;
-//			att = move.second;
-//			if(pl2 == 1){
-//				int pos = def_grid1_.find_ship(def);
-//				int type = def_grid1_.type_ship(pos);
-//				if(type == 1){
-//					fire(pl2, pos, att);
-//				}else if(type == 2){
-//					move_ship(pl2, pos, att);
-//					heal(pl2, pos, att);
-//				}else if(type == 3){
-//					move_ship(pl2, pos, att);
-//					search(pl2, pos, att);
-//				}
-//			}
-//			if(pl2 == 2){
-//				int pos = def_grid2_.find_ship(def);
-//				int type = def_grid2_.type_ship(pos);
-//				if(type == 1){
-//					fire(pl2, pos, att);
-//				}else if(type == 2){
-//					move_ship(pl2, pos, att);
-//					heal(pl2, pos, att);
-//				}else if(type == 3){
-//					move_ship(pl2, pos, att);
-//					search(pl2, pos, att);
-//				}
-//			}
-//		}catch(std::invalid_argument& e){
-//			valid  = false;
-//		}
-//	}
-//}
 
 void GamePlayer::make_move(int s){
+<<<<<<< Updated upstream
      increment_turn();
     int computer=2;
     int player=1;
@@ -256,6 +173,84 @@ void GamePlayer::make_move(int s){
         }
     valid=false;
     }
+=======
+    // controlla che la partita non sia finita:
+	// - player senza navi
+	// - limite turni raggiunto
+	if(end(false)){
+		return;
+	}
+	bool valid = false;
+	Coord def, att;
+	// TEST
+	std::cout << "\n* * Turno " << turn() << "\tPlayer " << s <<std::endl;	
+	// FINE TEST
+	while(!valid){
+		try{
+			valid = true;
+			// Seleziono la nave
+			// Determino il numero del player per modificare la griglia giusta
+			if(s == 1){
+				std::string first, second;
+				std::cout << "\nInserisci le coordinate della nave -> ";
+				std::cin >> first >> second;
+				util::to_upper(first);
+				util::to_upper(second);
+				if(!special_insert(first, second)){
+					def = UCoord::from_string_to_coord(first);
+					att = UCoord::from_string_to_coord(second);
+					int pos = def_grid1_.find_ship(def);
+					// Definisco il tipo di nave per l'azione da fare
+					int type = def_grid1_.type_ship(pos);
+					std::cout << "\tTipo:" << type;
+					if(type == 1){					// BATTLESHIP
+						fire(s, pos, att); 
+					} else if(type == 2) {			// HELPSHIP
+						// mofifica la ship
+						move_ship(s, pos, att);
+						heal(s, pos, att);
+					} else if(type == 3) {			// EXPL SUBMARINE
+						move_ship(s, pos, att);
+						search(s, pos, att);
+					}
+					// TEST
+					std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << std::endl;	
+					// FINE TEST
+					// Scrive la casella di arrivo della nave
+					def = def_grid1_.ship(pos) -> center();
+				}else{
+					valid = false;
+				}				
+			}
+			if(s == 2){
+				int pos = rand()%def_grid2_.number_ship();				
+				int type = def_grid2_.type_ship(pos);
+				std::cout << "\tTipo:" << type;
+				if(type == 1){					// BATTLESHIP
+					fire(s, pos, att); 
+				} else if(type == 2) {			// HELPSHIP
+					move_ship(s, pos, att);
+					heal(s, pos, att);
+				} else if(type == 3) {			// EXPL SUBMARINE
+					move_ship(s, pos, att);
+					search(s, pos, att);
+				}
+				// TEST
+				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << std::endl;		
+				// FINE TEST
+				def = def_grid2_.ship(pos) -> center();
+			}
+		}catch(std::invalid_argument& e){
+			valid  = false;
+		}
+	}
+	
+	std::pair<Coord, Coord> coord{def, att}; 
+	write_log(coord);
+	if(end(false)){
+		return;
+	}
+>>>>>>> Stashed changes
 }
 
 
@@ -297,106 +292,63 @@ void GamePlayer::positioning_pc(void){
 	}
 }
 
-int GamePlayer::select_ship(int player){
-	return 0;
+bool GamePlayer::special_insert(std::string first, std::string second){
+	if(first == "XX"){
+		if(second == "XX"){
+			print_attack(1);
+			print_defence(1);
+			return true;
+		}else{
+			throw std::invalid_argument("Errore");
+		}
+	}else if(first == "AA"){
+		if(second == "AA"){
+			att_grid1_.remove_detections();
+			return true;
+		}else{
+			throw std::invalid_argument("Errore");
+		}
+	}else if(first == "BB"){
+		if(second == "BB"){
+			att_grid1_.remove_hit();
+			return true;
+		}else{
+			throw std::invalid_argument("Errore");
+		}
+	}else if(first == "CC"){
+		if(second == "CC"){
+			att_grid1_.remove_water();
+			return true;
+		}else{
+			throw std::invalid_argument("Errore");
+		}
+	}
+	return false;
 }
 
-// std::pair<Coord,Coord> GamePlayer::select_move(int player){
-// 	if(player == 1){
-// 		bool end = false;
-// 		std::string first;
-// 		std::string second;
-// 		Coord f{};
-// 		Coord s{};
-// 		while(!end){
-// 			bool choice = false;
-// 			while(!choice){
-// 				std::cout << "Prossima mossa --> ";
-// 				std::cin >> first >> second;
-// 				choice = true;
-// 				util::to_upper(first);
-// 				if(first=="XX" && second=="XX"){
-// 					std::cout << att_grid1_;
-// 					choice = false;
-// 				}
-// 				if(first=="AA" && second=="AA"){
-// 					att_grid1_.remove_detections();
-// 					choice = false;
-// 				}
-// 				if(first=="BB" && second=="BB"){
-// 					att_grid1_.remove_hit();
-// 					choice = false;
-// 				}
-// 				if(first=="CC" && second=="CC"){
-// 					att_grid1_.remove_water();
-// 					choice = false;
-// 				}
-// 			}
-// 			try{
-// 				Coord f = UCoord::from_string_to_coord(first);
-// 				Coord s = UCoord::from_string_to_coord(second);
-				
-// 				if(!end){
-// 					std::cout << "Coordinate inserite non valide." << std::endl;
-// 				}
-// 			}catch(std::invalid_argument& e){
-// 				std::cout << "Coordinate inserite non valide." << std::endl;
-// 			}
-// 		}
-// 		std::pair<Coord, Coord> coord{f, s};
-// 		return coord;
-// 	}else{
-// 		int x, y;
-// 		srand(time(NULL));
-// 		int ran = rand()%(def_grid2_.number_ship());
-// 		x = def_grid2_.ship(ran)->center().X();
-// 		y = def_grid2_.ship(ran)->center().Y();
-// 		Coord first{x,y};
-// 		Coord second = UCoord::random_coord();
-// 		std::pair<Coord, Coord> coord{first, second};
-// 		return coord;
-// 	}
-// }
 
 void GamePlayer::start(){
-//	std::cout << def_grid2_.number_ship() << std::endl;
-//	std::cout << def_grid1_.ship(4)->center() << std::endl;
-//	for(int i = 0; i<def_grid1_.number_ship(); i++){
-//		std::cout << def_grid1_.ship(i)->center() << std::endl;
-//		std::cout << def_grid1_.ship(i)->center().X() << std::endl;
-//	}
-    
+	print_defence(1);
+	print_defence(2);
     while(!end(false)){
+		increment_turn();  
         make_move(starter());
         if(starter()==1){
             std::cout<<"Mossa player fatta"<<std::endl;
-            //TEST
-            std::cout<<def_grid1_<<"      "<<att_grid1_<<std::endl;
-            //FINE TEST
         }
         else{
-            //TEST
             std::cout<<"Mossa computer fatta"<<std::endl;
-            //FINE TEST
-            std::cout<<def_grid2_<<"      "<<att_grid2_<<std::endl;
         }
         make_move((starter()%2)+1);
         if((starter()%2+1)==1){
             std::cout<<"Mossa player fatta"<<std::endl;
-            //TEST
-            std::cout<<def_grid1_<<"      "<<att_grid1_<<std::endl;
-            //FINE TEST
         }
         else{
             std::cout<<"Mossa computer fatta"<<std::endl;
-            //TEST
-            std::cout<<def_grid2_<<"      "<<att_grid2_<<std::endl;
-            //FINE TEST
         }
-        
-       
+		print_defence(2);
     }
 }
 
 
-}
+

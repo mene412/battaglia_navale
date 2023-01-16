@@ -20,7 +20,7 @@ class Grid {
         //stampa la griglia
         std::string print_grid(void);
         virtual ~Grid(void){};
-        void flush(void);
+        void flush_grid(void);
 
     protected:    
         char grid_[12][12];

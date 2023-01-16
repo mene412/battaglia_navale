@@ -1,6 +1,7 @@
 // Autore:
 // #include "GamePlayer.cpp"
 #include "GamePc.cpp"
+#include "GamePlayer.cpp"
 #include "Coord.cpp"
 #include "AttackGrid.cpp"
 #include "Battleship.cpp"

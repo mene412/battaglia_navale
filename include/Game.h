@@ -17,7 +17,7 @@ class Game{
 		Game(void);
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
-		virtual int select_ship(int player);
+		int select_ship(int player);
 		void add_ship(int player, Coord& p, Coord& c, int type);
 		virtual void positioning(void) = 0;
 		virtual void select_starter(void);
@@ -25,6 +25,7 @@ class Game{
 		void write_log(std::string x);
 		void write_log(std::pair<Coord, Coord>& x);
 		int turn(void) const { return turn_;}
+		void check_dim(Coord& a, Coord& b, int dim);
 
 		AttackGrid att_grid1_;
 		AttackGrid att_grid2_;
