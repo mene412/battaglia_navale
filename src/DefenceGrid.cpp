@@ -209,7 +209,7 @@ void DefenceGrid::reload(void){
                 }
             }else if(type == 3){
                 grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'E';
-            }
+            }   
         }   
     }
 }
