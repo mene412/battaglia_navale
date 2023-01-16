@@ -95,7 +95,7 @@ void GamePlayer::positioning_player(void){
 			std::cout << "Coordinate non valide, reinserire." << std::endl;
 		}
 	}
-	
+
 }
 
 
@@ -128,7 +128,7 @@ void GamePlayer::make_move(int s){
 					int pos = def_grid1_.find_ship(def);
 					// Definisco il tipo di nave per l'azione da fare
 					int type = def_grid1_.type_ship(pos);
-					std::cout << "\tTipo:" << type;
+					std::cout << "\tTipo:" << type << std::endl;
 					if(type == 1){					// BATTLESHIP
 						fire(s, pos, att); 
 					} else if(type == 2) {			// HELPSHIP
@@ -149,9 +149,10 @@ void GamePlayer::make_move(int s){
 				}				
 			}
 			if(s == 2){
+				att = UCoord::random_coord();
 				int pos = rand()%def_grid2_.number_ship();				
 				int type = def_grid2_.type_ship(pos);
-				std::cout << "\tTipo:" << type;
+				std::cout << "\tTipo:" << type << std::endl;
 				if(type == 1){					// BATTLESHIP
 					fire(s, pos, att); 
 				} else if(type == 2) {			// HELPSHIP
@@ -214,10 +215,6 @@ void GamePlayer::positioning_pc(void){
 			Game::add_ship(pl, punta, coda, t);
 			number_e++;
 		}catch(std::invalid_argument& e){}
-	}
-	// TEST
-	for(int i = 0; i<def_grid2_.number_ship(); i++){
-		std::cout << def_grid2_.ship(i) -> center() << std::endl;
 	}
 }
 

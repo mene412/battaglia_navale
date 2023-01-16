@@ -499,8 +499,10 @@ void util::to_upper(std::string& x){
 
 void Game::print_defence(int pl){
 	if(pl == 1){
+		def_grid1_.reload();
 		std::cout << "Player " << pl << " - " << def_grid1_;
 	}else{
+		def_grid2_.reload();
 		std::cout << "Player " << pl << " - " << def_grid2_;
 	}
 }
