@@ -133,6 +133,7 @@ void Ship::hit(Coord& c){
             }
             coord_hit_.push_back(i);
             dec_armor();
+            return;
         }
     }
 }

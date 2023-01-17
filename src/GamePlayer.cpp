@@ -265,6 +265,8 @@ void GamePlayer::start(){
 		std::cout << "\n	Turno " << turn() << std::endl;
 		make_move(starter());
 		make_move((starter()%2)+1);
+		print_attack(2);
+		print_defence(2);
 	}
 	if(end(true)){
 		std::cout << "\nChiusura programma...\n" << std::endl; 

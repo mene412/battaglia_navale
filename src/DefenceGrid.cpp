@@ -185,8 +185,8 @@ void DefenceGrid::reload(void){
                         }else{
                             grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'C';
                         }
-                        hit = false;
                     }
+                    hit = false;
                 }
             }else if(type == 2){
                 bool hit = false;
@@ -202,8 +202,8 @@ void DefenceGrid::reload(void){
                         }else{
                             grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'S';
                         }
-                        hit = false;
                     }
+                    hit = false;
                 }
             }else if(type == 3){
                 grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'E';
