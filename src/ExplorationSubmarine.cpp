@@ -19,7 +19,7 @@ void ExplorationSubmarine::move(Coord& c) {
     set_coord_from_center(c);
 }
 
-void ExplorationSubmarine::set_coord_from_center(Coord& c){             // Setta le coordinate iniziali
+void ExplorationSubmarine::set_coord_from_center(Coord& c){             
     center_ = c;
     front_ = c;
     back_ = c;

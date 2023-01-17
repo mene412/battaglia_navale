@@ -58,13 +58,13 @@ void Replay::start(void){
             //_sleep(1);
             move_second();
             def_grid2_.reload();
-            std::cout << "Player " << second << "\n" << def_grid2_;
+            std::cout << "Player " << first << "\n" << def_grid2_;
             std::cout << att_grid2_;
             //_sleep(1);
-
+            
             move_first();
             def_grid1_.reload();
-            std::cout << "Player " << first << "\n" << def_grid1_;
+            std::cout << "Player " << second << "\n" << def_grid1_;
             std::cout << att_grid1_;
         }
     }
@@ -164,6 +164,7 @@ void Replay::take_ships(int player){
                 throw std::runtime_error("File di log errato");
             }
         }
+
         for(int i = 0; i<3; i++){
             type = 2;
             std::string punta;
@@ -177,11 +178,15 @@ void Replay::take_ships(int player){
                 throw std::runtime_error("File di log errato");
             }
         }
+      
         for(int i = 0; i<2; i++){
             type = 3;
             std::string punta;
             std::string coda;
             log_ >> punta >> coda;
+            if(punta != coda){
+                throw std::runtime_error("File di log errato");
+            }
             Coord c{UCoord::from_string_to_coord(coda)};
             if(type == 3 && def_grid1_.check_position(c)){
                 def_grid1_.add_ship(c, c, 3);
@@ -226,8 +231,8 @@ void Replay::take_ships(int player){
                 throw std::runtime_error("File di log errato");
             }
             Coord c{UCoord::from_string_to_coord(punta)};
-            if(type == 3 && def_grid1_.check_position(c)){
-                def_grid1_.add_ship(c, c, 3);
+            if(type == 3 && def_grid2_.check_position(c)){
+                def_grid2_.add_ship(c, c, 3);
             }else{
                 throw std::runtime_error("File di log errato");
             }
@@ -449,30 +454,45 @@ void Replay::search(int pl, int pos, Coord& b){
     if(pl == 1){
 		std::vector<Coord> coord;
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X()-2, b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X()-2, b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X()-1, b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X()-1, b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X(), b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X(), b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X()+1, b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X()+1, b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X()+2, b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X()+2, b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 
 		for(int i = 0; i<coord.size(); i++){
 			try{
-				int pos = def_grid2_.find_ship(coord.at(i));
-				att_grid1_.add_char('Y', coord.at(i));
+				for(int j = 0; j < def_grid2_.number_ship(); j++){
+					for(int k = 0; k < def_grid2_.ship(j)->coord().size(); k++){
+						if(coord.at(i) == def_grid2_.ship(j) -> coord().at(k)){
+							att_grid1_.add_char('Y', coord.at(i));
+						}
+					}
+				}
 			}catch(std::invalid_argument& e){}
 		}
 	}else{
@@ -500,8 +520,13 @@ void Replay::search(int pl, int pos, Coord& b){
 
 		for(int i = 0; i<coord.size(); i++){
 			try{
-				int pos = def_grid1_.find_ship(coord.at(i));
-				att_grid2_.add_char('Y', coord.at(i));
+				for(int j = 0; j < def_grid1_.number_ship(); j++){
+					for(int k = 0; k < def_grid1_.ship(j)->coord().size(); k++){
+						if(coord.at(i) == def_grid1_.ship(j) -> coord().at(k)){
+							att_grid2_.add_char('Y', coord.at(i));
+						}
+					}
+				}
 			}catch(std::invalid_argument& e){}
 		}
 	}
