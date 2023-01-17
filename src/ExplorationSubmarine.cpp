@@ -14,6 +14,7 @@ ExplorationSubmarine::ExplorationSubmarine(Coord& front)
     y_ = center_.Y();
 }
 
+
 void ExplorationSubmarine::move(Coord& c) {
     set_coord_from_center(c);
 }

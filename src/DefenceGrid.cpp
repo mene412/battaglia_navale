@@ -69,11 +69,9 @@ bool DefenceGrid::check_position(std::vector<Coord>& coordinates) {
 }
 
 int DefenceGrid::find_ship(Coord& x) {
-    for (int i = 0; i < number_ship(); i++) {
-        if (ships_.at(i)->armor() != 0) {
-            if (ships_.at(i)->center() == x) {
-                return i;
-            }
+    for (int i = 0; i < ships_.size(); i++) {
+        if (ships_.at(i)->center() == x) {
+            return i;
         }
     }
     throw std::invalid_argument("Nave non trovata");

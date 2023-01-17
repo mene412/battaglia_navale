@@ -153,7 +153,23 @@ int Game::select_ship(int player){
 }
 
 void Game::check_dim(Coord& a, Coord&b, int dim){
-	
+	if(a.X()!=b.X()){
+		if(a.Y()!=b.Y()){
+			throw std::invalid_argument("Errore");
+		}else{
+			if(abs(a.X()-b.X())!=dim){
+				throw std::invalid_argument("Errore");
+			}
+		}
+	}else{
+		if(a.Y()==b.Y()){
+			throw std::invalid_argument("Errore");
+		}else{
+			if(abs(a.Y()-b.Y())!=dim){
+				throw std::invalid_argument("Errore");
+			}
+		}
+	}
 }
 
 void Game::write_log(int player){
@@ -319,35 +335,49 @@ void Game::heal(int pl, int pos, Coord& c){
 }
 
 
-
 void Game::search(int pl, int pos, Coord& c) {
     if(pl == 1){
 		std::vector<Coord> coord;
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X()-2, c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X()-2, c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X()-1, c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X()-1, c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X(), c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X(), c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X()+1, c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X()+1, c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X()+2, c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X()+2, c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 
 		for(int i = 0; i<coord.size(); i++){
 			try{
-				int pos = def_grid2_.find_ship(coord.at(i));
-				att_grid1_.add_char('Y', coord.at(i));
+				for(int j = 0; j < def_grid2_.number_ship(); j++){
+					for(int k = 0; k < def_grid2_.ship(j)->coord().size(); k++){
+						if(coord.at(i) == def_grid2_.ship(j) -> coord().at(k)){
+							att_grid1_.add_char('Y', coord.at(i));
+						}
+					}
+				}
 			}catch(std::invalid_argument& e){}
 		}
 	}else{
@@ -375,8 +405,13 @@ void Game::search(int pl, int pos, Coord& c) {
 
 		for(int i = 0; i<coord.size(); i++){
 			try{
-				int pos = def_grid1_.find_ship(coord.at(i));
-				att_grid2_.add_char('Y', coord.at(i));
+				for(int j = 0; j < def_grid1_.number_ship(); j++){
+					for(int k = 0; k < def_grid1_.ship(j)->coord().size(); k++){
+						if(coord.at(i) == def_grid1_.ship(j) -> coord().at(k)){
+							att_grid2_.add_char('Y', coord.at(i));
+						}
+					}
+				}
 			}catch(std::invalid_argument& e){}
 		}
 	}

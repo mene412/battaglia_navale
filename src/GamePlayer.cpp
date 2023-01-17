@@ -137,7 +137,6 @@ void GamePlayer::make_move(int s){
 						move_ship(s, pos, att);
 						search(s, pos, att);
 					}
-					def = def_grid1_.ship(pos) -> center();
 				}else{
 					valid = false;
 				}				
@@ -146,6 +145,7 @@ void GamePlayer::make_move(int s){
 				att = UCoord::random_coord();
 				int pos = rand()%def_grid2_.number_ship();				
 				int type = def_grid2_.type_ship(pos);
+				def = def_grid2_.ship(pos) -> center();
 				if(type == 1){					// BATTLESHIP
 					fire(s, pos, att); 
 				} else if(type == 2) {			// HELPSHIP
@@ -155,7 +155,6 @@ void GamePlayer::make_move(int s){
 					move_ship(s, pos, att);
 					search(s, pos, att);
 				}
-				def = def_grid2_.ship(pos) -> center();
 				std::cout << "   Player " << s << " --> " << def << " " << att << std::endl;
 			}
 		}catch(std::invalid_argument& e){
