@@ -305,10 +305,16 @@ void Game::heal(int pl, int pos, Coord& c){
 			}
 			if(heal){
                 try{
-                    int p = def_grid1_.find_ship(coord_heal.at(i));
-				    if(!def_grid1_.ship(p) -> healed()){
-					    def_grid1_.ship(p) -> heal();
-				    }
+                    for(int k = 0; k<def_grid1_.number_ship(); k++){
+						if(!def_grid1_.ship(k) -> healed()){
+							for(int l = 0; l<def_grid1_.ship(k)->coord().size(); l++){
+								if(def_grid1_.ship(k)->coord().at(l) == coord_heal.at(i)){
+									def_grid1_.ship(k) -> heal();
+								}
+							}
+						}
+					}
+				    
                 }catch(std::invalid_argument& e){}
 			}
             heal = true;
@@ -325,15 +331,21 @@ void Game::heal(int pl, int pos, Coord& c){
 			}
 			if(heal){
                 try{
-                    int p = def_grid2_.find_ship(coord_heal.at(i));
-				    if(!def_grid2_.ship(p) -> healed()){
-					    def_grid2_.ship(p) -> heal();
-				    }
+                    for(int k = 0; k<def_grid2_.number_ship(); k++){
+						if(!def_grid2_.ship(k) -> healed()){
+							for(int l = 0; l<def_grid2_.ship(k)->coord().size(); l++){
+								if(def_grid2_.ship(k)->coord().at(l) == coord_heal.at(i)){
+									def_grid2_.ship(k) -> heal();
+								}
+							}
+						}
+					}
+				    
                 }catch(std::invalid_argument& e){}
 			}
             heal = true;
 		}
-		def_grid2_.reload();
+		def_grid1_.reload();
 	}
 }
 

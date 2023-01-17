@@ -126,9 +126,13 @@ void Ship::heal(void){
 void Ship::hit(Coord& c){
     for(int i = 0; i<dim(); i++){
         if(coord_.at(i)==c){
+            for(int j = 0; j<coord_hit_.size(); j++){
+                if(i == coord_hit_.at(j)){
+                    return;
+                }
+            }
             coord_hit_.push_back(i);
             dec_armor();
-            return;
         }
     }
 }
