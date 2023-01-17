@@ -196,7 +196,7 @@ void DefenceGrid::reload(void){
                         }else{
                             grid_[ships_.at(i) -> coord().at(j).X()][ships_.at(i) -> coord().at(j).Y()] = 'S';
                         }
-                        hit = true;
+                        hit = false;
                     }
                 }
             }else if(type == 3){

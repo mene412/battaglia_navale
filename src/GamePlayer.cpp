@@ -121,23 +121,28 @@ void GamePlayer::make_move(int s){
 				util::to_upper(first);
 				util::to_upper(second);
 				if(!special_insert(first, second)){
-					def = UCoord::from_string_to_coord(first);
-					att = UCoord::from_string_to_coord(second);
-					int pos = def_grid1_.find_ship(def);
-					// Definisco il tipo di nave per l'azione da fare
-					int type = def_grid1_.type_ship(pos);
-					if(type == 1){					// BATTLESHIP
-						fire(s, pos, att); 
-					} else if(type == 2) {			// HELPSHIP
-						move_ship(s, pos, att);
-						heal(s, pos, att);
-					} else if(type == 3) {			// EXPL SUBMARINE
-						move_ship(s, pos, att);
-						search(s, pos, att);
+					try{
+						def = UCoord::from_string_to_coord(first);
+						att = UCoord::from_string_to_coord(second);
+						int pos = def_grid1_.find_ship(def);
+						// Definisco il tipo di nave per l'azione da fare
+						int type = def_grid1_.type_ship(pos);
+						if(type == 1){					// BATTLESHIP
+							fire(s, pos, att); 
+						} else if(type == 2) {			// HELPSHIP
+							move_ship(s, pos, att);
+							heal(s, pos, att);
+						} else if(type == 3) {			// EXPL SUBMARINE
+							move_ship(s, pos, att);
+							search(s, pos, att);
+						}
+					}catch(std::invalid_argument& e){
+						std::cout << "   Mossa non valida" << std::endl;
+						throw std::invalid_argument("Errore");
 					}
 				}else{
 					valid = false;
-					std::cout << "   Mossa non valida" << std::endl;
+					
 				}				
 			}
 			if(s == 2){
