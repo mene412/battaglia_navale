@@ -32,7 +32,7 @@ bool DefenceGrid::check_position(Coord& a, Coord& b, int dim) {
     }else if(a.Y()>b.Y()){
         dim = a.Y()-b.Y();
         for(int i = 0; i<dim; i++){
-            Coord c{a.X(), a.Y()+i};
+            Coord c{a.X(), b.Y()+i};
             coord.push_back(c);
         }
     } else if(a == b) {

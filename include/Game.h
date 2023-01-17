@@ -1,7 +1,7 @@
 // Autore: Andrea Mutti
 
-#ifndef Game_h
-#define Game_h
+#ifndef GAME_H
+#define GAME_H
 
 #include <fstream>
 #include "DefenceGrid.h"
@@ -9,7 +9,7 @@
 
 class Game{
 	public:
-		virtual ~Game(){log.close();}
+		virtual ~Game(){log_.close();}
 		int starter(void){return starter_;}
 	
 	protected:
@@ -27,13 +27,14 @@ class Game{
 		void write_log(std::pair<Coord, Coord>& x);
 		int turn(void) const { return turn_;}
 		void check_dim(Coord& a, Coord& b, int dim);
+		bool ship_went_down(void) const { return ship_went_down_;}
 
 		AttackGrid att_grid1_;
 		AttackGrid att_grid2_;
 		DefenceGrid def_grid1_;
 		DefenceGrid def_grid2_;
+		bool ship_went_down_;
 
-		std::pair<DefenceGrid, DefenceGrid> def_grid_;
 		bool end(bool over);
 		void fire(int pl, int pos, Coord& c);
 		void move_ship(int pl, int pos, Coord& c);
@@ -46,7 +47,7 @@ class Game{
 
 	private:
 		int turn_;
-		std::ofstream log;
+		std::ofstream log_;
 		const int MAX_TURNS = 1000;
 };
 

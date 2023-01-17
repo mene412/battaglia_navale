@@ -5,7 +5,7 @@
 #include <cmath>
 
 Game::Game(void)
-	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log{"log.txt"}
+	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log_{"log.txt"}, ship_went_down_{false}
 {
 	std::cout << "- - - - - - - - - - - - - - - - - - - - -" << std::endl; 
 	std::cout << "* * * I N I Z I A   I L   G I O C O * * *" << std::endl; 
@@ -15,9 +15,9 @@ Game::Game(void)
 void Game::select_starter(void){
 	int s = rand()%2+1;
 	if(s==1){
-		std::cout << "Inizia il player " << s << std::endl;
+		std::cout << "   Inizia il player " << s << std::endl;
 	}else if(s==2){
-		std::cout << "Inizia il player " << s << std::endl;
+		std::cout << "   Inizia il player " << s << std::endl;
 	}
 	starter_ = s;
 	write_log(s);
@@ -38,7 +38,7 @@ void Game::add_ship(int player, Coord& p, Coord& c, int type){
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
 		}else{
-			throw std::invalid_argument("Non puoi aggiungere una nave qua - linea 40");
+			throw std::invalid_argument("Errore");
 		}
 	}else{
 		if(type == 1 && def_grid2_.check_position(p, c, 5)){
@@ -54,7 +54,7 @@ void Game::add_ship(int player, Coord& p, Coord& c, int type){
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
 		}else{
-			throw std::invalid_argument("Non puoi aggiungere una nave qua - linea 56");
+			throw std::invalid_argument("Errore");
 		}
 	}
 }
@@ -75,9 +75,6 @@ void Game::make_move(int s){
 	}
 	bool valid = false;
 	Coord def, att;
-	// TEST
-	std::cout << "\n* * Turno " << turn() << "\tPlayer " << s <<std::endl;	
-	// FINE TEST
 	while(!valid){
 		try{
 			valid = true;
@@ -89,50 +86,57 @@ void Game::make_move(int s){
 			if(s == 1){
 				// Definisco il tipo di nave per l'azione da fare
 				int type = def_grid1_.type_ship(pos);
-				std::cout << "\tTipo:" << type;
-				if(type == 1){					// BATTLESHIP
+				if(type == 1){
+					std::cout << "1\n";
+					def = def_grid1_.ship(pos) -> center();					// BATTLESHIP
 					fire(s, pos, att); 
 				} else if(type == 2) {	
-					std::cout << "\n\nOLEEEE\n\n" << std::endl;		// HELPSHIP
+					std::cout << "2\n";
+					def = def_grid1_.ship(pos) -> center();	// HELPSHIP
 					// mofifica la ship
 					move_ship(s, pos, att);
 					heal(s, pos, att);
-				} else if(type == 3) {			// EXPL SUBMARINE
+				} else if(type == 3) {	
+					std::cout << "3\n";
+					def = def_grid1_.ship(pos) -> center();		// EXPL SUBMARINE
 					move_ship(s, pos, att);
 					search(s, pos, att);
 				}
-				// TEST
-				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << std::endl;	
-				// FINE TEST
 				// Scrive la casella di arrivo della nave
-				def = def_grid1_.ship(pos) -> center();
 			}
 			if(s == 2){
 				int type = def_grid2_.type_ship(pos);
-				std::cout << "\tTipo:" << type;
-				if(type == 1){					// BATTLESHIP
+				if(type == 1){	
+					std::cout << "1\n";
+					def = def_grid2_.ship(pos) -> center();				// BATTLESHIP
 					fire(s, pos, att); 
-				} else if(type == 2) {		
-					std::cout << "\n\nOLEEEE\n\n" << std::endl;	// HELPSHIP
+				} else if(type == 2) {	
+					std::cout << "2\n";
+					def = def_grid2_.ship(pos) -> center();	// HELPSHIP
 					move_ship(s, pos, att);
 					heal(s, pos, att);
-				} else if(type == 3) {			// EXPL SUBMARINE
+				} else if(type == 3) {	
+					std::cout << "3\n";
+					def = def_grid2_.ship(pos) -> center();		// EXPL SUBMARINE
 					move_ship(s, pos, att);
 					search(s, pos, att);
 				}
-				// TEST
-				std::cout << "\nScelta ed eseguita azione con nave di tipo " << type << std::endl;		
-				// FINE TEST
-				def = def_grid2_.ship(pos) -> center();
 			}
 		}catch(std::invalid_argument& e){
-			std::cout << " Questo tipo non va ";
 			valid  = false;
 		}
 	}
-	
+	std::cout << "   Player " << s << " --> " << def << " " << att << std::endl;
 	std::pair<Coord, Coord> coord{def, att}; 
 	write_log(coord);
+	if(ship_went_down_){
+		ship_went_down_ = false;
+		if(s == 1){
+			std::cout << "   Nave abbattuta del player 2 - rimaste: " << def_grid2_.number_ship() << " navi." << std::endl;
+		}else{
+			std::cout << "   Nave abbattuta del player 1 - rimaste: " << def_grid1_.number_ship() << " navi." << std::endl;
+		}
+	}
 	if(end(false)){
 		return;
 	}
@@ -153,34 +157,40 @@ void Game::check_dim(Coord& a, Coord&b, int dim){
 }
 
 void Game::write_log(int player){
-	log << std::to_string(player);
+	log_ << std::to_string(player);
 }
 
 void Game::write_log(std::string x){
-	log << "\n" << x;
+	log_ << "\n" << x;
 }
 
 void Game::write_log(std::pair<Coord, Coord>& x){
-	log << "\n" << x.first << " " << x.second;
+	log_ << "\n" << x.first << " " << x.second;
 }
 
 
 bool Game::end(bool over){
 	if(turn_>=MAX_TURNS){
 		if(over){
-			std::cout << "\n\nPareggio!" << std::endl;
+			std::cout << "\n|-----------|\n";
+			std::cout << "| Pareggio! |";
+			std::cout << "\n|-----------|\n" << std::endl;
 		}
 		return true;
 	}
 	if(def_grid1_.number_ship()==0){
 		if(over){
-			std::cout << "\n\nPlayer 2 ha vinto!" << std::endl;
+			std::cout << "\n|--------------------|\n";
+			std::cout << "| Player 2 ha vinto! |";
+			std::cout << "\n|--------------------|\n" << std::endl;
 		}
 		return true;	
 	}
 	if(def_grid2_.number_ship()==0){		
 		if(over){
-			std::cout << "\n\nPlayer 1 ha vinto!" << std::endl;
+			std::cout << "\n|--------------------|\n";
+			std::cout << "| Player 1 ha vinto! |";
+			std::cout << "\n|--------------------|\n" << std::endl;
 		}
 		return true;
 	}
@@ -201,18 +211,12 @@ void Game::fire(int pl, int pos, Coord& c){
 					def_grid2_.ship(i) -> hit(c);
 					// segna nella defGrid nemica che è stata colpita
 					def_grid2_.hit(c);
-					// TEST
-					std::cout << "\nNave colpita in posizione " << c << std::endl;
-					// FINE TEST
 					// controlla che la nave non sia distrutta
 					if(def_grid2_.destroyed(i)){
 						// se è distrutta
 						// 
 						titanic(pl, i);
-						// 
-						
-						// Stampa a schermo le navi rimaste
-						std::cout << "Nave abbattuta del player 2 - rimaste: " << def_grid2_.number_ship() << std::endl;
+						ship_went_down_ = true;
 					}
 					def_grid2_.reload();
 					return;
@@ -221,9 +225,6 @@ void Game::fire(int pl, int pos, Coord& c){
 		}
 		// se non trova la nave, segna acqua ("O")
     	att_grid1_.add_char('O', c);
-		// TEST
-		std::cout << "\nAcqua in " << c << std::endl;
-		// FINE TEST
     	return;
 	}else{
 		for(int i = 0; i<def_grid1_.number_ship(); i++){
@@ -232,13 +233,9 @@ void Game::fire(int pl, int pos, Coord& c){
 					att_grid2_.add_char('x', c);
 					def_grid1_.ship(i) -> hit(c);
 					def_grid1_.hit(c);
-					// TEST
-					std::cout << "\nNave colpita in posizione " << c << std::endl;
-					// FINE TEST
 					if(def_grid1_.destroyed(i)){
 						titanic(pl, i);
-						std::cout << "Nave abbattuta del player 1 - rimaste:";
-						std::cout << def_grid1_.number_ship() << std::endl;
+						ship_went_down_ = true;
 					}
 					def_grid1_.reload();
 					return;
@@ -246,9 +243,6 @@ void Game::fire(int pl, int pos, Coord& c){
 			}
 		}
     	att_grid2_.add_char('O', c);
-		// TEST
-			std::cout << "\nAcqua in " << c << std::endl;
-		// FINE TEST
     	return;
 	} 
 }
@@ -283,40 +277,42 @@ void Game::heal(int pl, int pos, Coord& c){
 	}
 	if(pl == 1){
 		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
-		def_grid1_.ship(pos)->set_healed(true);
-		// scorro la griglia 3x3 da curare
+		bool heal = true;
 		for(int i = 0; i<coord_heal.size(); i++){
-			// TEST
-			std::cout << "Inizio a cercare se devo curare" << std::endl;
-			// FINE TEST
-			// se è occupata cerca la nave
-			if (!def_grid1_.check_position(coord_heal.at(i))) {
-				// TEST
-				std::cout << "Cerco la nave in posizione " << coord_heal.at(i) << std::endl;
-				// FINE TEST
-                int p = def_grid1_.find_ship(coord_heal.at(i));
-                if(!def_grid1_.ship(p) -> healed()){
-                    def_grid1_.ship(p) -> heal();
-					// TEST
-					std::cout << "Nave curata " << std::endl;
-					// FINE TEST
-                }
+			for(int j = 0; j<coord.size(); j++){
+				if(coord_heal.at(i) == coord.at(j)){
+					heal = false;
+				}
 			}
+			if(heal){
+                try{
+                    int p = def_grid1_.find_ship(coord_heal.at(i));
+				    if(!def_grid1_.ship(p) -> healed()){
+					    def_grid1_.ship(p) -> heal();
+				    }
+                }catch(std::invalid_argument& e){}
+			}
+            heal = true;
 		}
 		def_grid1_.reload();
 	}else{
 		std::vector<Coord> coord = def_grid2_.ship(pos) -> coord();
-		def_grid2_.ship(pos)->set_healed(true);
+		bool heal = true;
 		for(int i = 0; i<coord_heal.size(); i++){
-			if (!def_grid2_.check_position(coord_heal.at(i))) {
-				int p = def_grid2_.find_ship(coord_heal.at(i));
-            	if(!def_grid2_.ship(p) -> healed()){
-                	def_grid2_.ship(p) -> heal();
-					// TEST
-					std::cout << "Nave curata " << std::endl;
-					// FINE TEST
-            	}
+			for(int j = 0; j<coord.size(); j++){
+				if(coord_heal.at(i) == coord.at(j)){
+					heal = false;
+				}
 			}
+			if(heal){
+                try{
+                    int p = def_grid2_.find_ship(coord_heal.at(i));
+				    if(!def_grid2_.ship(p) -> healed()){
+					    def_grid2_.ship(p) -> heal();
+				    }
+                }catch(std::invalid_argument& e){}
+			}
+            heal = true;
 		}
 		def_grid2_.reload();
 	}
@@ -414,9 +410,6 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			if(def_grid1_.check_position(new_coord)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
 				s -> move(c);
-				// TEST
-				std::cout << "Helpship spostata in " << c << std::endl;
-				// FINE TEST
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -429,9 +422,6 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			if(def_grid1_.check_position(c)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos));
 				s -> move(c);
-				// TEST
-				std::cout << "Submarine spostato in " << c << std::endl;
-				// FINE TEST
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -463,9 +453,6 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			if(def_grid2_.check_position(new_coord)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid2_.ship(pos));
 				s -> move(c);
-				// TEST
-				std::cout << "Helpship spostata in " << c << std::endl;
-				// FINE TEST
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -476,9 +463,6 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			if(def_grid2_.check_position(cord)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos));
 				s -> move(c);
-				// TEST
-				std::cout << "Submarine spostato in " << c << std::endl;
-				// FINE TEST
 				// Ridisegniamo la nave sulla griglia
 				return;
 				return;

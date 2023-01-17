@@ -92,25 +92,19 @@ void GamePc::positioning(void){
 			number_e++;
 		}catch(std::invalid_argument& e){}
 	}
-	std::cout << "Navi create e inserite correttamente" << std::endl;
+	std::cout << "Navi create e inserite correttamente\n" << std::endl;
 }
 
 void GamePc::start(void){
-		print_defence(1);
-		print_attack(1);
-		print_defence(2);
-		print_attack(2);
+	std::cout << "Posizionamento navi iniziale." << std::endl;
+	print_defence(1);
+	print_defence(2);
 	while(!end(false)){
 		increment_turn();
+		std::cout << "\n	Turno " << turn() << std::endl;
 		make_move(starter());
 		make_move((starter()%2)+1);
 	}
-		def_grid2_.reload();
-		def_grid1_.reload();
-		print_defence(1);
-		print_attack(1);
-		print_defence(2);
-		print_attack(2);
 	if(end(true)){
 		std::cout << "\nChiusura programma...\n" << std::endl; 
 	}

@@ -23,6 +23,7 @@ class Ship
         Coord& back(void) { return back_; }
         int x(void){ return x_;}
         int y(void){ return y_;}
+        int distance(void) const { return distance_;}
 
         //metodi setter 
         virtual void set_coord(std::vector<Coord>& coordinates);
