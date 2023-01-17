@@ -108,13 +108,12 @@ void GamePlayer::make_move(int s){
 	if(end(false)){
 		return;
 	}
+	
 	bool valid = false;
 	Coord def, att;
 	while(!valid){
 		try{
 			valid = true;
-			// Seleziono la nave
-			// Determino il numero del player per modificare la griglia giusta
 			if(s == 1){
 				std::string first, second;
 				std::cout << "\n   Inserisci le coordinate della tua prossima mossa --> ";
@@ -130,7 +129,6 @@ void GamePlayer::make_move(int s){
 					if(type == 1){					// BATTLESHIP
 						fire(s, pos, att); 
 					} else if(type == 2) {			// HELPSHIP
-						// mofifica la ship
 						move_ship(s, pos, att);
 						heal(s, pos, att);
 					} else if(type == 3) {			// EXPL SUBMARINE
@@ -139,6 +137,7 @@ void GamePlayer::make_move(int s){
 					}
 				}else{
 					valid = false;
+					std::cout << "   Comando non valido" << std::endl;
 				}				
 			}
 			if(s == 2){
@@ -159,6 +158,7 @@ void GamePlayer::make_move(int s){
 			}
 		}catch(std::invalid_argument& e){
 			valid  = false;
+			std::cout << "   Comando non valido" << std::endl;
 		}
 	}
 	if(ship_went_down_){
