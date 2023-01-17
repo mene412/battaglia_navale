@@ -87,17 +87,14 @@ void Game::make_move(int s){
 				// Definisco il tipo di nave per l'azione da fare
 				int type = def_grid1_.type_ship(pos);
 				if(type == 1){
-					std::cout << "1\n";
 					def = def_grid1_.ship(pos) -> center();					// BATTLESHIP
 					fire(s, pos, att); 
 				} else if(type == 2) {	
-					std::cout << "2\n";
 					def = def_grid1_.ship(pos) -> center();	// HELPSHIP
 					// mofifica la ship
 					move_ship(s, pos, att);
 					heal(s, pos, att);
 				} else if(type == 3) {	
-					std::cout << "3\n";
 					def = def_grid1_.ship(pos) -> center();		// EXPL SUBMARINE
 					move_ship(s, pos, att);
 					search(s, pos, att);
@@ -107,16 +104,13 @@ void Game::make_move(int s){
 			if(s == 2){
 				int type = def_grid2_.type_ship(pos);
 				if(type == 1){	
-					std::cout << "1\n";
 					def = def_grid2_.ship(pos) -> center();				// BATTLESHIP
 					fire(s, pos, att); 
 				} else if(type == 2) {	
-					std::cout << "2\n";
 					def = def_grid2_.ship(pos) -> center();	// HELPSHIP
 					move_ship(s, pos, att);
 					heal(s, pos, att);
 				} else if(type == 3) {	
-					std::cout << "3\n";
 					def = def_grid2_.ship(pos) -> center();		// EXPL SUBMARINE
 					move_ship(s, pos, att);
 					search(s, pos, att);
