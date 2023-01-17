@@ -1,6 +1,7 @@
 #include "../include/Game.h"
 
 #include <cmath>
+#include <string>
 
 Game::Game(std::string file_log)
 	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log_{file_log}, ship_went_down_{false}
