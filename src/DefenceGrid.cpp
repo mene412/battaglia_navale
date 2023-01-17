@@ -50,19 +50,25 @@ bool DefenceGrid::check_position(Coord& a, Coord& b, int dim) {
 }
 
 bool DefenceGrid::check_position(Coord& a){
-    if(grid_[a.X()][a.Y()] == ' '){
-        return true;
+    for(int i = 0; i<ships_.size(); i++){
+        for(int j = 0; j<ships_.at(i)->coord().size(); j++){
+            if(a == ships_.at(i)->coord().at(j)){
+                return false;
+            }
+        }
     }
-    return false;
+    return true;
 }
 
 bool DefenceGrid::check_position(std::vector<Coord>& coordinates) {
     for (int i = 0; i < coordinates.size(); i++) {
-        int checkRow = coordinates.at(i).X();        // numero riga
-        int checkColumn = coordinates.at(i).Y();    // numero colonna
-        if (grid_[checkRow][checkColumn] != ' ') {
-            // se la cella non è vuota, ritorna false
-            return false;
+        for(int j = 0; j<ships_.size(); j++){
+            for(int k = 0; k<ships_.at(j)->coord().size(); k++){
+                if(coordinates.at(i) == ships_.at(j) -> coord().at(k)){
+                    std::cout << "NON PASSA" << std::endl;
+                    return false;
+                }
+            }
         }
     }
     return true;

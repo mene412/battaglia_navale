@@ -88,6 +88,7 @@ void Game::make_move(int s){
 				// Definisco il tipo di nave per l'azione da fare
 				int type = def_grid1_.type_ship(pos);
 				def = def_grid1_.ship(pos) -> center();	
+				std::cout << type << def_grid1_.ship(pos) -> center() << std::endl;
 				if(type == 1){
 					def = def_grid1_.ship(pos) -> center();					// BATTLESHIP
 					fire(s, pos, att); 
@@ -103,6 +104,7 @@ void Game::make_move(int s){
 			}
 			if(s == 2){
 				int type = def_grid2_.type_ship(pos);
+				std::cout << type << def_grid2_.ship(pos) -> center() << std::endl;
 				def = def_grid2_.ship(pos) -> center();	
 				if(type == 1){					// BATTLESHIP
 					fire(s, pos, att); 
@@ -276,13 +278,22 @@ void Game::titanic(int pl, int pos){
 void Game::heal(int pl, int pos, Coord& c){
 	std::vector<Coord> coord_heal;
 	for(int i = 0; i<3; i++){
-		coord_heal.push_back(Coord{c.X()-1, c.Y()-1+i});
+		try{
+			Coord cord{c.X()-1, c.Y()-1+i};
+			coord_heal.push_back(cord);
+		}catch(std::invalid_argument& e){}
 	}
 	for(int i = 0; i<3; i++){
-		coord_heal.push_back(Coord{c.X(), c.Y()-1+i});
+		try{
+			Coord cord{c.X(), c.Y()-1+i};
+			coord_heal.push_back(cord);
+		}catch(std::invalid_argument& e){}
 	}
 	for(int i = 0; i<3; i++){
-		coord_heal.push_back(Coord{c.X()+1, c.Y()-1+i});
+		try{
+			Coord cord{c.X()+1, c.Y()-1+i};
+			coord_heal.push_back(cord);
+		}catch(std::invalid_argument& e){}
 	}
 	if(pl == 1){
 		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
@@ -376,24 +387,34 @@ void Game::search(int pl, int pos, Coord& c) {
 	}else{
 		std::vector<Coord> coord;
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X()-2, c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X()-2, c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X()-1, c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X()-1, c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X(), c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X(), c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X()+1, c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X()+1, c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{c.X()+2, c.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{c.X()+2, c.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 
 		for(int i = 0; i<coord.size(); i++){
@@ -437,7 +458,9 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			}
 			if(def_grid1_.check_position(new_coord)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
+				std::cout << s -> center() << " ";
 				s -> move(c);
+				std::cout << s -> center() << "\n";
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -449,7 +472,9 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			// controllo che la cella sia libera
 			if(def_grid1_.check_position(c)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos));
+				std::cout << s -> center() << " ";
 				s -> move(c);
+				std::cout << s -> center() << "\n";
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -480,7 +505,9 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			}
 			if(def_grid2_.check_position(new_coord)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid2_.ship(pos));
+				std::cout << s -> center() << " ";
 				s -> move(c);
+				std::cout << s -> center() << "\n";
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -490,9 +517,10 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			std::vector<Coord>cord {c};
 			if(def_grid2_.check_position(cord)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos));
+				std::cout << s -> center() << " ";
 				s -> move(c);
+				std::cout << s -> center() << "\n";
 				// Ridisegniamo la nave sulla griglia
-				return;
 				return;
 			}else{
 				throw std::invalid_argument("Errore");

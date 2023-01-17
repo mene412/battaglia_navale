@@ -323,18 +323,23 @@ void Replay::titanic(int pl, int pos){
 void Replay::heal(int pl, int pos, Coord& c){
     std::vector<Coord> coord_heal;
 	for(int i = 0; i<3; i++){
-        Coord cord{c.X()-1, c.Y()-1+i};
-		coord_heal.push_back(cord);
+		try{
+			Coord cord{c.X()-1, c.Y()-1+i};
+			coord_heal.push_back(cord);
+		}catch(std::invalid_argument& e){}
 	}
 	for(int i = 0; i<3; i++){
-		Coord cord{c.X(), c.Y()-1+i};
-		coord_heal.push_back(cord);
+		try{
+			Coord cord{c.X(), c.Y()-1+i};
+			coord_heal.push_back(cord);
+		}catch(std::invalid_argument& e){}
 	}
 	for(int i = 0; i<3; i++){
-		Coord cord{c.X()+1, c.Y()-1+i};
-		coord_heal.push_back(cord);
+		try{
+			Coord cord{c.X()+1, c.Y()-1+i};
+			coord_heal.push_back(cord);
+		}catch(std::invalid_argument& e){}
 	}
-    
 	if(pl == 1){
 		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
 		bool heal = true;
@@ -343,15 +348,15 @@ void Replay::heal(int pl, int pos, Coord& c){
 				if(coord_heal.at(i) == coord.at(j)){
 					heal = false;
 				}
-            }
-            if(heal){
+			}
+			if(heal){
                 try{
                     int p = def_grid1_.find_ship(coord_heal.at(i));
-                    if(!def_grid1_.ship(p) -> healed()){
-                        def_grid1_.ship(p) -> heal();
-                    }
+				    if(!def_grid1_.ship(p) -> healed()){
+					    def_grid1_.ship(p) -> heal();
+				    }
                 }catch(std::invalid_argument& e){}
-            }
+			}
             heal = true;
 		}
 		def_grid1_.reload();
@@ -498,24 +503,34 @@ void Replay::search(int pl, int pos, Coord& b){
 	}else{
 		std::vector<Coord> coord;
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X()-2, b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X()-2, b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X()-1, b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X()-1, b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X(), b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X(), b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X()+1, b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X()+1, b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 		for(int i = 0; i<5; i++){
-			Coord temp{b.X()+2, b.Y()-2+i};
-			coord.push_back(temp);
+			try{
+				Coord temp{b.X()+2, b.Y()-2+i};
+				coord.push_back(temp);
+			}catch(std::invalid_argument& e){}
 		}
 
 		for(int i = 0; i<coord.size(); i++){
