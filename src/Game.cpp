@@ -455,6 +455,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			if(def_grid1_.check_position(new_coord)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
 				s -> move(c);
+				def_grid1_.reload();
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -467,6 +468,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			if(def_grid1_.check_position(c)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos));
 				s -> move(c);
+				def_grid1_.reload();
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -498,6 +500,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			if(def_grid2_.check_position(new_coord)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid2_.ship(pos));
 				s -> move(c);
+				def_grid2_.reload();
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -508,6 +511,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			if(def_grid2_.check_position(cord)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos));
 				s -> move(c);
+				def_grid2_.reload();
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
