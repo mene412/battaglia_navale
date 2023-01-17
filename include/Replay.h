@@ -36,7 +36,7 @@ class Replay{
         AttackGrid att_grid1_;
         AttackGrid att_grid2_;
         int turn_;
-        int const MAX_TURNS = 1000;
+        int const MAX_TURNS = 2000;
 };
 
 #endif
