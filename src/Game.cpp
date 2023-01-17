@@ -165,17 +165,14 @@ void Game::check_dim(Coord& a, Coord&b, int dim){
 
 void Game::write_log(int player){
 	log_ << std::to_string(player);
-	std::cout << "STAMPATO";
 }
 
 void Game::write_log(std::string x){
 	log_ << "\n" << x;
-	std::cout << "STAMPATO";
 }
 
 void Game::write_log(std::pair<Coord, Coord>& x){
 	log_ << "\n" << x.first << " " << x.second;
-	std::cout << "STAMPATO";
 }
 
 
