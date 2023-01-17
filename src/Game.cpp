@@ -23,15 +23,15 @@ void Game::select_starter(void){
 
 void Game::add_ship(int player, Coord& p, Coord& c, int type){
 	if(player == 1){
-		if(type == 1 && def_grid1_.check_position(p, c, 5)){
+		if(type == 1 && def_grid1_.check_position(p, c, 5, -1)){
 			def_grid1_.add_ship(p, c, type);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 2 && def_grid1_.check_position(p, c, 3)){
+		}else if(type == 2 && def_grid1_.check_position(p, c, 3, -1)){
 			def_grid1_.add_ship(p, c, type);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 3 && def_grid1_.check_position(p, c, 1)){
+		}else if(type == 3 && def_grid1_.check_position(p, c, 1, -1)){
 			def_grid1_.add_ship(p, c, type);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
@@ -39,15 +39,15 @@ void Game::add_ship(int player, Coord& p, Coord& c, int type){
 			throw std::invalid_argument("Errore");
 		}
 	}else{
-		if(type == 1 && def_grid2_.check_position(p, c, 5)){
+		if(type == 1 && def_grid2_.check_position(p, c, 5, -1)){
 			def_grid2_.add_ship(p, c, type);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 2 && def_grid2_.check_position(p, c, 3)){
+		}else if(type == 2 && def_grid2_.check_position(p, c, 3, -1)){
 			def_grid2_.add_ship(p, c, type);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
-		}else if(type == 3 && def_grid2_.check_position(p, c, 1)){
+		}else if(type == 3 && def_grid2_.check_position(p, c, 1, -1)){
 			def_grid2_.add_ship(p, c, type);
 			std::pair<Coord, Coord> coord{p, c}; 
 			write_log(coord);
@@ -464,7 +464,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				new_c = Coord{c.X()+1, c.Y()};
 				new_coord.push_back(new_c);
 			}
-			if(def_grid1_.check_position(new_coord)){
+			if(def_grid1_.check_position(new_coord, pos)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
 				s -> move(c);
 				def_grid1_.reload();
@@ -509,7 +509,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				new_c = Coord{c.X()+1, c.Y()};
 				new_coord.push_back(new_c);
 			}
-			if(def_grid2_.check_position(new_coord)){
+			if(def_grid2_.check_position(new_coord, pos)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid2_.ship(pos));
 				s -> move(c);
 				def_grid2_.reload();
@@ -519,8 +519,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 				throw std::invalid_argument("Errore");
 			}
 		}else if(type == 3){
-			std::vector<Coord>cord {c};
-			if(def_grid2_.check_position(cord)){
+			if(def_grid2_.check_position(c)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos));
 				s -> move(c);
 				def_grid2_.reload();

@@ -116,7 +116,7 @@ void GamePlayer::make_move(int s){
 			valid = true;
 			if(s == 1){
 				std::string first, second;
-				std::cout << "\n   Inserisci le coordinate della tua prossima mossa --> ";
+				std::cout << "\n   Player 1 - Inserisci le coordinate della tua prossima mossa --> ";
 				std::cin >> first >> second;
 				util::to_upper(first);
 				util::to_upper(second);
@@ -129,12 +129,15 @@ void GamePlayer::make_move(int s){
 						int type = def_grid1_.type_ship(pos);
 						if(type == 1){					// BATTLESHIP
 							fire(s, pos, att); 
+							std::cout << "\n   Fuoco in posizione " << att << std::endl;
 						} else if(type == 2) {			// HELPSHIP
 							move_ship(s, pos, att);
 							heal(s, pos, att);
+							std::cout << "\n   Nave di supporto spostata in " << att << std::endl;
 						} else if(type == 3) {			// EXPL SUBMARINE
 							move_ship(s, pos, att);
 							search(s, pos, att);
+							std::cout << "\n   Sottomarino spostato in " << att << std::endl;
 						}
 					}catch(std::invalid_argument& e){
 						std::cout << "   Mossa non valida" << std::endl;
@@ -159,7 +162,7 @@ void GamePlayer::make_move(int s){
 					move_ship(s, pos, att);
 					search(s, pos, att);
 				}
-				std::cout << "   Player " << s << " --> " << def << " " << att << std::endl;
+				std::cout << "\n   Player 2 - Mossa eseguita" << std::endl;
 			}
 		}catch(std::invalid_argument& e){
 			valid  = false;
