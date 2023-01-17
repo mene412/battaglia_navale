@@ -1,7 +1,5 @@
 #include "../include/Game.h"
 
-#include <ctime>
-#include <cstdlib>
 #include <cmath>
 
 Game::Game(void)
@@ -88,7 +86,6 @@ void Game::make_move(int s){
 				// Definisco il tipo di nave per l'azione da fare
 				int type = def_grid1_.type_ship(pos);
 				def = def_grid1_.ship(pos) -> center();	
-				std::cout << type << def_grid1_.ship(pos) -> center() << std::endl;
 				if(type == 1){
 					def = def_grid1_.ship(pos) -> center();					// BATTLESHIP
 					fire(s, pos, att); 
@@ -104,7 +101,6 @@ void Game::make_move(int s){
 			}
 			if(s == 2){
 				int type = def_grid2_.type_ship(pos);
-				std::cout << type << def_grid2_.ship(pos) -> center() << std::endl;
 				def = def_grid2_.ship(pos) -> center();	
 				if(type == 1){					// BATTLESHIP
 					fire(s, pos, att); 
@@ -458,9 +454,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			}
 			if(def_grid1_.check_position(new_coord)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
-				std::cout << s -> center() << " ";
 				s -> move(c);
-				std::cout << s -> center() << "\n";
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -472,9 +466,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			// controllo che la cella sia libera
 			if(def_grid1_.check_position(c)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid1_.ship(pos));
-				std::cout << s -> center() << " ";
 				s -> move(c);
-				std::cout << s -> center() << "\n";
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -505,9 +497,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			}
 			if(def_grid2_.check_position(new_coord)){
 				HelpShip* s = dynamic_cast<HelpShip*>(def_grid2_.ship(pos));
-				std::cout << s -> center() << " ";
 				s -> move(c);
-				std::cout << s -> center() << "\n";
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{
@@ -517,9 +507,7 @@ void Game::move_ship(int pl, int pos, Coord& c){
 			std::vector<Coord>cord {c};
 			if(def_grid2_.check_position(cord)){
 				ExplorationSubmarine* s = dynamic_cast<ExplorationSubmarine*>(def_grid2_.ship(pos));
-				std::cout << s -> center() << " ";
 				s -> move(c);
-				std::cout << s -> center() << "\n";
 				// Ridisegniamo la nave sulla griglia
 				return;
 			}else{

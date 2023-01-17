@@ -1,11 +1,11 @@
-// Autore:
+// Autore: Gaia Soso
 
 #include "GamePc.cpp"
 #include "GamePlayer.cpp"
 #include "Coord.cpp"
 #include "AttackGrid.cpp"
 #include "Battleship.cpp"
-#include "DefenceGrid.cpp"              //non dovrebbero essere .h gli include?
+#include "DefenceGrid.cpp"              
 #include "ExplorationSubmarine.cpp"
 #include "Game.cpp"
 #include "Grid.cpp"

@@ -137,7 +137,7 @@ void GamePlayer::make_move(int s){
 					}
 				}else{
 					valid = false;
-					std::cout << "   Comando non valido" << std::endl;
+					std::cout << "   Mossa non valida" << std::endl;
 				}				
 			}
 			if(s == 2){
@@ -158,7 +158,6 @@ void GamePlayer::make_move(int s){
 			}
 		}catch(std::invalid_argument& e){
 			valid  = false;
-			std::cout << "   Comando non valido" << std::endl;
 		}
 	}
 	if(ship_went_down_){

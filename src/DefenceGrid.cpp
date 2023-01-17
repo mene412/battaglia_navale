@@ -1,10 +1,6 @@
-//Autore: Matteo
+//Autore: Matteo Meneghin
 
 #include "../include/DefenceGrid.h"
-#include "../include/Battleship.h"
-#include "../include/HelpShip.h"
-#include "../include/ExplorationSubmarine.h"
-
 
 DefenceGrid::DefenceGrid(void)
     : Grid{}, ships_{}
@@ -18,19 +14,16 @@ bool DefenceGrid::check_position(Coord& a, Coord& b, int dim) {
             coord.push_back(c);
         }
     }else if(a.X()>b.X()){
-        dim = a.X()-b.X();
         for(int i = 0; i<dim; i++){
             Coord c{b.X()+i, a.Y()};
             coord.push_back(c);
         }
     }else if(a.Y()<b.Y()){
-        dim = b.Y()-a.Y();
         for(int i = 0; i<dim; i++){
             Coord c{a.X(), a.Y()+i};
             coord.push_back(c);
         }
     }else if(a.Y()>b.Y()){
-        dim = a.Y()-b.Y();
         for(int i = 0; i<dim; i++){
             Coord c{a.X(), b.Y()+i};
             coord.push_back(c);
@@ -38,15 +31,11 @@ bool DefenceGrid::check_position(Coord& a, Coord& b, int dim) {
     } else if(a == b) {
         coord.push_back(a);
     }
-    for (int i = 0; i < coord.size(); i++) {
-        int checkRow = coord.at(i).X();       // numero riga
-        int checkColumn = coord.at(i).Y();    // numero colonna
-        if (grid_[checkRow][checkColumn] != ' ') {
-            // se la cella non è vuota, ritorna false
-            return false;
-        } 
+    if(check_position(coord)){
+        return true;
+    }else{
+        return false;
     }
-    return true;
 }
 
 bool DefenceGrid::check_position(Coord& a){
@@ -65,7 +54,6 @@ bool DefenceGrid::check_position(std::vector<Coord>& coordinates) {
         for(int j = 0; j<ships_.size(); j++){
             for(int k = 0; k<ships_.at(j)->coord().size(); k++){
                 if(coordinates.at(i) == ships_.at(j) -> coord().at(k)){
-                    std::cout << "NON PASSA" << std::endl;
                     return false;
                 }
             }

@@ -1,6 +1,8 @@
 // Autore: Andrea Mutti
 
 #include "../include/Replay.h"
+#include <chrono>
+#include <thread>
 
 Replay::Replay(std::string file_log)
     : log_{file_log}, def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}
@@ -20,54 +22,71 @@ void Replay::start(void){
     }
     std::cout << "   Inizia il player " << first << "." << std::endl;
     std::cout << "\n   Posizionamento iniziale\n" << std::endl;
-    //_sleep(1);
+    // std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     if(first == 1){
         take_ships(first);
         def_grid1_.reload();
-        std::cout << "Player " << first << "\n" << def_grid1_;
+        std::cout << "  Player " << first << "\n" << def_grid1_;
         //_sleep(1);
         take_ships(second);
         def_grid2_.reload();
-        std::cout << "Player " << second << "\n" << def_grid2_;
+        std::cout << "  Player " << second << "\n" << def_grid2_;
     }else{
         take_ships(first);
         def_grid2_.reload();
-        std::cout << "Player " << first << "\n" << def_grid2_;
+        std::cout << "  Player " << first << "\n" << def_grid2_;
         //_sleep(1);
         take_ships(second);
         def_grid1_.reload();
-        std::cout << "Player " << second << "\n" << def_grid1_;
+        std::cout << "  Player " << second << "\n" << def_grid1_;
     }
 
     while(!log_.eof()){
         increment_turn();
-        std::cout << "\nTurno " << turn_  << std::endl;
+        std::cout << "\n  Turno " << turn_  << std::endl;
         if(first==1){
             //_sleep(1);
             move_first();
             def_grid1_.reload();
-            std::cout << "Player " << first << "\n" << def_grid1_;
+            std::cout << "  Player " << first << "\n" << def_grid1_;
             std::cout << att_grid1_;
             //_sleep(1);
-            
+            if(end()){
+                std::cout << "   Replay terminato." << std::endl;
+                return;
+            }
             move_second();
             def_grid2_.reload();
-            std::cout << "Player " << second << "\n" << def_grid2_;
-            std::cout << att_grid2_;            
+            std::cout << "  Player " << second << "\n" << def_grid2_;
+            std::cout << att_grid2_;  
+            if(end()){
+                std::cout << "   Replay terminato." << std::endl;
+                return;
+            }          
         }else{
             //_sleep(1);
             move_second();
             def_grid2_.reload();
-            std::cout << "Player " << first << "\n" << def_grid2_;
+            std::cout << "  Player " << first << "\n" << def_grid2_;
             std::cout << att_grid2_;
             //_sleep(1);
-            
+            if(end()){
+                std::cout << "   Replay terminato." << std::endl;
+                return;
+            }
             move_first();
             def_grid1_.reload();
-            std::cout << "Player " << second << "\n" << def_grid1_;
+            std::cout << "  Player " << second << "\n" << def_grid1_;
             std::cout << att_grid1_;
+            if(end()){
+                std::cout << "   Replay terminato." << std::endl;
+                return;
+            }
         }
     }
+    std::cout << "\n|-----------|\n";
+    std::cout << "| Pareggio! |";
+	std::cout << "\n|-----------|\n" << std::endl;
     std::cout << "   Replay terminato." << std::endl;
 }
 
@@ -86,19 +105,19 @@ void Replay::start(std::string file_output){
     if(first == 1){
         take_ships(first);
         def_grid1_.reload();
-        output << def_grid1_;
+        output << "  Player " << first << "\n" << def_grid1_;
 
         take_ships(second);
         def_grid2_.reload();
-        output << def_grid2_;
+        output << "  Player "<< second << "\n" << def_grid2_;
     }else{
         take_ships(first);
         def_grid2_.reload();
-        output << def_grid2_;
+        output << "  Player " << first << "\n" << def_grid1_;
 
         take_ships(second);
         def_grid1_.reload();
-        output << def_grid1_;
+        output << "  Player " << second << "\n" << def_grid1_;
     }
     while(!log_.eof()){
         increment_turn();
@@ -106,24 +125,48 @@ void Replay::start(std::string file_output){
         if(first==1){
             move_first();
             def_grid1_.reload();
-            output << def_grid1_;
+            output << "  Player " << first << "\n" << def_grid1_;
             output << att_grid1_;
+            if(end_file(output)){
+                std::cout << "   Replay completato e salvato su file." << std::endl;
+                output.close();
+                return;
+            }
             move_second();
             def_grid2_.reload();
-            output << def_grid2_;
+            output << "  Player " << second << "\n" << def_grid2_;
             output << att_grid2_;
+            if(end_file(output)){
+                std::cout << "   Replay completato e salvato su file." << std::endl;
+                output.close();
+                return;
+            }
         }else{
             move_second();
             def_grid2_.reload();
-            output << def_grid1_;
-            output << att_grid1_;
+            output << "  Player " << first << "\n" << def_grid2_;
+            output << att_grid2_;
+            if(end_file(output)){
+                std::cout << "   Replay completato e salvato su file." << std::endl;
+                output.close();
+                return;
+            }
             move_first();
             def_grid1_.reload();
-            output << def_grid2_;
-            output << att_grid2_;
+            output << "  Player " << second << "\n" << def_grid1_;
+            output << att_grid1_;
+            if(end_file(output)){
+                std::cout << "   Replay completato e salvato su file." << std::endl;
+                output.close();
+                return;
+            }
         }
     }
-    std::cout << "   Replay completato e salvato su file." << std::endl;
+    output << "\n|-----------|\n";
+    output << "| Pareggio! |";
+	output << "\n|-----------|\n" << std::endl;
+    output << "   Replay completato e salvato su file." << std::endl;
+    output.close();
 }
 
 void Replay::move_first(void){
@@ -277,7 +320,7 @@ void Replay::attack(int pl, int pos, Coord& c){
 					def_grid2_.ship(i) -> hit(c);
 					def_grid2_.hit(c);
 					if(def_grid2_.destroyed(i)){
-                        titanic(pl, pos);
+                        titanic(pl, i);
 						def_grid2_.reload();
 					}
 					return;
@@ -293,7 +336,7 @@ void Replay::attack(int pl, int pos, Coord& c){
 					def_grid1_.ship(i) -> hit(c);
 					def_grid1_.hit(c);
 					if(def_grid1_.destroyed(i)){
-                        titanic(pl, pos);
+                        titanic(pl, i);
 						def_grid1_.reload();
 					}
 					return;
@@ -546,3 +589,35 @@ void Replay::search(int pl, int pos, Coord& b){
 		}
 	}
 }   
+
+bool Replay::end(void){
+    if(def_grid1_.number_ship() == 0){
+        std::cout << "\n|--------------------|\n";
+        std::cout << "| Player 2 ha vinto! |";
+        std::cout << "\n|--------------------|\n" << std::endl;
+        return true;
+    }
+    if(def_grid2_.number_ship() == 0){
+        std::cout << "\n|--------------------|\n";
+        std::cout << "| Player 1 ha vinto! |";
+        std::cout << "\n|--------------------|\n" << std::endl;
+        return true;
+    }
+    return false;
+}
+
+bool Replay::end_file(std::ofstream& file){
+    if(def_grid1_.number_ship() == 0){
+        file << "\n|--------------------|\n";
+        file << "| Player 2 ha vinto! |";
+        file << "\n|--------------------|\n" << std::endl;
+        return true;
+    }
+    if(def_grid2_.number_ship() == 0){
+        file << "\n|--------------------|\n";
+        file << "| Player 1 ha vinto! |";
+        file << "\n|--------------------|\n" << std::endl;
+        return true;
+    }
+    return false;
+}

@@ -120,6 +120,7 @@ void Ship::dec_armor(void){
 void Ship::heal(void){
     armor_ = dim_;
     healed_ = true;
+    coord_hit_.clear();
 }
 
 void Ship::hit(Coord& c){

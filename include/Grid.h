@@ -6,7 +6,6 @@
 #include "Battleship.h"
 #include "ExplorationSubmarine.h"
 #include "HelpShip.h"
-#include <iostream>
 
 class Grid {
     public:

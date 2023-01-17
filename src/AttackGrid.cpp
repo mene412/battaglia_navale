@@ -9,12 +9,13 @@ AttackGrid::AttackGrid(void)
 //rimuove le Y
 // invocato dall'utente con il comando AA AA
 void AttackGrid::remove_detections(void) {
-    return remove_char('Y');
+    remove_char('Y');
 }   
 //rimuove le X
 // invocato dall'utente con il comando BB BB (vedi FAQ - Q1)
 void AttackGrid::remove_hit(void) {
-    return remove_char('X');
+    remove_char('X');
+    remove_char('x');
 }       
 //rimuove le O
 // invocato dall'utente con il comando CC CC (vedi FAQ - Q1)
@@ -25,8 +26,9 @@ void AttackGrid::remove_water(void) {
 void AttackGrid::remove_char(char c) {
     for (int i = 0; i < 12; i++) {
         for (int j = 0; j < 12; j++) {
-            if (grid_[i][j] == c)
+            if (grid_[i][j] == c){
                 grid_[i][j] = ' ';
+            }
         }
     }
 }
@@ -38,9 +40,11 @@ void AttackGrid::add_char(char ch, Coord& coord) {
     if(ch == 'Y'){
         if(grid_[coord.X()][coord.Y()] != 'x'){
             grid_[coord.X()][coord.Y()] = ch;
-        };
+        }
+    }else{
+        grid_[coord.X()][coord.Y()] = ch;
     }
-    grid_[coord.X()][coord.Y()] = ch;
+    
 }
 
 std::ostream& operator<<(std::ostream& os, AttackGrid& a){

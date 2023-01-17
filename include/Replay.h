@@ -1,7 +1,7 @@
 // Autore: Andrea Mutti
 
-#ifndef Replay_h
-#define Replay_h
+#ifndef REPLAY_H
+#define REPLAY_H
 
 #include <fstream>
 #include "DefenceGrid.h"
@@ -27,6 +27,8 @@ class Replay{
         void search(int pl, int pos, Coord& c);
         void titanic(int pl, int pos);
         void increment_turn(){turn_++;};
+        bool end(void);
+        bool end_file(std::ofstream& file);
 
         std::ifstream log_;
         DefenceGrid def_grid1_;
@@ -34,6 +36,7 @@ class Replay{
         AttackGrid att_grid1_;
         AttackGrid att_grid2_;
         int turn_;
+        int const MAX_TURNS = 1000;
 };
 
 #endif
