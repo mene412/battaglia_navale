@@ -91,21 +91,11 @@ void Game::make_move(int s){
 				if(type == 1){
 					def = def_grid1_.ship(pos) -> center();					// BATTLESHIP
 					fire(s, pos, att); 
-<<<<<<< HEAD
 				} else if(type == 2) {		// HELPSHIP
 					// mofifica la ship
 					move_ship(s, pos, att);
 					heal(s, pos, att);
 				} else if(type == 3) {		// EXPL SUBMARINE
-=======
-				} else if(type == 2) {	
-					def = def_grid1_.ship(pos) -> center();	// HELPSHIP
-					// mofifica la ship
-					move_ship(s, pos, att);
-					heal(s, pos, att);
-				} else if(type == 3) {	
-					def = def_grid1_.ship(pos) -> center();		// EXPL SUBMARINE
->>>>>>> 4f3a4b6da97aa8a6f552e04c3bf638b976534a51
 					move_ship(s, pos, att);
 					search(s, pos, att);
 				}
@@ -113,24 +103,14 @@ void Game::make_move(int s){
 			}
 			if(s == 2){
 				int type = def_grid2_.type_ship(pos);
-<<<<<<< HEAD
 				def = def_grid2_.ship(pos) -> center();	
 				if(type == 1){					// BATTLESHIP
-=======
-				if(type == 1){	
-					def = def_grid2_.ship(pos) -> center();				// BATTLESHIP
->>>>>>> 4f3a4b6da97aa8a6f552e04c3bf638b976534a51
 					fire(s, pos, att); 
 				} else if(type == 2) {	
 					def = def_grid2_.ship(pos) -> center();	// HELPSHIP
 					move_ship(s, pos, att);
 					heal(s, pos, att);
-<<<<<<< HEAD
 				} else if(type == 3) {		// EXPL SUBMARINE
-=======
-				} else if(type == 3) {	
-					def = def_grid2_.ship(pos) -> center();		// EXPL SUBMARINE
->>>>>>> 4f3a4b6da97aa8a6f552e04c3bf638b976534a51
 					move_ship(s, pos, att);
 					search(s, pos, att);
 				}
