@@ -2,8 +2,8 @@
 
 #include <cmath>
 
-Game::Game(void)
-	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log_{"log.txt"}, ship_went_down_{false}
+Game::Game(std::string file_log)
+	: def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}, starter_{0}, log_{file_log}, ship_went_down_{false}
 {
 	std::cout << "- - - - - - - - - - - - - - - - - - - - -" << std::endl; 
 	std::cout << "* * * I N I Z I A   I L   G I O C O * * *" << std::endl; 
@@ -165,14 +165,17 @@ void Game::check_dim(Coord& a, Coord&b, int dim){
 
 void Game::write_log(int player){
 	log_ << std::to_string(player);
+	std::cout << "STAMPATO";
 }
 
 void Game::write_log(std::string x){
 	log_ << "\n" << x;
+	std::cout << "STAMPATO";
 }
 
 void Game::write_log(std::pair<Coord, Coord>& x){
 	log_ << "\n" << x.first << " " << x.second;
+	std::cout << "STAMPATO";
 }
 
 

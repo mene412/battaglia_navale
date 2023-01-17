@@ -4,8 +4,8 @@
 #include <ctime>
 #include <cstdlib>
 
-GamePlayer::GamePlayer(void)
-	: Game{}
+GamePlayer::GamePlayer()
+	: Game{"log_player.txt"}
 {
 	select_starter();
 	positioning();
