@@ -1,6 +1,6 @@
 // Autore: Matteo Meneghin
 
-#include "../include/AttackGrid.h"
+#include "AttackGrid.h"
 
 AttackGrid::AttackGrid(void)
     :   Grid{}

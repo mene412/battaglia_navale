@@ -1,16 +1,6 @@
 // Autore: Andrea Mutti
 
-#include "../include/Replay.h"
-#include "Replay.cpp"
-#include "Coord.cpp"
-#include "AttackGrid.cpp"
-#include "Battleship.cpp"
-#include "DefenceGrid.cpp"
-#include "ExplorationSubmarine.cpp"
-#include "Game.cpp"
-#include "Grid.cpp"
-#include "HelpShip.cpp"
-#include "Ship.cpp"
+#include "Replay.h"
 
 int main(int argc, char* argv[]){           // main con argomenti da linea di comando
     try{

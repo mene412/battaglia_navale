@@ -1,4 +1,4 @@
-#include "../include/Game.h"
+#include "Game.h"
 
 
 // Costruttore che istanzia le variabili iniziali e il file di log corretto

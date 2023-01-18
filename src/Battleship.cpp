@@ -1,5 +1,5 @@
 // Autore: Gaia Soso
-#include "../include/Battleship.h"
+#include "Battleship.h"
 
 Battleship::Battleship(Coord& front, Coord& back) //definizione del costruttore delle corazzate
     : Ship{front, back}

@@ -1,0 +1,1 @@
+/usr/bin/c++    -rdynamic CMakeFiles/replay.dir/src/main-replay.cpp.o  -o replay  libBattleship.a 

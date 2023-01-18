@@ -1,6 +1,6 @@
 //Autore: Matteo Meneghin
 
-#include "../include/Grid.h"
+#include "Grid.h"
 
 Grid::Grid(void)
     : grid_{}

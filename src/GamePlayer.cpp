@@ -1,4 +1,4 @@
-#include "../include/GamePlayer.h"
+#include "GamePlayer.h"
 
 #include <cmath>
 

@@ -1,6 +1,6 @@
 // Autore: Matteo Meneghin
 
-#include "../include/ExplorationSubmarine.h"
+#include "ExplorationSubmarine.h"
 
 ExplorationSubmarine::ExplorationSubmarine(Coord& front)
     :   Ship{front, front}

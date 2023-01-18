@@ -1,6 +1,6 @@
 // Autore: Andrea Mutti
 
-#include "../include/Replay.h"
+#include "Replay.h"
 #include <chrono>
 #include <thread>
 
@@ -24,12 +24,12 @@ void Replay::start(void){
     }
     std::cout << "   Inizia il player " << first << "." << std::endl; 
     std::cout << "\n   Posizionamento iniziale\n" << std::endl;
-    // std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(800));	// attesa di 800 millisecondi prima di procedere
     if(first == 1){
         take_ships(first);                                          // posiziona le navi e stampa le griglie di difesa iniziali
         def_grid1_.reload();
         std::cout << "  Player " << first << "\n" << def_grid1_;
-        //_sleep(1);
+    std::this_thread::sleep_for(std::chrono::milliseconds(800));
         take_ships(second);
         def_grid2_.reload();
         std::cout << "  Player " << second << "\n" << def_grid2_;
@@ -37,7 +37,7 @@ void Replay::start(void){
         take_ships(first);
         def_grid2_.reload();
         std::cout << "  Player " << first << "\n" << def_grid2_;
-        //_sleep(1);
+        std::this_thread::sleep_for(std::chrono::milliseconds(800));
         take_ships(second);
         def_grid1_.reload();
         std::cout << "  Player " << second << "\n" << def_grid1_;
@@ -47,16 +47,16 @@ void Replay::start(void){
         increment_turn();       // incrementa e stampa il turno
         std::cout << "\n  Turno " << turn_  << std::endl;
         if(first==1){              // esegue la mossa, poi stampa la griglia di attacco e difesa, dopo aver aggiornato quella di difesa
-            //_sleep(1);
+            std::this_thread::sleep_for(std::chrono::milliseconds(800));
             move_first();
             def_grid1_.reload();
             std::cout << "  Player " << first << "\n" << def_grid1_;
             std::cout << att_grid1_;
-            //_sleep(1);    
             if(end()){           // se un player vince, termina l'esecuzione
                 std::cout << "   Replay terminato." << std::endl;
                 return;
             }
+            std::this_thread::sleep_for(std::chrono::milliseconds(800));   
             move_second();
             def_grid2_.reload();
             std::cout << "  Player " << second << "\n" << def_grid2_;
@@ -66,16 +66,16 @@ void Replay::start(void){
                 return;
             }          
         }else{
-            //_sleep(1);
+            std::this_thread::sleep_for(std::chrono::milliseconds(800));   
             move_second();
             def_grid2_.reload();
             std::cout << "  Player " << first << "\n" << def_grid2_;
             std::cout << att_grid2_;
-            //_sleep(1);
             if(end()){
                 std::cout << "   Replay terminato." << std::endl;
                 return;
             }
+            std::this_thread::sleep_for(std::chrono::milliseconds(800));   
             move_first();
             def_grid1_.reload();
             std::cout << "  Player " << second << "\n" << def_grid1_;

@@ -1,8 +1,5 @@
 // Autore: Andrea Mutti
-#include "../include/GamePc.h"
-
-#include <ctime>
-#include <cstdlib>
+#include "GamePc.h"
 
 // Costruttore public
 GamePc::GamePc(void)

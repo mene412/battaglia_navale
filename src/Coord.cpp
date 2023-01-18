@@ -1,6 +1,6 @@
 // Autore: Andrea Mutti
 
-#include "../include/Coord.h"
+#include "Coord.h"
 #include <ctime>
 #include <cstdlib>
 #include <iostream>

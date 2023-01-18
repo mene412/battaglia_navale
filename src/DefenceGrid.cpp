@@ -1,6 +1,6 @@
 //Autore: Matteo Meneghin
 
-#include "../include/DefenceGrid.h"
+#include "DefenceGrid.h"
 
 DefenceGrid::DefenceGrid(void)
     : Grid{}, ships_{}

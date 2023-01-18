@@ -2,6 +2,8 @@
 #ifndef COORD_H
 #define COORD_H
 
+#include <string>
+
 class Coord{
 	public:
 		// Costruttori e costruttori di copia -> necessari

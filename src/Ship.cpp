@@ -1,5 +1,5 @@
 //AUTORE: Gaia Soso
-#include "../include/Ship.h"
+#include "Ship.h"
 
 Ship::Ship(Coord& front, Coord& back)       //definizione costruttore Ship
     : front_{front}, back_{back}, healed_{true}, coord_hit_{}, dim_{0}, coord_{}, armor_{0}, distance_{0}, orizzontal_{false}

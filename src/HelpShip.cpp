@@ -1,6 +1,6 @@
 // Autore: Matteo Meneghin
 
-#include "../include/HelpShip.h"
+#include "HelpShip.h"
 
 HelpShip::HelpShip(Coord& front, Coord& back)
 	:	Ship{front, back}
