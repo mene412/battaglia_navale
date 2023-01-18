@@ -6,7 +6,7 @@ DefenceGrid::DefenceGrid(void)
     : Grid{}, ships_{}
 {}
 
-bool DefenceGrid::check_position(Coord& a, Coord& b, int dim, int pos) {
+bool DefenceGrid::check_position(Coord& a, Coord& b, int dim) {
     std::vector<Coord> coord;
     if(a.X()<b.X()){
         for(int i = 0; i<dim; i++){
@@ -31,7 +31,7 @@ bool DefenceGrid::check_position(Coord& a, Coord& b, int dim, int pos) {
     } else if(a == b) {
         coord.push_back(a);
     }
-    if(check_position(coord, pos)){
+    if(check_position(coord)){
         return true;
     }else{
         return false;
@@ -49,17 +49,11 @@ bool DefenceGrid::check_position(Coord& a){
     return true;
 }
 
-bool DefenceGrid::check_position(std::vector<Coord>& coordinates, int pos) {
+bool DefenceGrid::check_position(std::vector<Coord>& coordinates) {
     for (int i = 0; i < coordinates.size(); i++) {
         for(int j = 0; j<ships_.size(); j++){
-            if(j != pos){
-                for(int k = 0; k<ships_.at(j)->coord().size(); k++){
-                    if(coordinates.at(i) == ships_.at(j) -> coord().at(k)){
-                        return false;
-                    }
-                }
-            }else{
-                if(ships_.at(j) -> center() == coordinates.at((int)(coordinates.size()/2))){
+            for(int k = 0; k<ships_.at(j)->coord().size(); k++){
+                if(coordinates.at(i) == ships_.at(j) -> coord().at(k)){
                     return false;
                 }
             }

@@ -7,7 +7,7 @@
 
 class GamePlayer: public Game{
  	public:
- 	    GamePlayer();
+ 	    GamePlayer(void);
 		void start(void);
 		~GamePlayer(){}
 		
@@ -18,7 +18,5 @@ class GamePlayer: public Game{
 		void positioning_player(void);
  		void positioning_pc(void);
 		bool special_insert(std::string first, std::string second);
-
-		
 };
 #endif

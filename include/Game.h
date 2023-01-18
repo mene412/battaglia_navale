@@ -14,7 +14,7 @@ class Game{
 	
 	protected:
 		virtual void make_move(int s);
-		Game(std::string file_log);
+		Game(void);
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
 		int select_ship(int player);

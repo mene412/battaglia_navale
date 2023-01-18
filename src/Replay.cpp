@@ -165,7 +165,7 @@ void Replay::start(std::string file_output){
     output << "\n|-----------|\n";
     output << "| Pareggio! |";
 	output << "\n|-----------|\n" << std::endl;
-    output << "   Replay completato e salvato su file." << std::endl;
+    std::cout << "   Replay completato e salvato su file." << std::endl;
     output.close();
 }
 
