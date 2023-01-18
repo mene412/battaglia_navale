@@ -2,7 +2,7 @@
 #include "../include/Ship.h"
 
 Ship::Ship(Coord& front, Coord& back)       //definizione costruttore Ship
-    : front_{front}, back_{back}, healed_{true}, coord_hit_{}, dim_{0}, coord_{}, armor_{0}, distance_{0}, orizzontal_{false}, x_{0}, y_{0}
+    : front_{front}, back_{back}, healed_{true}, coord_hit_{}, dim_{0}, coord_{}, armor_{0}, distance_{0}, orizzontal_{false}
 {}
 
 void Ship::set_center(void){
