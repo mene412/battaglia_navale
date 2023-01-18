@@ -1,1 +1,0 @@
-/usr/bin/c++    -rdynamic CMakeFiles/battaglia_navale.dir/src/main.cpp.o  -o battaglia_navale  libBattleship.a 
