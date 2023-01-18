@@ -112,9 +112,9 @@ void Ship::dec_armor(void){
 }
 
 void Ship::heal(void){
-    armor_ = dim_;
+    armor_ = dim_;      //riporta la dimensione dell'armatura alla dimensione della nave
     healed_ = true;
-    coord_hit_.clear(); //Cancella il contenuto del vettore coord_hit_ dato che la nave è stata curata
+    coord_hit_.clear(); //cancella il contenuto del vettore coord_hit_ dato che la nave è stata curata
 }
 
 void Ship::hit(Coord& c){

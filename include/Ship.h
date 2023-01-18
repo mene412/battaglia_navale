@@ -31,8 +31,8 @@ class Ship
        
        //metodi ausiliari
         void dec_armor();  //decrementa di 1 l'armatura
-        void heal(void);  //"Guarisce" la nave
-        void hit(Coord& c); //Se una parte di nave è stata colpita, scrive nel vettore coord_hit_() la sua posizione
+        void heal(void);  //ripara  la nave
+        void hit(Coord& c); //se una parte di nave è stata colpita, scrive nel vettore coord_hit_() la sua posizione
 
     protected:
         //dichiarazione costruttore protected, che inizializza le variabili (accessibile solo da classi derivate)
@@ -48,11 +48,11 @@ class Ship
         int armor_;                    //armatura della nave (quante "parti" non sono state colpite)
         bool healed_;                 //ritorna true se la nave è stata curata, false altrimenti
         int distance_;               //distanza dal centro della nave e la sua prua/poppa
-        std::vector<Coord> coord_;  //Vettore che identifica le coordinate delle singole "parti" della nave
-        Coord center_;               //Coordinata che identifica il centro della nave
+        std::vector<Coord> coord_;  //vettore che identifica le coordinate delle singole "parti" della nave
+        Coord center_;               //coordinata che identifica il centro della nave
         bool orizzontal_;           //ritorna true se la nave è orizzontale, false se è verticale
-        Coord front_;               //Coordinata che identifica la prua della nave
-        Coord back_;                //Coordinata che identifica la poppa della nave
+        Coord front_;               //coordinata che identifica la prua della nave
+        Coord back_;                //coordinata che identifica la poppa della nave
 
     private:
         //variabili private
