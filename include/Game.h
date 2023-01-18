@@ -9,37 +9,48 @@
 
 class Game{
 	public:	
-		virtual ~Game(){log_.close();}		// distruttore virtual conz
-		int starter(void){return starter_;}
+		// Distruttore
+		virtual ~Game(){log_.close();}		// distruttore virtual con chiusura file di log
+		
+		// Metodi getter
+		int starter(void){return starter_;} 						// player iniziale
+		bool ship_went_down(void) const { return ship_went_down_;}	// utile per il controllo di una nave abbattuta
+		int turn(void) const { return turn_;}						// turno del gioco
 	
 	protected:
-		virtual void make_move(int s);
+		// Costruttore
 		Game(std::string log_file);
-		Game(const Game&) = delete;
-		Game& operator=(const Game&) = delete;
-		int select_ship(int player);
-		void add_ship(int player, Coord& p, Coord& c, int type);
-		virtual void positioning(void) = 0;
+		Game(const Game&) = delete;				// costruttore di copia disabilitato
+		Game& operator=(const Game&) = delete;	// assegnamento di copia disabilitato
+
+		// Funzioni virtual
+		virtual void make_move(int s);		
 		virtual void select_starter(void);
-		int starter_;
+		virtual void positioning(void) = 0;		// positioning virtuale pura (ogni classe derivata gestisce il poszionamento navi)
+
+		// Funzioni membro
+		void add_ship(int player, Coord& p, Coord& c, int type);	// aggiunta della nave nella rispettiva griglia di difesa
+		
+		int select_ship(int player);			// selezione randomica di una nave
+		void fire(int pl, int pos, Coord& c);	// azioni delle navi
+		void move_ship(int pl, int pos, Coord& c);
+		void heal(int pl, int pos, Coord& c);	// passaggio di oggetti Coord avvengono per riferimento
+		void search(int pl, int pos, Coord& c);
+		
+
 		void write_log(int player);
-		void write_log(std::string x);
 		void write_log(std::pair<Coord, Coord>& x);
-		int turn(void) const { return turn_;}
 		void check_dim(Coord& a, Coord& b, int dim);
-		bool ship_went_down(void) const { return ship_went_down_;}
 
 		AttackGrid att_grid1_;
 		AttackGrid att_grid2_;
 		DefenceGrid def_grid1_;
 		DefenceGrid def_grid2_;
 		bool ship_went_down_;
+		int starter_;
 
 		bool end(bool over);
-		void fire(int pl, int pos, Coord& c);
-		void move_ship(int pl, int pos, Coord& c);
-		void heal(int pl, int pos, Coord& c);
-		void search(int pl, int pos, Coord& c);
+		
 		void increment_turn(void);
 		void titanic(int pl, int pos);
 		void print_defence(int pl);
