@@ -1,9 +1,9 @@
 // Autore: Gaia Soso
-#ifndef Ship_h
-#define Ship_h
+#ifndef Ship_H
+#define Ship_H
 #include <vector>
-#include "Coord.h"
 #include <iostream>
+#include "Coord.h"
 class Ship
 {
     public:
@@ -21,8 +21,6 @@ class Ship
         int armor(void) const { return armor_; }
         Coord& front(void) { return front_;}
         Coord& back(void) { return back_; }
-        int x(void){ return x_;}
-        int y(void){ return y_;}
         int distance(void) const { return distance_;}
 
         //metodi setter che modificano il valore delle variabili private e protette
@@ -52,8 +50,6 @@ class Ship
         int distance_;               //distanza dal centro della nave e la sua prua/poppa
         std::vector<Coord> coord_;  //Vettore che identifica le coordinate delle singole "parti" della nave
         Coord center_;               //Coordinata che identifica il centro della nave
-        int x_;                      //valore dell'ascissa del centro
-        int y_;                      //valore dell'ordinata del centro
         bool orizzontal_;           //ritorna true se la nave è orizzontale, false se è verticale
         Coord front_;               //Coordinata che identifica la prua della nave
         Coord back_;                //Coordinata che identifica la poppa della nave
@@ -62,4 +58,4 @@ class Ship
         //variabili private
         std::vector<int> coord_hit_; //vettore che contiene la posizione delle coordinate colpite
 };
-#endif /* Ship_h */
+#endif /* Ship_H */

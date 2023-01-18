@@ -9,13 +9,9 @@ void Ship::set_center(void){
     if(orizzontal_){
         Coord c{front_.X(), (back_.Y() + front_.Y())/2};        //coordinata del centro di una nave orizzontale
         center_ = c;
-        x_ = front_.X();
-        y_ = (back_.Y() + front_.Y()/2);
     }else{
         Coord c{(back_.X() + front_.X())/2, front_.Y()};        //coordinata del centro di una nave verticale
         center_ = c;
-        x_ = (back_.X() + front_.X()/2);
-        y_ = front_.Y();
     }
 }
 
@@ -80,8 +76,6 @@ void Ship::set_coord(std::vector<Coord>& coordinates){
 
 void Ship::set_coord_from_center(Coord& cord){
     center_ = cord;
-    x_ = cord.X();
-    y_ = cord.Y();
     if(orizzontal_){
         front_ = Coord{cord.X(), cord.Y()-distance_};
         back_ = Coord{cord.X(), cord.Y()+distance_};

@@ -10,8 +10,6 @@ ExplorationSubmarine::ExplorationSubmarine(Coord& front)
     distance_ = 0;
     center_ = front;
     coord_.push_back(center_);
-    x_ = center_.X();
-    y_ = center_.Y();
 }
 
 
@@ -23,8 +21,6 @@ void ExplorationSubmarine::set_coord_from_center(Coord& c){
     center_ = c;
     front_ = c;
     back_ = c;
-    x_ = c.X();
-    y_ = c.Y();
     coord_.at(0) = center_;
 }
 
