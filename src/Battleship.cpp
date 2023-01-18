@@ -1,7 +1,7 @@
-// Autore:
+// Autore: Gaia Soso
 #include "../include/Battleship.h"
 
-Battleship::Battleship(Coord& front, Coord& back)
+Battleship::Battleship(Coord& front, Coord& back) //definizione del costruttore delle corazzate
     : Ship{front, back}
 {
     dim_= 5;
