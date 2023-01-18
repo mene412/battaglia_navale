@@ -7,10 +7,10 @@
 class Ship
 {
     public:
-        //distruttore virtual
+        //distruttore virtuale
         virtual ~Ship(){};
 
-        //metodi getter
+        //metodi getter che restituiscono il valore delle variabili private e protette
         bool healed(void) const { return healed_; }
         Coord& center(void) { return center_; }
         bool orizzontal(void) const { return orizzontal_; }  
@@ -25,41 +25,41 @@ class Ship
         int y(void){ return y_;}
         int distance(void) const { return distance_;}
 
-        //metodi setter 
+        //metodi setter che modificano il valore delle variabili private e protette
         virtual void set_coord(std::vector<Coord>& coordinates);
         virtual void set_coord_from_center(Coord& cord);
         virtual void set_armor(int a);
         void set_healed(bool heal);
        
        //metodi ausiliari
-        void dec_armor();
-        void heal(void);
-        void hit(Coord& c);
+        void dec_armor();  //decrementa di 1 l'armatura
+        void heal(void);  //"Guarisce" la nave
+        void hit(Coord& c); //Se una parte di nave è stata colpita, scrive nel vettore coord_hit_() la sua posizione
 
     protected:
         //costruttore protected (accessibile solo da classi derivate)
         Ship(Coord& front, Coord& back);
          
         //metodi setter costruttore
-        void set_direction(void);
-        void set_center(void);
-        void set_coord_center(void);
+        void set_direction(void);//stabilisce se la nave è orizzonatale o verticale
+        void set_center(void);  //setta il centro della nave a partire dalle coordinate front_ e back_
+        void set_coord_center(void);  //
 
         //variabili protected per classi derivate
-        int dim_;
-        int armor_;
-        bool healed_;
-        int distance_;
-        std::vector<Coord> coord_;
-        Coord center_;
-        int x_;
-        int y_;
-        bool orizzontal_;
-        Coord front_;
-        Coord back_;
+        int dim_;                      //dimensione della nave
+        int armor_;                    //armatura della nave (quante "parti" non sono state colpite)
+        bool healed_;                 //ritorna true se la nave è stata curata, false altrimenti
+        int distance_;               //distanza dal centro della nave e la sua prua/poppa
+        std::vector<Coord> coord_;  //Vettore che identifica le coordinate delle singole "parti" della nave
+        Coord center_;               //Coordinata che identifica il centro della nave
+        int x_;                      //valore dell'ascissa del centro
+        int y_;                      //oalore dell'ordinata del centri
+        bool orizzontal_;           //ritorna true se la nave è orizzontale, false se è verticale
+        Coord front_;               //Coordinata che identifica la prua della nave
+        Coord back_;                //Coordinata che identifica la poppa della nave
 
     private:
         //variabili private
-        std::vector<int> coord_hit_;
+        std::vector<int> coord_hit_; //vettore che contiene la posizione delle coordinate colpite
 };
 #endif /* Ship_h */

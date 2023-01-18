@@ -1,7 +1,7 @@
-
+//AUTORE: Gaia Soso
 #include "../include/Ship.h"
 
-Ship::Ship(Coord& front, Coord& back)         // Costruttore di Ship, inizializza le variabili e richiama le funzioni per settare centro e orientamento della nave
+Ship::Ship(Coord& front, Coord& back)// Costruttore di Ship, inizializza le variabili e richiama le funzioni per settare centro e orientamento della nave
     : front_{front}, back_{back}, healed_{true}, coord_hit_{}, dim_{0}, coord_{}, armor_{0}, distance_{0}, orizzontal_{false}, x_{0}, y_{0}
 {}
 
@@ -120,7 +120,7 @@ void Ship::dec_armor(void){
 void Ship::heal(void){
     armor_ = dim_;
     healed_ = true;
-    coord_hit_.clear();
+    coord_hit_.clear(); //Cancella il contenuto del vettore coord_hit_
 }
 
 void Ship::hit(Coord& c){
