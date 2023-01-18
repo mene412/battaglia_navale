@@ -167,10 +167,6 @@ void Game::write_log(int player){
 	log_ << std::to_string(player);
 }
 
-void Game::write_log(std::string x){
-	log_ << "\n" << x;
-}
-
 void Game::write_log(std::pair<Coord, Coord>& x){
 	log_ << "\n" << x.first << " " << x.second;
 }

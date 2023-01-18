@@ -58,14 +58,14 @@ std::string Coord::coord(){
 	return c;
 }
 
-static Coord UCoord::random_coord(){	
+Coord UCoord::random_coord(){	
 	int x = rand()%12;
 	int y = rand()%12;
 	Coord coordinate{x,y};
 	return coordinate;
 }
 
-static Coord UCoord::random_coord(Coord c, int dim){
+Coord UCoord::random_coord(Coord c, int dim){
 	int s = rand()%2;
     int x=c.X();
     int y=c.Y();
@@ -91,7 +91,7 @@ static Coord UCoord::random_coord(Coord c, int dim){
 	return coordinate;
 }
 
-static char UCoord::from_int_to_char(int a){
+char UCoord::from_int_to_char(int a){
 	char c;
 	std::string letters = "ABCDEFGHILMN";
 	if(a<0 || a>11){
@@ -101,7 +101,7 @@ static char UCoord::from_int_to_char(int a){
 	return c;
 }	
 
-static Coord UCoord::from_string_to_coord(std::string c){
+Coord UCoord::from_string_to_coord(std::string c){
 	if(c.length()<2 || c.length()>3){
 		throw std::invalid_argument("Coordinate non valide");
 	}
@@ -132,7 +132,7 @@ static Coord UCoord::from_string_to_coord(std::string c){
 	return coordinate; 
 }
 
-std::ostream& operator<<(std::ostream& os, Coord a){
+std::ostream& operator<<(std::ostream& os, Coord& a){
 	return os << UCoord::from_int_to_char(a.X()) << (a.Y()+1);
 }
 
