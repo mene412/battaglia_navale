@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 GamePlayer::GamePlayer(void)
-	: Game{}
+	: Game{"log_player.txt"}
 {
 	select_starter();
 	positioning();

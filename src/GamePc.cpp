@@ -5,7 +5,7 @@
 #include <cstdlib>
 
 GamePc::GamePc(void)
-:   Game{}
+:   Game{"log_pc.txt"}
 {
     select_starter();
 	positioning();

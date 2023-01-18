@@ -3,18 +3,18 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include <fstream>
+#include <fstream>	// libreria fstream per gestire output su file di log
 #include "DefenceGrid.h"
 #include "AttackGrid.h"
 
 class Game{
-	public:
-		virtual ~Game(){log_.close();}
+	public:	
+		virtual ~Game(){log_.close();}		// distruttore virtual conz
 		int starter(void){return starter_;}
 	
 	protected:
 		virtual void make_move(int s);
-		Game(void);
+		Game(std::string log_file);
 		Game(const Game&) = delete;
 		Game& operator=(const Game&) = delete;
 		int select_ship(int player);

@@ -17,9 +17,9 @@ class DefenceGrid : public Grid {
 
         // Controlla che le celle non siano già occupate da altre navi
         // ritorna true se sono libere
-        bool check_position(Coord& a, Coord& b, int dim);
+        bool check_position(Coord& a, Coord& b, int dim, int pos);
         bool check_position(Coord& a);
-        bool check_position(std::vector<Coord>& coordinates);
+        bool check_position(std::vector<Coord>& coordinates, int pos);
 
         // Inserisce la nave nel vettore ship_, e scrive i char corrispondenti nella griglia
         void add_ship(Coord& front, Coord& back, int type);

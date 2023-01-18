@@ -201,7 +201,7 @@ void Replay::take_ships(int player){
             log_ >> punta >> coda;
             Coord p{UCoord::from_string_to_coord(punta)};
             Coord c{UCoord::from_string_to_coord(coda)};
-            if(type == 1 && def_grid1_.check_position(p, c, 5)){
+            if(type == 1 && def_grid1_.check_position(p, c, 5, -1)){
                 def_grid1_.add_ship(p, c, 1);
             }else{
                 throw std::runtime_error("File di log errato");
@@ -215,7 +215,7 @@ void Replay::take_ships(int player){
             log_ >> punta >> coda;
             Coord p{UCoord::from_string_to_coord(punta)};
             Coord c{UCoord::from_string_to_coord(coda)};
-            if(type == 2 && def_grid1_.check_position(p, c, 3)){
+            if(type == 2 && def_grid1_.check_position(p, c, 3, -1)){
                 def_grid1_.add_ship(p, c, 2);
             }else{
                 throw std::runtime_error("File di log errato");
@@ -246,7 +246,7 @@ void Replay::take_ships(int player){
             log_ >> punta >> coda;
             Coord p{UCoord::from_string_to_coord(punta)};
             Coord c{UCoord::from_string_to_coord(coda)};
-            if(type == 1 && def_grid2_.check_position(p, c, 5)){
+            if(type == 1 && def_grid2_.check_position(p, c, 5, -1)){
                 def_grid2_.add_ship(p, c, 1);
             }else{
                 throw std::runtime_error("File di log errato");
@@ -259,7 +259,7 @@ void Replay::take_ships(int player){
             log_ >> punta >> coda;
             Coord p{UCoord::from_string_to_coord(punta)};
             Coord c{UCoord::from_string_to_coord(coda)};
-            if(type == 2 && def_grid2_.check_position(p, c, 3)){
+            if(type == 2 && def_grid2_.check_position(p, c, 3, -1)){
                 def_grid2_.add_ship(p, c, 2);
             }else{
                 throw std::runtime_error("File di log errato");
@@ -444,7 +444,7 @@ void Replay::move_help(int pl, int pos, Coord& b){
             cord = Coord{b.X()+1, b.Y()};
             c.push_back(cord);
         }
-        if(def_grid1_.check_position(c)){
+        if(def_grid1_.check_position(c, pos)){
             HelpShip* ship = dynamic_cast<HelpShip*>(def_grid1_.ship(pos));
             ship -> move(b);
             def_grid1_.reload();
@@ -468,7 +468,7 @@ void Replay::move_help(int pl, int pos, Coord& b){
             cord = Coord{b.X()+1, b.Y()};
             c.push_back(cord);
         }
-        if(def_grid2_.check_position(c)){
+        if(def_grid2_.check_position(c, pos)){
             HelpShip* ship = dynamic_cast<HelpShip*>(def_grid2_.ship(pos));
             ship -> move(b);
             def_grid2_.reload();
