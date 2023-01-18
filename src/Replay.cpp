@@ -84,10 +84,16 @@ void Replay::start(void){
             }
         }
     }
-    std::cout << "\n|-----------|\n";
-    std::cout << "| Pareggio! |";
-	std::cout << "\n|-----------|\n" << std::endl;
-    std::cout << "   Replay terminato." << std::endl;
+    turn_++;
+    if(turn_ == MAX_TURNS){
+        std::cout << "\n|-----------|\n";
+        std::cout << "| Pareggio! |";
+        std::cout << "\n|-----------|\n" << std::endl;
+        std::cout << "   Replay terminato." << std::endl;
+    }else{
+        throw std::runtime_error("File fi log errato");
+    }
+    
 }
 
 void Replay::start(std::string file_output){
@@ -162,11 +168,18 @@ void Replay::start(std::string file_output){
             }
         }
     }
-    output << "\n|-----------|\n";
-    output << "| Pareggio! |";
-	output << "\n|-----------|\n" << std::endl;
-    std::cout << "   Replay completato e salvato su file." << std::endl;
-    output.close();
+    turn_++;
+    if(turn_ == MAX_TURNS){
+        output << "\n|-----------|\n";
+        output << "| Pareggio! |";
+        output << "\n|-----------|\n" << std::endl;
+        std::cout << "   Replay completato e salvato su file." << std::endl;
+        output.close();
+    }else{
+        output.close();
+        throw std::runtime_error("File di log errato");
+    }
+
 }
 
 void Replay::move_first(void){
@@ -384,43 +397,33 @@ void Replay::heal(int pl, int pos, Coord& c){
 		}catch(std::invalid_argument& e){}
 	}
 	if(pl == 1){
-		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
-		bool heal = true;
 		for(int i = 0; i<coord_heal.size(); i++){
-			for(int j = 0; j<coord.size(); j++){
-				if(coord_heal.at(i) == coord.at(j)){
-					heal = false;
+			for(int k = 0; k<def_grid1_.number_ship(); k++){
+				if(k!=pos){
+					for(int j = 0; j<def_grid1_.ship(k)->coord().size(); j++){
+						if(!def_grid1_.ship(k)->healed()){
+							if(def_grid1_.ship(k)->coord().at(j) == coord_heal.at(i)){
+								def_grid1_.ship(k) -> heal();
+							}
+						}
+					}
 				}
 			}
-			if(heal){
-                try{
-                    int p = def_grid1_.find_ship(coord_heal.at(i));
-				    if(!def_grid1_.ship(p) -> healed()){
-					    def_grid1_.ship(p) -> heal();
-				    }
-                }catch(std::invalid_argument& e){}
-			}
-            heal = true;
 		}
 		def_grid1_.reload();
 	}else{
-		std::vector<Coord> coord = def_grid2_.ship(pos) -> coord();
-		bool heal = true;
 		for(int i = 0; i<coord_heal.size(); i++){
-			for(int j = 0; j<coord.size(); j++){
-				if(coord_heal.at(i) == coord.at(j)){
-					heal = false;
+			for(int k = 0; k<def_grid2_.number_ship(); k++){
+				if(k!=pos){
+					for(int j = 0; j<def_grid2_.ship(k)->coord().size(); j++){
+						if(!def_grid2_.ship(k)->healed()){
+							if(def_grid2_.ship(k)->coord().at(j) == coord_heal.at(i)){
+								def_grid2_.ship(k) -> heal();
+							}
+						}
+					}
 				}
 			}
-			if(heal){
-                try{
-                    int p = def_grid2_.find_ship(coord_heal.at(i));
-				    if(!def_grid2_.ship(p) -> healed()){
-					    def_grid2_.ship(p) -> heal();
-				    }
-                }catch(std::invalid_argument& e){}
-			}
-            heal = true;
 		}
 		def_grid2_.reload();
 	}

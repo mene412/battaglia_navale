@@ -143,26 +143,6 @@ int Game::select_ship(int player){
 	}
 }
 
-void Game::check_dim(Coord& a, Coord&b, int dim){
-	if(a.X()!=b.X()){
-		if(a.Y()!=b.Y()){
-			throw std::invalid_argument("Errore");
-		}else{
-			if(abs(a.X()-b.X())!=dim){
-				throw std::invalid_argument("Errore");
-			}
-		}
-	}else{
-		if(a.Y()==b.Y()){
-			throw std::invalid_argument("Errore");
-		}else{
-			if(abs(a.Y()-b.Y())!=dim){
-				throw std::invalid_argument("Errore");
-			}
-		}
-	}
-}
-
 void Game::write_log(int player){
 	log_ << std::to_string(player);
 }
@@ -288,43 +268,33 @@ void Game::heal(int pl, int pos, Coord& c){
 		}catch(std::invalid_argument& e){}
 	}
 	if(pl == 1){
-		std::vector<Coord> coord = def_grid1_.ship(pos) -> coord();
-		bool heal = true;
 		for(int i = 0; i<coord_heal.size(); i++){
-			for(int j = 0; j<coord.size(); j++){
-				if(coord_heal.at(i) == coord.at(j)){
-					heal = false;
+			for(int k = 0; k<def_grid1_.number_ship(); k++){
+				if(k!=pos){
+					for(int j = 0; j<def_grid1_.ship(k)->coord().size(); j++){
+						if(!def_grid1_.ship(k)->healed()){
+							if(def_grid1_.ship(k)->coord().at(j) == coord_heal.at(i)){
+								def_grid1_.ship(k) -> heal();
+							}
+						}
+					}
 				}
 			}
-			if(heal){
-                try{
-                    int p = def_grid1_.find_ship(coord_heal.at(i));
-				    if(!def_grid1_.ship(p) -> healed()){
-					    def_grid1_.ship(p) -> heal();
-				    }
-                }catch(std::invalid_argument& e){}
-			}
-            heal = true;
 		}
 		def_grid1_.reload();
 	}else{
-		std::vector<Coord> coord = def_grid2_.ship(pos) -> coord();
-		bool heal = true;
 		for(int i = 0; i<coord_heal.size(); i++){
-			for(int j = 0; j<coord.size(); j++){
-				if(coord_heal.at(i) == coord.at(j)){
-					heal = false;
+			for(int k = 0; k<def_grid2_.number_ship(); k++){
+				if(k!=pos){
+					for(int j = 0; j<def_grid2_.ship(k)->coord().size(); j++){
+						if(!def_grid2_.ship(k)->healed()){
+							if(def_grid2_.ship(k)->coord().at(j) == coord_heal.at(i)){
+								def_grid2_.ship(k) -> heal();
+							}
+						}
+					}
 				}
 			}
-			if(heal){
-                try{
-                    int p = def_grid2_.find_ship(coord_heal.at(i));
-				    if(!def_grid2_.ship(p) -> healed()){
-					    def_grid2_.ship(p) -> heal();
-				    }
-                }catch(std::invalid_argument& e){}
-			}
-            heal = true;
 		}
 		def_grid2_.reload();
 	}

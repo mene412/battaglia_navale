@@ -268,5 +268,22 @@ void GamePlayer::start(){
 	}
 }
 
-
-
+void GamePlayer::check_dim(Coord& a, Coord&b, int dim){
+	if(a.X()!=b.X()){
+		if(a.Y()!=b.Y()){
+			throw std::invalid_argument("Errore");
+		}else{
+			if(abs(a.X()-b.X())!=dim){
+				throw std::invalid_argument("Errore");
+			}
+		}
+	}else{
+		if(a.Y()==b.Y()){
+			throw std::invalid_argument("Errore");
+		}else{
+			if(abs(a.Y()-b.Y())!=dim){
+				throw std::invalid_argument("Errore");
+			}
+		}
+	}
+}

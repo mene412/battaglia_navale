@@ -5,25 +5,11 @@
 #include <cstdlib>
 #include <iostream>
 
-Coord::Coord()
+Coord::Coord()					// costruttore base
 	: X_{0}, Y_{0}
 {}
 
-void Coord::setX(int x){
-	if(x<0 || x>11){
-		throw std::invalid_argument("");
-	}
-	X_ = x;
-}
-
-void Coord::setY(int y){
-	if(y<0 || y>11){
-		throw std::invalid_argument("");
-	}
-	Y_ = y;
-}
-
-Coord::Coord(int X, int Y)
+Coord::Coord(int X, int Y)		// costruttore che riceve in ingresso due parametri int, lancia eccezione se i valori sono errati
 	: X_{X}, Y_{Y}
 {
 	if(X_<0 || X_>11 || Y_<0 || Y_>11){
@@ -31,19 +17,35 @@ Coord::Coord(int X, int Y)
 	}
 }
 
-Coord::Coord(const Coord& c)
+Coord::Coord(const Coord& c)	// copy contructor
 	: X_{c.X()}, Y_{c.Y()}
 {}
 
-Coord& Coord::operator=(const Coord& c){
+
+Coord::Coord(Coord&& c)			// move contructor
+	: X_{c.X()}, Y_{c.Y()}	
+{}
+
+void Coord::setX(int x){		// setta le coordinata X dopo averne controllato la validità
+	if(x<0 || x>11){
+		throw std::invalid_argument("");
+	}
+	X_ = x;
+}
+
+void Coord::setY(int y){		// setta la coordinata Y dopo averne controllato la valità
+	if(y<0 || y>11){
+		throw std::invalid_argument("");
+	}
+	Y_ = y;
+}
+
+Coord& Coord::operator=(const Coord& c){		// overload operatori di assegnamento
 	X_ = c.X(); 
 	Y_ = c.Y();
 	return *this;
 }
 
-Coord::Coord(Coord&& c)
-	: X_{c.X()}, Y_{c.Y()}	
-{}
 
 Coord& Coord::operator=(Coord&& c){
 	X_ = c.X();

@@ -37,32 +37,37 @@ class Game{
 		void heal(int pl, int pos, Coord& c);	// passaggio di oggetti Coord avvengono per riferimento
 		void search(int pl, int pos, Coord& c);
 		
+		// Scrittura del file di log
+		void write_log(int player);						// player che inizia
+		void write_log(std::pair<Coord, Coord>& x);		// coordinate delle navi o delle mosse
 
-		void write_log(int player);
-		void write_log(std::pair<Coord, Coord>& x);
-		void check_dim(Coord& a, Coord& b, int dim);
-
-		AttackGrid att_grid1_;
-		AttackGrid att_grid2_;
-		DefenceGrid def_grid1_;
-		DefenceGrid def_grid2_;
-		bool ship_went_down_;
-		int starter_;
-
+		// Turno successivo e controllo di fine partita
 		bool end(bool over);
-		
 		void increment_turn(void);
-		void titanic(int pl, int pos);
+
+		// Stampa delle griglie di attacco e difesa
 		void print_defence(int pl);
 		void print_attack(int pl);
 
+		// Variabili d'esemplare protected - accessibili alle classi derivate
+		AttackGrid att_grid1_;
+		AttackGrid att_grid2_;		// griglie di attacco e difesa
+		DefenceGrid def_grid1_;
+		DefenceGrid def_grid2_;
+		bool ship_went_down_;		// variabile di utilità
+		int starter_;				// giocatore iniziale
+
 	private:
-		int turn_;
-		std::ofstream log_;
-		const int MAX_TURNS = 2000;
+		// Funzione membro private
+		void titanic(int pl, int pos);		// chiamata solamente dalla classe Game
+		
+		// Variabili d'esemplare private
+		int turn_;						// turno corrente
+		std::ofstream log_;				// oggetto ofstream per output su file di log
+		const int MAX_TURNS = 2000;		// massimo numero di turni per evitare stalli
 };
 
-namespace util{
-	void to_upper(std::string& x);
+namespace util{							// namespace di utilità
+	void to_upper(std::string& x);		// conversione di una stringa in maiuscolo, sfruttando il metodo std::toupper(char)
 }
 #endif
