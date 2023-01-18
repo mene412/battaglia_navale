@@ -26,10 +26,10 @@ class Ship
         int distance(void) const { return distance_;}
 
         //metodi setter che modificano il valore delle variabili private e protette
-        virtual void set_coord(std::vector<Coord>& coordinates);
-        virtual void set_coord_from_center(Coord& cord);
-        virtual void set_armor(int a);
-        void set_healed(bool heal);
+        virtual void set_coord(std::vector<Coord>& coordinates); //imposta le coordinate della nave a partire da un vettore di coordinate
+        virtual void set_coord_from_center(Coord& cord);  //imposta le coordinate della nave a partire da quella centrale
+        virtual void set_armor(int a);  //imposta il valore dell'armatura
+        void set_healed(bool heal); //cambia il valore di healed della nave
        
        //metodi ausiliari
         void dec_armor();  //decrementa di 1 l'armatura
@@ -37,13 +37,13 @@ class Ship
         void hit(Coord& c); //Se una parte di nave è stata colpita, scrive nel vettore coord_hit_() la sua posizione
 
     protected:
-        //costruttore protected (accessibile solo da classi derivate)
+        //dichiarazione costruttore protected, che inizializza le variabili (accessibile solo da classi derivate)
         Ship(Coord& front, Coord& back);
          
-        //metodi setter costruttore
+        //metodi setter costruttore navi
         void set_direction(void);//stabilisce se la nave è orizzonatale o verticale
-        void set_center(void);  //setta il centro della nave a partire dalle coordinate front_ e back_
-        void set_coord_center(void);  //
+        void set_center(void);  //imposta  il centro della nave a partire dalle coordinate front_ e back_
+        void set_coord_center(void);  //imposta il vettore di coordinate appena la nave è costruita
 
         //variabili protected per classi derivate
         int dim_;                      //dimensione della nave
@@ -53,7 +53,7 @@ class Ship
         std::vector<Coord> coord_;  //Vettore che identifica le coordinate delle singole "parti" della nave
         Coord center_;               //Coordinata che identifica il centro della nave
         int x_;                      //valore dell'ascissa del centro
-        int y_;                      //oalore dell'ordinata del centri
+        int y_;                      //valore dell'ordinata del centro
         bool orizzontal_;           //ritorna true se la nave è orizzontale, false se è verticale
         Coord front_;               //Coordinata che identifica la prua della nave
         Coord back_;                //Coordinata che identifica la poppa della nave

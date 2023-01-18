@@ -1,18 +1,18 @@
 //AUTORE: Gaia Soso
 #include "../include/Ship.h"
 
-Ship::Ship(Coord& front, Coord& back)// Costruttore di Ship, inizializza le variabili e richiama le funzioni per settare centro e orientamento della nave
+Ship::Ship(Coord& front, Coord& back)       //definizione costruttore Ship
     : front_{front}, back_{back}, healed_{true}, coord_hit_{}, dim_{0}, coord_{}, armor_{0}, distance_{0}, orizzontal_{false}, x_{0}, y_{0}
 {}
 
-void Ship::set_center(void){                // Setta il centro della nave a partire da front e back
+void Ship::set_center(void){
     if(orizzontal_){
-        Coord c{front_.X(), (back_.Y() + front_.Y())/2};
+        Coord c{front_.X(), (back_.Y() + front_.Y())/2};        //coordinata del centro di una nave orizzontale
         center_ = c;
         x_ = front_.X();
         y_ = (back_.Y() + front_.Y()/2);
     }else{
-        Coord c{(back_.X() + front_.X())/2, front_.Y()};
+        Coord c{(back_.X() + front_.X())/2, front_.Y()};        //coordinata del centro di una nave verticale
         center_ = c;
         x_ = (back_.X() + front_.X()/2);
         y_ = front_.Y();
@@ -21,10 +21,10 @@ void Ship::set_center(void){                // Setta il centro della nave a part
 
 
 
-void Ship::set_direction(void){     // Setta l'orientamento della nave [orizzontal_ = true -> orizzontale]
+void Ship::set_direction(void){
     if(front_.Y()==back_.Y()){
         if(front_.X()!=back_.X()){
-            orizzontal_ = false;
+            orizzontal_ = false;               
         }else{
             throw std::invalid_argument("Errore");
         }
@@ -39,17 +39,17 @@ void Ship::set_direction(void){     // Setta l'orientamento della nave [orizzont
     }
 }
 
-void Ship::set_coord_center(void){             // Setta le coordinate iniziali
+void Ship::set_coord_center(void){
     if(orizzontal_){
         if(front_.Y()<back_.Y()){
             for(int i = 0; i<dim_; i++){
                 Coord c{front_.X(), front_.Y()+i};
-                coord_.push_back(c);
+                coord_.push_back(c);                    //"caricamento" della coordinata nel vettore coord
             }
         }else{
             for(int i = 0; i<dim_; i++){
                 Coord c{back_.X(), back_.Y()+i};
-                coord_.push_back(c);
+                coord_.push_back(c);                    //"caricamento" della coordinata nel vettore coord
             }
         }
     }
@@ -57,12 +57,12 @@ void Ship::set_coord_center(void){             // Setta le coordinate iniziali
         if(front_.X()<back_.X()){
             for(int i = 0; i<dim_; i++){
                 Coord c{front_.X()+i, front_.Y()};
-                coord_.push_back(c);
+                coord_.push_back(c);                  //"caricamento" della coordinata nel vettore coord
             }
         }else{
             for(int i = 0; i<dim_; i++){
                 Coord c{back_.X()+i, back_.Y()};
-                coord_.push_back(c);
+                coord_.push_back(c);                 //"caricamento" della coordinata nel vettore coord
             }
         }
     }
@@ -74,11 +74,11 @@ void Ship::set_coord(std::vector<Coord>& coordinates){
         throw std::invalid_argument("Dimensione coordinate non valida");
     }
     coord_=coordinates;
-    set_coord_from_center(coordinates[distance_+1]);
+    set_coord_from_center(coordinates[distance_+1]); //distance+1 è la coordinata centrale che identifica il centro
 }
 
 
-void Ship::set_coord_from_center(Coord& cord){        // Setta le coordinate a partire dal centro 
+void Ship::set_coord_from_center(Coord& cord){
     center_ = cord;
     x_ = cord.X();
     y_ = cord.Y();
@@ -113,25 +113,25 @@ void Ship::set_healed(bool heal) {
 
 
 void Ship::dec_armor(void){
-    armor_--;
+    armor_--;                   //decremento dell'armatura di 1
     healed_ = false;
 }
 
 void Ship::heal(void){
     armor_ = dim_;
     healed_ = true;
-    coord_hit_.clear(); //Cancella il contenuto del vettore coord_hit_
+    coord_hit_.clear(); //Cancella il contenuto del vettore coord_hit_ dato che la nave è stata curata
 }
 
 void Ship::hit(Coord& c){
     for(int i = 0; i<dim(); i++){
         if(coord_.at(i)==c){
-            for(int j = 0; j<coord_hit_.size(); j++){
+            for(int j = 0; j<coord_hit_.size(); j++){ //si scorre il vettore coord_hit per vedere se c'è un elemento uguale alla posizione della                                          coordinata colpita della nave
                 if(coord_hit_.at(j) == i){
                     return;
                 }
             }
-            coord_hit_.push_back(i);
+            coord_hit_.push_back(i); //posizione della coordinata colpita inserita nel vettore delle coordinate colpite.
             dec_armor();
             return;
         }
