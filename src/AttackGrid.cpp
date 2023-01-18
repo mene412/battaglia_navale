@@ -1,28 +1,24 @@
-// Autore: Matteo
+// Autore: Matteo Meneghin
 
 #include "../include/AttackGrid.h"
-
 
 AttackGrid::AttackGrid(void)
     :   Grid{}
 {}
-//rimuove le Y
-// invocato dall'utente con il comando AA AA
+
 void AttackGrid::remove_detections(void) {
     remove_char('Y');
 }   
-//rimuove le X
-// invocato dall'utente con il comando BB BB (vedi FAQ - Q1)
+
 void AttackGrid::remove_hit(void) {
     remove_char('X');
     remove_char('x');
 }       
-//rimuove le O
-// invocato dall'utente con il comando CC CC (vedi FAQ - Q1)
+
 void AttackGrid::remove_water(void) {
     return remove_char('O');
 }       
-//rimuove uno specifico char
+
 void AttackGrid::remove_char(char c) {
     for (int i = 0; i < 12; i++) {
         for (int j = 0; j < 12; j++) {
@@ -32,7 +28,7 @@ void AttackGrid::remove_char(char c) {
         }
     }
 }
-// aggiunge uno specifico char in una specifica Coord
+
 void AttackGrid::add_char(char ch, Coord& coord) {
     if (ch != 'X' && ch != 'O' && ch!='Y' && ch!='x'){
         throw std::invalid_argument("Errore");

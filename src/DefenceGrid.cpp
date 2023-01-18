@@ -77,7 +77,6 @@ int DefenceGrid::find_ship(Coord& x) {
     throw std::invalid_argument("Nave non trovata");
 }
 
-
 int DefenceGrid::type_ship(int pos){
     if(dynamic_cast<Battleship*>(ships_.at(pos)) != nullptr){
         return 1; // battleship 
@@ -104,8 +103,6 @@ int DefenceGrid::type_ship(Ship* ship){
     throw std::invalid_argument("Tipo non trovato");
 }
 
-
-
 void DefenceGrid::add_ship(Coord& front, Coord& back, int type) {
     if(type == 1){
         ships_.push_back(new Battleship{front, back});
@@ -128,8 +125,6 @@ void DefenceGrid::add_ship(Coord& front, Coord& back, int type) {
     }
 }
 
-
-
 std::vector<Coord> DefenceGrid::get_ship_coord(Coord& c, int pos) {
     std::vector<Coord> coord_ship;
     int x = c.X();
@@ -151,7 +146,6 @@ std::vector<Coord> DefenceGrid::get_ship_coord(Coord& c, int pos) {
     }
     return coord_ship;
 }
-
 
 bool DefenceGrid::destroyed(int pos){
     if(ships_.at(pos)->armor() == 0){
@@ -221,7 +215,7 @@ std::ostream& operator<<(std::ostream& os, DefenceGrid& a){
     return os;
 }
 
- DefenceGrid::~DefenceGrid(void){
+DefenceGrid::~DefenceGrid(void){
     for(int i = 0; i<number_ship(); i++){
         delete ships_.at(i);
         ships_.at(i) = nullptr;

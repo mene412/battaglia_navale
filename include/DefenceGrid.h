@@ -49,6 +49,7 @@ class DefenceGrid : public Grid {
         // la posizione della nave nel vettore ships_
         std::vector<Coord> get_ship_coord(Coord& c, int pos);
 
+        // Distruttore virtual
         ~DefenceGrid(void);
 
     protected:

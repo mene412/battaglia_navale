@@ -18,4 +18,5 @@ class ExplorationSubmarine: public Ship {
         void move(Coord& c);
         
 };
+
 #endif /* ExplorationSubmarine_h */
