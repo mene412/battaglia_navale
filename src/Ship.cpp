@@ -18,20 +18,20 @@ void Ship::set_center(void){
 
 
 void Ship::set_direction(void){
-    if(front_.Y()==back_.Y()){
+    if(front_.Y()==back_.Y()){                  //se le ordinate di prua e di poppa sono uguali la nave è verticale
         if(front_.X()!=back_.X()){
             orizzontal_ = false;               
         }else{
             throw std::invalid_argument("Errore");
         }
-    }else if(front_.X()==back_.X()){
+    }else if(front_.X()==back_.X()){             //se le ascisse di prua e di poppa sono uguali la nave è orizzontale
         if(front_.Y()!=back_.Y()){
             orizzontal_ = true;
         }else{
             throw std::invalid_argument("Errore");
         }
     }else{
-        throw std::invalid_argument("Errore");
+        throw std::invalid_argument("Errore");      //altrimenti coordinate non valide ed eccezione lanciata
     }
 }
 
@@ -67,27 +67,27 @@ void Ship::set_coord_center(void){
 
 void Ship::set_coord(std::vector<Coord>& coordinates){
     if(coordinates.size()!=dim_){
-        throw std::invalid_argument("Dimensione coordinate non valida");
+        throw std::invalid_argument("Dimensione coordinate non valida"); //se il vettore di coordinate ha dimensione maggiore della nave viene                                                                  lanciata un'eccezione
     }
     coord_=coordinates;
-    set_coord_from_center(coordinates[distance_+1]); //distance+1 è la coordinata centrale che identifica il centro
+    set_coord_from_center(coordinates[distance_+1]); //distance+1 è la coordinata centrale che identifica il centro della nave
 }
 
 
 void Ship::set_coord_from_center(Coord& cord){
     center_ = cord;
-    if(orizzontal_){
+    if(orizzontal_){                            //caso nave orizzontale
         front_ = Coord{cord.X(), cord.Y()-distance_};
         back_ = Coord{cord.X(), cord.Y()+distance_};
-        for(int i = 0; i<dim_; i++){
+        for(int i = 0; i<dim_; i++){                 //inserimento delle coordinate da quella di prua a quella di poppa nel vettore coord_
             Coord c{front_.X(), front_.Y()+i};
             coord_.at(i) = c;
         }
     }
-    if(!orizzontal_){
+    if(!orizzontal_){                           //caso nave verticale 
         front_ = Coord{cord.X()-distance_, cord.Y()};
         back_ = Coord{cord.X()+distance_, cord.Y()};
-        for(int i = 0; i<dim_; i++){
+        for(int i = 0; i<dim_; i++){                 //inserimento delle coordinate da quella di prua a quella di poppa nel vettore coord_
             Coord c{front_.X()+i, front_.Y()};
             coord_.at(i) = c;
         }
@@ -96,7 +96,7 @@ void Ship::set_coord_from_center(Coord& cord){
 
 void Ship::set_armor(int a){
     if(a<0 || a>dim_){
-        throw std::invalid_argument("Errore");
+        throw std::invalid_argument("Errore"); //se il parametro a inserito è minore di 0 o maggiore della dimensione dell'armatura viene                                             lanciata un'eccezione
     }
     armor_ = a;
 }
@@ -108,12 +108,12 @@ void Ship::set_healed(bool heal) {
 
 void Ship::dec_armor(void){
     armor_--;                   //decremento dell'armatura di 1
-    healed_ = false;
+    healed_ = false;            //variabile healed impostata a false così che la nave possa essere riparata
 }
 
 void Ship::heal(void){
     armor_ = dim_;      //riporta la dimensione dell'armatura alla dimensione della nave
-    healed_ = true;
+    healed_ = true;     //variabile healed impostata ad indicare che è stata riparata
     coord_hit_.clear(); //cancella il contenuto del vettore coord_hit_ dato che la nave è stata curata
 }
 
