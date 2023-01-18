@@ -1,4 +1,4 @@
-//Autore: Matteo
+//Autore: Matteo Meneghin
 
 #include "../include/Grid.h"
 
@@ -55,7 +55,6 @@ std::string Grid::print_grid(void) {
     }
     return grid_str;
 }
-
 
 std::ostream& operator<<(std::ostream& os, Grid& a){
     os << a.print_grid();

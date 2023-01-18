@@ -1,6 +1,6 @@
-// Autore:
-#include "../include/ExplorationSubmarine.h"
+// Autore: Matteo Meneghin
 
+#include "../include/ExplorationSubmarine.h"
 
 ExplorationSubmarine::ExplorationSubmarine(Coord& front)
     :   Ship{front, front}
@@ -35,4 +35,3 @@ void ExplorationSubmarine::set_coord(std::vector<Coord>& coordinates){
     coord_ = coordinates;
     center_ = coord_.at(0);
 }
-

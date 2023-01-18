@@ -1,4 +1,4 @@
-// Autore: Matteo
+// Autore: Matteo Meneghin
 
 #include "../include/HelpShip.h"
 

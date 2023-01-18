@@ -28,6 +28,7 @@ class Grid {
         // Rimuove tutti i char dalla griglia
         void flush_grid(void);
 
+        // Distruttore virtual
         virtual ~Grid(void){};
         
     protected:    

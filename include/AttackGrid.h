@@ -27,4 +27,5 @@ class AttackGrid : public Grid{
 };
 
 std::ostream& operator<<(std::ostream& os, AttackGrid& a);
+
 #endif /* AttackGrid_h */
