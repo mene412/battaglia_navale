@@ -6,3 +6,5 @@ I comandi speciali che abbiamo implementato sono:
 -CC CC—>Cancella i caratteri relativi ai colpi andati vuoto dalla griglia di attacco del giocatore
 
 Come per i comandi AA AA (per cancellare gli avvistamenti sonar dalla griglia di difesa del giocatore) e XX XX (per visualizzare le due griglie del giocatore) questi comandi non “consumano” la mossa, ma devono essere effettuati prima di compiere un’azione con una propria nave. 
+
+Sulla griglia di attacco i punti di una nave colpiti senza aver abbattuto la nave sono indicati in minuscolo

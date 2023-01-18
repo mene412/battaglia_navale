@@ -4,27 +4,29 @@
 #include <chrono>
 #include <thread>
 
-Replay::Replay(std::string file_log)
+// Costruttore per il replay 
+Replay::Replay(std::string file_log)    // riceve in ingresso un file di log
     : log_{file_log}, def_grid1_{}, def_grid2_{}, att_grid1_{}, att_grid2_{}, turn_{0}
 {
     std::cout << "   Replay del file di log -> " << file_log << std::endl;
 }
 
-void Replay::start(void){
+// Funzione start per replay a video
+void Replay::start(void){   
     int first, second;
-    log_ >> first;
+    log_ >> first;                              
     if(first==1){
-        second = 2;
+        second = 2;             // legge il player iniziale
     }else if(first==2){
         second = 1;
     }else{
         throw std::runtime_error("File di log errato");
     }
-    std::cout << "   Inizia il player " << first << "." << std::endl;
+    std::cout << "   Inizia il player " << first << "." << std::endl; 
     std::cout << "\n   Posizionamento iniziale\n" << std::endl;
     // std::this_thread::sleep_for(std::chrono::milliseconds(1000));
     if(first == 1){
-        take_ships(first);
+        take_ships(first);                                          // posiziona le navi e stampa le griglie di difesa iniziali
         def_grid1_.reload();
         std::cout << "  Player " << first << "\n" << def_grid1_;
         //_sleep(1);
@@ -41,17 +43,17 @@ void Replay::start(void){
         std::cout << "  Player " << second << "\n" << def_grid1_;
     }
 
-    while(!log_.eof()){
-        increment_turn();
+    while(!log_.eof()){         // fino a fine file
+        increment_turn();       // incrementa e stampa il turno
         std::cout << "\n  Turno " << turn_  << std::endl;
-        if(first==1){
+        if(first==1){              // esegue la mossa, poi stampa la griglia di attacco e difesa, dopo aver aggiornato quella di difesa
             //_sleep(1);
             move_first();
             def_grid1_.reload();
             std::cout << "  Player " << first << "\n" << def_grid1_;
             std::cout << att_grid1_;
-            //_sleep(1);
-            if(end()){
+            //_sleep(1);    
+            if(end()){           // se un player vince, termina l'esecuzione
                 std::cout << "   Replay terminato." << std::endl;
                 return;
             }
@@ -85,7 +87,7 @@ void Replay::start(void){
         }
     }
     turn_++;
-    if(turn_ == MAX_TURNS){
+    if(turn_ == MAX_TURNS){                         // caso pareggio
         std::cout << "\n|-----------|\n";
         std::cout << "| Pareggio! |";
         std::cout << "\n|-----------|\n" << std::endl;
@@ -96,11 +98,12 @@ void Replay::start(void){
     
 }
 
-void Replay::start(std::string file_output){
-    std::ofstream output(file_output);
+// Funzione start su file
+void Replay::start(std::string file_output){    // riceve come parametro d'ingresso il file di output dove 
+    std::ofstream output(file_output);          // oggetto ofstream per l'output
     int first, second;
     log_ >> first;
-    if(first==1){
+    if(first==1){                               // lettura di starter
         second = 2;
     }else if(first==2){
         second = 1;
@@ -109,7 +112,7 @@ void Replay::start(std::string file_output){
     }
     output << "   Inizia il player " << first << ".\n" << std::endl;
     if(first == 1){
-        take_ships(first);
+        take_ships(first);              // posiziona le navi e stampa la griglia orrispondente dopo averla aggiornata
         def_grid1_.reload();
         output << "  Player " << first << "\n" << def_grid1_;
 
@@ -119,14 +122,14 @@ void Replay::start(std::string file_output){
     }else{
         take_ships(first);
         def_grid2_.reload();
-        output << "  Player " << first << "\n" << def_grid1_;
+        output << "  Player " << first << "\n" << def_grid2_;
 
         take_ships(second);
         def_grid1_.reload();
         output << "  Player " << second << "\n" << def_grid1_;
     }
     while(!log_.eof()){
-        increment_turn();
+        increment_turn();                           // fino a fine file incrementa il turno ed esegue le mosse
         output << "Turno " << turn_  << std::endl;
         if(first==1){
             move_first();
@@ -168,7 +171,7 @@ void Replay::start(std::string file_output){
             }
         }
     }
-    turn_++;
+    turn_++;                            // caso pareggio
     if(turn_ == MAX_TURNS){
         output << "\n|-----------|\n";
         output << "| Pareggio! |";
@@ -182,39 +185,18 @@ void Replay::start(std::string file_output){
 
 }
 
-void Replay::move_first(void){
-    if(log_.eof()){
-        return;
-    }
-    std::string head, tail;
-    log_ >> head >> tail;
-    Coord h{UCoord::from_string_to_coord(head)};
-    Coord t{UCoord::from_string_to_coord(tail)};
-    attack_first(h, t);
-}
-
-void Replay::move_second(void){
-    if(log_.eof()){
-        return;
-    }
-    std::string head, tail;
-    log_ >> head >> tail;
-    Coord h{UCoord::from_string_to_coord(head)};
-    Coord t{UCoord::from_string_to_coord(tail)};
-    attack_second(h, t);
-}
-
+// Posizionamento iniziale
 void Replay::take_ships(int player){
     if(player == 1){
-        int type;
+        int type;                   // tipo della nave
         for(int i = 0; i<3; i++){
             type = 1;
             std::string punta;
-            std::string coda;
+            std::string coda;       // 3 navi corazzata
             log_ >> punta >> coda;
             Coord p{UCoord::from_string_to_coord(punta)};
             Coord c{UCoord::from_string_to_coord(coda)};
-            if(type == 1 && def_grid1_.check_position(p, c, 5, -1)){
+            if(type == 1 && def_grid1_.check_position(p, c, 5, -1)){    // check_position, altrimenti file di log errato
                 def_grid1_.add_ship(p, c, 1);
             }else{
                 throw std::runtime_error("File di log errato");
@@ -223,7 +205,7 @@ void Replay::take_ships(int player){
 
         for(int i = 0; i<3; i++){
             type = 2;
-            std::string punta;
+            std::string punta;      // 3 navi di supporto
             std::string coda;
             log_ >> punta >> coda;
             Coord p{UCoord::from_string_to_coord(punta)};
@@ -239,8 +221,8 @@ void Replay::take_ships(int player){
             type = 3;
             std::string punta;
             std::string coda;
-            log_ >> punta >> coda;
-            if(punta != coda){
+            log_ >> punta >> coda;      // due sottomarini
+            if(punta != coda){          // se le due posizioni sono errate, errore
                 throw std::runtime_error("File di log errato");
             }
             Coord c{UCoord::from_string_to_coord(coda)};
@@ -252,7 +234,7 @@ void Replay::take_ships(int player){
         }
     }else{
         int type;
-        for(int i = 0; i<3; i++){
+        for(int i = 0; i<3; i++){           // player due
             type = 1;
             std::string punta;
             std::string coda;
@@ -296,9 +278,34 @@ void Replay::take_ships(int player){
     }
 }
 
+// Controllo mossa player 1
+void Replay::move_first(void){
+    if(log_.eof()){             // controlla che non sia finito il file 
+        return;
+    }
+    std::string head, tail;     // riceve in ingresso le coordinate
+    log_ >> head >> tail;
+    Coord h{UCoord::from_string_to_coord(head)};
+    Coord t{UCoord::from_string_to_coord(tail)};    // ecceziona invalid_argument lanciata se coordinate errate
+    attack_first(h, t);         // attacco
+}
+
+// Controllo mossa player 2
+void Replay::move_second(void){
+    if(log_.eof()){             // controlla che non sia finito il file 
+        return;
+    }
+    std::string head, tail;     // riceve in ingresso le coordinate
+    log_ >> head >> tail;
+    Coord h{UCoord::from_string_to_coord(head)};
+    Coord t{UCoord::from_string_to_coord(tail)};    // ecceziona invalid_argument lanciata se coordinate errate
+    attack_second(h, t);        // attacco
+}
+
+// Mossa player 1
 void Replay::attack_first(Coord& a, Coord& b){  
-    int pos = def_grid1_.find_ship(a);
-    if(def_grid1_.type_ship(pos) == 1){
+    int pos = def_grid1_.find_ship(a);              // posizione della nave
+    if(def_grid1_.type_ship(pos) == 1){             // controlla il tipo di nave
         attack(1, pos, b);
     }else if(def_grid1_.type_ship(pos) == 2){
         move_help(1, pos, b);
@@ -309,11 +316,10 @@ void Replay::attack_first(Coord& a, Coord& b){
     }
 }
 
-
-
+// Mossa player 2
 void Replay::attack_second(Coord& a, Coord& b){
-    int pos = def_grid2_.find_ship(a);
-    if(def_grid2_.type_ship(pos) == 1){
+    int pos = def_grid2_.find_ship(a);              // posizione della nave
+    if(def_grid2_.type_ship(pos) == 1){             // controlla il tipo di nave
         attack(2, pos, b);
     }else if(def_grid2_.type_ship(pos) == 2){
         move_help(2, pos, b);
@@ -324,27 +330,28 @@ void Replay::attack_second(Coord& a, Coord& b){
     }
 }
 
+// Equivalente di fire() in Game - attacca
 void Replay::attack(int pl, int pos, Coord& c){
     if(pl == 1){
-		for(int i = 0; i<def_grid2_.number_ship(); i++){
-			for(int j = 0; j<def_grid2_.ship(i)->dim(); j++){
-				if(def_grid2_.ship(i)->coord().at(j) == c){
-					att_grid1_.add_char('x', c);
-					def_grid2_.ship(i) -> hit(c);
-					def_grid2_.hit(c);
-					if(def_grid2_.destroyed(i)){
-                        titanic(pl, i);
-						def_grid2_.reload();
+		for(int i = 0; i<def_grid2_.number_ship(); i++){        // scoore le navi
+			for(int j = 0; j<def_grid2_.ship(i)->dim(); j++){   // scorre le coordinate
+				if(def_grid2_.ship(i)->coord().at(j) == c){     // se una coordinata corrisponde
+					att_grid1_.add_char('x', c);                // x nella griglia di attacco
+					def_grid2_.ship(i) -> hit(c);               // funzione hit della nave
+					def_grid2_.hit(c);                          // hit nella griglia
+					if(def_grid2_.destroyed(i)){                // se distrutta
+                        titanic(pl, i);                         // nave abbattuta
+						def_grid2_.reload();                    // ricarica la griglia e return
 					}
 					return;
 				}
 			}
 		}
-    	att_grid1_.add_char('O', c);
+    	att_grid1_.add_char('O', c);                            // se non è colpita, acqua (O)
 	}else{
 		for(int i = 0; i<def_grid1_.number_ship(); i++){
 			for(int j = 0; j<def_grid1_.ship(i)->dim(); j++){
-				if(def_grid1_.ship(i)->coord().at(j) == c){
+				if(def_grid1_.ship(i)->coord().at(j) == c){         // player 2
 					att_grid2_.add_char('x', c);
 					def_grid1_.ship(i) -> hit(c);
 					def_grid1_.hit(c);
@@ -358,22 +365,6 @@ void Replay::attack(int pl, int pos, Coord& c){
 		}
     	att_grid2_.add_char('O', c);
     }
-}
-
-void Replay::titanic(int pl, int pos){
-    if(pl == 1){
-		for(int i = 0; i<def_grid2_.ship(pos)->dim(); i++){
-			att_grid1_.add_char('X', def_grid2_.ship(pos)->coord().at(i));
-		}
-		def_grid2_.remove_ship(pos);
-		return;
-	}else{
-		for(int i = 0; i<def_grid1_.ship(pos)->dim(); i++){
-			att_grid2_.add_char('X', def_grid1_.ship(pos)->coord().at(i));
-		}
-		def_grid1_.remove_ship(pos);
-		return;
-	}
 }
 
 void Replay::heal(int pl, int pos, Coord& c){
@@ -593,8 +584,27 @@ void Replay::search(int pl, int pos, Coord& b){
 	}
 }   
 
+
+// Nave affondata
+void Replay::titanic(int pl, int pos){
+    if(pl == 1){
+		for(int i = 0; i<def_grid2_.ship(pos)->dim(); i++){                 // scorre le coordinate della nave
+			att_grid1_.add_char('X', def_grid2_.ship(pos)->coord().at(i));  // aggiunge i colpi sulla griglia
+		}
+		def_grid2_.remove_ship(pos);                                        // rimuove la nave
+		return;
+	}else{
+		for(int i = 0; i<def_grid1_.ship(pos)->dim(); i++){                 // player 2
+			att_grid2_.add_char('X', def_grid1_.ship(pos)->coord().at(i));
+		}
+		def_grid1_.remove_ship(pos);
+		return;
+	}
+}
+
+// Verifica fine replay video
 bool Replay::end(void){
-    if(def_grid1_.number_ship() == 0){
+    if(def_grid1_.number_ship() == 0){                          // verifica e scrive quale player ha vinto
         std::cout << "\n|--------------------|\n";
         std::cout << "| Player 2 ha vinto! |";
         std::cout << "\n|--------------------|\n" << std::endl;
@@ -609,7 +619,8 @@ bool Replay::end(void){
     return false;
 }
 
-bool Replay::end_file(std::ofstream& file){
+// Verifica fine replay file                
+bool Replay::end_file(std::ofstream& file){                      // verifica e scrive quale player ha vinto
     if(def_grid1_.number_ship() == 0){
         file << "\n|--------------------|\n";
         file << "| Player 2 ha vinto! |";

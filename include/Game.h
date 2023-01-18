@@ -23,10 +23,10 @@ class Game{
 		Game(const Game&) = delete;				// costruttore di copia disabilitato
 		Game& operator=(const Game&) = delete;	// assegnamento di copia disabilitato
 
-		// Funzioni virtual
-		virtual void make_move(int s);		
+		// Funzioni virtual			
 		virtual void select_starter(void);
 		virtual void positioning(void) = 0;		// positioning virtuale pura (ogni classe derivata gestisce il poszionamento navi)
+		virtual void make_move(int s);	
 
 		// Funzioni membro
 		void add_ship(int player, Coord& p, Coord& c, int type);	// aggiunta della nave nella rispettiva griglia di difesa
@@ -58,9 +58,10 @@ class Game{
 		int starter_;				// giocatore iniziale
 
 	private:
-		// Funzione membro private
+		// Funzioni membro private
 		void titanic(int pl, int pos);		// chiamata solamente dalla classe Game
-		
+		// Funzione di stampa delle info del gioco iniziali
+		void print_info(void);
 		// Variabili d'esemplare private
 		int turn_;						// turno corrente
 		std::ofstream log_;				// oggetto ofstream per output su file di log
