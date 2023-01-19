@@ -5,20 +5,22 @@
 
 #include "Game.h"
 
-class GamePc : public Game{			// classe derivata da Game
+// Classe per la gestione di una partita di battaglia navale tra due computer
+// La classe deriva i metodi e i campi d'esemplare public e protected della classe Game
+class GamePc : public Game{			
 	public:
-		// Costruttore public
+		// Costruttore public, non riceve parametri di ingresso, sfrutta il costruttore della classe da cui deriva
 		GamePc(void);
 
-		// Funzione di inizio gioco
-		void start(void);			// gestisce l'intera partita, toglie il più possibile codice al main, ma gestisce il game totalmente
+		// Funzione di inizio gioco, gestisce l'intera partita dall'inizio alla fine
+		void start(void);			
 		
-		// Distruttore (automaticamente virtual)
+		// Distruttore virtual, automaticamente richiama il costruttore di Game
 		~GamePc(){}
 
 	private:
 		// Override obbligato della funzione virtuale pura definita nella classe Game, private per evitare posizionamenti non voluti
 		void positioning(void) override;
-		
 };
-#endif
+
+#endif // GAME_PC_H

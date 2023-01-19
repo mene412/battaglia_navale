@@ -4,45 +4,69 @@
 
 #include <string>
 
+// Classe di gestione delle coordinate di una griglia 12X12
 class Coord{
 	public:
-		// Costruttori e costruttori di copia -> necessari
+		// Costruttore che non riceve parametri in ingresso
 		Coord();	
+		// Costruttore che riceve in ingresso due interi, controlla la validità
 		Coord(int X, int Y);
-		Coord(const Coord& c);		// copy constructor
-		Coord(Coord&& c);			// move constructor
+		// Copy constructor
+		Coord(const Coord& c);
+		// Move constructor
+		Coord(Coord&& c);
 
 		// Metodi setter
-		void setX(int X);			// setta la riga
-		void setY(int Y);			// setta la colonna
+		// Setta la riga della coordinata
+		void setX(int X);	
+		// Setta la riga della colonna		
+		void setY(int Y);			
 
 		// Metodi getter
-		int X(void) const {return X_;};		// restituisce la riga
-		int Y(void) const {return Y_;};		// restituisce la colonna
-		std::string coord(void);			// restituisce la coordinata in formato
-											// char-int
-		// Overload operatori di assegnamento
+		// Ritorna la riga della coordinata come int
+		int X(void) const {return X_;};	
+		// Ritorna la colonna della coordinata come int
+		int Y(void) const {return Y_;};	
+		// restituisce la coordinata in formato char -int
+		std::string coord(void);			
+
+		// Overload operator di assegnamento
 		Coord& operator=(const Coord& c);
+		// Overload assegnamento
 		Coord& operator=(Coord&& c);
 	
 	private:
 		// Variabili membro private
-		int X_;		// numero riga
-		int Y_;		// numero colonna
+		// numero riga
+		int X_;	
+		// numero colonna	
+		int Y_;		
 };
 
 // Overload operratori - helper functions
-std::ostream& operator<<(std::ostream& os, Coord& a);	// overload output
-bool operator==(Coord a, Coord b);						// overload operatore di confronto
-bool operator!=(Coord a, Coord b);						// uguaglianza e disuguaglianza
+// Overload operatore di output
+std::ostream& operator<<(std::ostream& os, Coord& a);
+// Overload operatore di uguaglianza
+// Ritorna true se le due variabili x e le due variabili y sono uguali
+bool operator==(Coord a, Coord b);	
+// Overload operatore di disuguaglianza		
+// Ritorna true se almeno una variabile del primo oggetto non è uguale alla variabile del secondo			
+bool operator!=(Coord a, Coord b);						
 
 
-// Namepsace per alcune funzioni di utilità (Utility Coord)
+// Namepsace per alcune funzioni di utilità con le coordinate (Utility Coord)
 namespace UCoord {
-	Coord random_coord();						// crea una coordinata randomica
-	Coord random_coord(Coord c, int dim);		// coordinata pseudo-randomica a partire da una già definita e una dimensione
-	char from_int_to_char(int a);				// resistuisce un char a partire da un int (utile per la stampa)
-	Coord from_string_to_coord(std::string c);	// conversione da stringa in entrata a coordinata
-}												// utile in ingresso
+	// Crea una coordinata randomica
+	Coord random_coord();			
+	// Crea una coordinata pseudo-randomica a partire da una già definita e una dimensione			
+	Coord random_coord(Coord c, int dim);	
+	// Resistuisce un valore di tipo char a partire dall'int corrispondente
+	// Utile per stampare il valore della variabile x
+	char from_int_to_char(int a);		
+	// Conversione da stringa a Coord
+	// Utile in ingresso per la lettura di una coordinata
+	// Lancia eccezione se non valida
+	Coord from_string_to_coord(std::string c);	
+}
 
-#endif
+#endif // COORD_H
