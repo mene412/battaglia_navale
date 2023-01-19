@@ -1,5 +1,0 @@
-/home/local/muttand11213/untitled folder/battaglia_navale-main/CMakeFiles/rebuild_cache.dir
-/home/local/muttand11213/untitled folder/battaglia_navale-main/CMakeFiles/replay.dir
-/home/local/muttand11213/untitled folder/battaglia_navale-main/CMakeFiles/battaglia_navale.dir
-/home/local/muttand11213/untitled folder/battaglia_navale-main/CMakeFiles/edit_cache.dir
-/home/local/muttand11213/untitled folder/battaglia_navale-main/CMakeFiles/Battleship.dir
